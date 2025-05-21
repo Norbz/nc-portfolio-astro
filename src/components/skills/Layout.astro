@@ -71,6 +71,7 @@ import {Icon} from 'astro-icon/components'
             color: $yellow;
             animation: slide-left var(--duration, 10s) linear infinite;
             animation-delay: calc(-1 * var(--duration, 10s));
+            gap: 0.2rem;
             &:last-child {
                 animation-delay: 0;
             }
@@ -89,7 +90,7 @@ import {Icon} from 'astro-icon/components'
                 padding: 0.5rem;
                 width: fit-content;
 
-                span {
+                :first-child {
                     margin-right: 0.5rem;
                 }
             }

@@ -1,0 +1,37 @@
+---
+import Card from './Card.astro'
+
+import { getCollection } from 'astro:content';
+const projects = await getCollection('projects');
+console.log(projects);
+---
+<section>
+  <h2>Recent Work</h2>
+  <!-- <ul>
+    <Card v-for="proj in projects" :key="proj.stem" :project="proj"/>
+  </ul> -->
+
+  <ul>
+  {projects.map(proj => (
+    <Card id={proj.id} project={proj.data}/>
+  ))}
+</ul>
+</section>
+<style lang="scss" scoped>
+section {
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    align-self: flex-end;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+</style>

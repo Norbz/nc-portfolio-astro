@@ -4,13 +4,16 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "dither-images": "node build/dither.js",
+    "build": "npm run dither-images && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@fontsource/space-grotesk": "^5.2.7",
-    "astro": "^5.7.13"
+    "astro": "^5.7.13",
+    "canvas": "^3.1.0",
+    "pngquant-bin": "^9.0.0"
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.44",

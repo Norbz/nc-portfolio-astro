@@ -1,0 +1,90 @@
+---
+import { Icon } from "astro-icon/components";
+const { tag, href, email, domain, text } = Astro.props;
+
+const icon = "uil:envelope";
+---
+
+<nav>
+    <button class="email-button">
+        <Icon name={icon} size="24" />
+        <span client.visible>hello@nicolaschesne.fr</span>
+    </button>
+</nav>
+
+<script>
+    const buttons = document.querySelectorAll(".email-button");
+    buttons.forEach((button) => {
+        const btn = button as HTMLElement;
+        btn.addEventListener("click", () => {
+            const email = `${btn.dataset.email}@${btn.dataset.domain}`;
+            navigator.clipboard.writeText(email).then(() => {
+                btn?.classList.add("copied");
+                setTimeout(() => {
+                    btn?.classList.remove("copied");
+                }, 2000);
+            });
+        });
+    });
+</script>
+
+<style lang="scss">
+    nav {
+        position: sticky;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .email-button {
+            display: flex;
+            appearance: none;
+            border: 0;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            height: 60px;
+            width: 240px;
+            color: $yellow;
+            background: black;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            &:hover {
+                background: $black;
+                color: $yellow;
+            }
+
+            &:visited {
+                color: black !important;
+            }
+
+            &:after {
+                content: "";
+                width: 0;
+                transition: all 0.2s ease-in-out;
+            }
+
+            &.copied {
+                color: $yellow;
+                background: $black;
+                &:after {
+                    content: "Email copied to the clipboard";
+                    // position: absolute;
+                    // top: 0;
+                    // left: 0;
+                    // right: 0;
+                    // bottom: 0;
+                    height: 100%;
+                    width: auto;
+                    padding: 0 1rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: $black;
+                    color: $yellow;
+                }
+            }
+        }
+    }
+</style>

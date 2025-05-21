@@ -1,0 +1,10 @@
+{
+  "name": "Astro",
+  "client": "Monnaie de paris",
+  "agency": "La Chose",
+  "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
+  "image": "/images/works/astro.png",
+  "date": "2023-10-01",
+  "tags": ["VueJS"],
+  "co2": 0.5
+}

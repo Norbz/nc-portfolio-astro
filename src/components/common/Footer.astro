@@ -1,0 +1,47 @@
+---
+import EmailButton from './EmailButton.astro';
+import { Icon } from 'astro-icon/components';
+---
+<footer>
+  <address>hello@nicolaschesne.fr</address>
+  <aside>
+    <Icon name="lucide:sprout" size="14" />
+    <p>This page generates 0.01g co2eq</p>
+  </aside>
+</footer>
+
+<style lang="scss">
+  footer {
+    display: flex;
+    justify-content: space-between;
+    color: $yellow;
+    align-items: center;
+    background-color: black;
+    padding: 4rem 2rem 2rem;
+
+     @include mobile() {
+      flex-direction: column;
+      padding: 2rem 2rem 0.2rem;
+     }
+
+    address {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+
+      @include mobile() {
+        font-size: 1.2rem;
+      }
+    }
+
+    aside {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+      p {
+        font-size: 0.8rem;
+      }
+    }
+  }
+</style>

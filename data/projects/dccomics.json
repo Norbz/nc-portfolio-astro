@@ -1,0 +1,10 @@
+{
+    "name": "DC Comics",
+    "client": "Monnaie de paris",
+    "agency": "La Chose",
+    "description": "Description of project 1",
+    "image": "/images/works/dccomics.png",
+    "date": "2022-10-01",
+    "tags": ["design", "branding"],
+    "co2": 0.5
+  }
