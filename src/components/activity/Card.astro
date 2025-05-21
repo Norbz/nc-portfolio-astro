@@ -1,0 +1,34 @@
+---
+import {Icon} from 'astro-icon/components'
+
+const { icon } = Astro.props;
+---
+<li>
+  <Icon class="icon" name={icon} size="22" />
+  <article class="activity-card">
+    <h3><slot name="title"/></h3>
+    <p><slot name="content" /></p>
+    </article>
+</li>
+
+<style lang="scss">
+li {
+  min-width: 300px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  
+  .icon {
+    align-self: flex-end;
+  }
+
+  article {
+    border-top: $border;
+    margin-top: 0.8rem;
+
+    h3, p {
+      margin-top: 0.8rem;
+    }
+  }
+}
+</style>

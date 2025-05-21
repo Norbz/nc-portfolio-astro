@@ -1,0 +1,61 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+<div>
+  <p class="inverted">Hi, I am</p>
+  <h1><span>Nicolas Chesné</span><span>a French <Icon class="food" name="lucide:croissant" /></span><span>fullstack freelancer</span></h1>
+</div>
+
+<style lang="scss">
+div {
+  margin: 3rem auto 5rem;
+  max-width: 1400px;
+  p {
+    margin: 1rem 0;
+
+    &.inverted {
+      color: $yellow;
+      background-color: $black;
+      padding: 0.5rem 1rem;
+      display: inline;
+    }
+  }
+  h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+    & > span {
+      text-align: center;
+    }
+
+    & > span:first-child {
+      align-self: flex-start;
+      text-align: left;
+    }
+
+    & > span:last-child {
+      align-self: flex-end;
+      text-align: right;
+    }
+
+    .food {
+      animation: 2s giggle infinite;
+
+      @keyframes giggle {
+        0% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(10deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+    }
+  }
+}
+</style>

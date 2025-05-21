@@ -1,0 +1,55 @@
+---
+import ActivityCard from './Card.astro';
+---
+
+<section id="activities">
+    <h2>22 years of experience building low-carbon, high speed, highly crafted websites</h2>
+    <ul class="content-center">
+      <ActivityCard icon="lucide:network">
+        <Fragment slot="title">
+          Technical leadership
+        </Fragment>
+        <Fragment slot="content">
+          <p>At the service of agencies as well as my own projects. My work is documented and transparent.</p>
+        </Fragment>
+      </ActivityCard>
+      <ActivityCard icon="lucide:earth">
+        <Fragment slot="title">
+          Eco-designed Websites
+        </Fragment>
+        <Fragment slot="content">
+          <p>Also aesthetic, accessible, high-performing and efficient.</p>
+        </Fragment>
+      </ActivityCard>
+      <ActivityCard  icon="lucide:heart">
+        <Fragment slot="title">
+          User Experiences
+        </Fragment>
+        <Fragment slot="content">
+          <p>Online or on physical kiosks.</p>
+        </Fragment>
+      </ActivityCard>
+      <ActivityCard  icon="lucide:slack">
+        <Fragment slot="title">
+          Project Management
+        </Fragment>
+        <Fragment slot="content">
+          <p>To support both agencies and brands in their digital projects.</p>
+        </Fragment>
+      </ActivityCard>
+    </ul>
+</section>
+<style lang="scss">
+h2 {
+ place-content: center;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+</style>

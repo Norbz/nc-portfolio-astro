@@ -1,0 +1,98 @@
+---
+import {Icon} from 'astro-icon/components'
+---
+
+<div>
+    <ul>
+        <li>
+            <Icon name="lucide:code" />HTML, CSS, Javascript
+        </li>
+        <li>
+            <Icon name="lucide:file-json" />Vue, Nuxt, Tailwind
+        </li>
+        <li>
+            <Icon name="lucide:server" />NodeJS, Express, Strapi, Directus
+        </li>
+        <li>
+            <Icon name="lucide:cloud" />Firebase, AWS, Github
+        </li>
+        <li>
+            <Icon name="lucide:earth" />Eco-friendly software development
+        </li>
+        <li>
+            <Icon name="lucide:slack" />Project Management
+        </li>
+        <li>
+            <Icon name="lucide:search" />Carbon Footprint Analysis
+        </li>
+        <li>
+            <Icon name="lucide:chart-pie" />Environmental Impact Reporting
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <Icon name="lucide:code" />HTML, CSS, Javascript
+        </li>
+        <li>
+            <Icon name="lucide:file-json" />Vue, Nuxt, Tailwind
+        </li>
+        <li>
+            <Icon name="lucide:server" />NodeJS, Express, Strapi, Directus
+        </li>
+        <li>
+            <Icon name="lucide:cloud" />Firebase, AWS, Github
+        </li>
+        <li>
+            <Icon name="lucide:earth" />Eco-friendly software development
+        </li>
+        <li>
+            <Icon name="lucide:slack" />Project Management
+        </li>
+        <li>
+            <Icon name="lucide:search" />Carbon Footprint Analysis
+        </li>
+        <li>
+            <Icon name="lucide:chart-pie" />Environmental Impact Reporting
+        </li>
+    </ul>
+</div>
+<style lang="scss">
+    div {
+        margin: -2rem;
+        display: flex;
+        overflow: clip;
+        ul {
+            --duration: 25s;
+            justify-self: flex-start;
+            display: flex;
+            flex-shrink: 0;
+            width: max-content;
+            background: black;
+            color: $yellow;
+            animation: slide-left var(--duration, 10s) linear infinite;
+            animation-delay: calc(-1 * var(--duration, 10s));
+            &:last-child {
+                animation-delay: 0;
+            }
+            @keyframes slide-left {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-100%);
+                }
+            }
+
+            li {
+                display: flex;
+                align-items: center;
+                padding: 0.5rem;
+                width: fit-content;
+
+                span {
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+    }
+</style>

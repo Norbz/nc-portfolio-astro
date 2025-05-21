@@ -1,0 +1,100 @@
+// Rupture-like Media Query Mixins
+// -------------------------------------
+@use 'sass:list';
+// These default breakpoints will only be used if not previously defined
+// in _config.scss or elsewhere
+
+
+
+$scale: 0 400px 600px 800px 1050px !default;
+$mobile-cutoff: list.nth($scale, 2) !default;
+$tablet-cutoff: list.nth($scale, 4) !default;
+$desktop-cutoff: list.nth($scale, 5) !default;
+
+// Helper function to get value from scale
+@function get-scale-value($index) {
+  @if type-of($index) == 'number' and unitless($index) and $index < length($scale) {
+    @return list.nth($scale, $index + 1); // +1 because SCSS is 1-indexed while Rupture scale is 0-indexed
+  }
+  @return $index;
+}
+
+// +above(measure)
+@mixin above($measure) {
+  $breakpoint: get-scale-value($measure);
+  @media screen and (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Alias for above
+@mixin from-width($measure) {
+  @include above($measure);
+  @content;
+}
+
+// +below(measure)
+@mixin below($measure) {
+  $breakpoint: get-scale-value($measure);
+  @media screen and (max-width: ($breakpoint - 1px)) {
+    @content;
+  }
+}
+
+// Alias for below
+@mixin to-width($measure) {
+  @include below($measure);
+  @content;
+}
+
+// +between(measure, measure)
+@mixin between($from, $to) {
+  $from-bp: get-scale-value($from);
+  $to-bp: get-scale-value($to);
+  @media screen and (min-width: $from-bp) and (max-width: ($to-bp - 1px)) {
+    @content;
+  }
+}
+
+// +at(measure)
+@mixin at($index) {
+  @if type-of($index) == 'number' and unitless($index) and $index < length($scale) - 1 {
+    $from: nth($scale, $index + 1);
+    $to: nth($scale, $index + 2);
+    @media screen and (min-width: $from) and (max-width: ($to - 1px)) {
+      @content;
+    }
+  }
+}
+
+// Common device mixins
+@mixin mobile() {
+  @media screen and (max-width: $mobile-cutoff) {
+    @content;
+  }
+}
+
+@mixin tablet() {
+  @media screen and (min-width: ($mobile-cutoff + 1px)) and (max-width: ($desktop-cutoff - 1px)) {
+    @content;
+  }
+}
+
+@mixin desktop() {
+  @media screen and (min-width: $desktop-cutoff) {
+    @content;
+  }
+}
+
+@mixin retina() {
+  @media (-webkit-min-device-pixel-ratio: 1.5),
+         (min--moz-device-pixel-ratio: 1.5),
+         (-o-min-device-pixel-ratio: 3/2),
+         (min-device-pixel-ratio: 1.5),
+         (min-resolution: 144dpi),
+         (min-resolution: 1.5dppx) {
+    @content;
+  }
+}
+
+// Add more mixins as needed

@@ -1,3 +1,9 @@
+---
+import CommonHeader from '../components/common/Header.astro';
+import '../scss/reset.scss';
+import '../scss/variables.scss';
+import '../scss/main.scss';
+---
 <!doctype html>
 <html lang="en">
 	<head>
@@ -8,11 +14,13 @@
 		<title>Astro Basics</title>
 	</head>
 	<body>
+		<CommonHeader/>
 		<slot />
 	</body>
 </html>
 
 <style>
+
 	html,
 	body {
 		margin: 0;

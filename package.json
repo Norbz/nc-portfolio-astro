@@ -1,5 +1,5 @@
 {
-  "name": "portfolio-website",
+  "name": "nc-portfolio-astro",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,5 +10,11 @@
   },
   "dependencies": {
     "astro": "^5.7.13"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.44",
+    "@iconify-json/uil": "^1.2.3",
+    "astro-icon": "^1.1.5",
+    "sass": "^1.89.0"
   }
 }

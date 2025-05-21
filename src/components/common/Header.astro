@@ -1,0 +1,60 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+<header class="shadowed">
+  <div itemprop="logo">NC</div>
+  <nav>
+    <a @click="$router.push('/')"><Icon name="uil:envelope" size="24"/></a>
+    <a @click="$router.push('/')"><Icon name="uil:github" size="24"/></a>
+  </nav>
+</header>
+
+<style lang="scss" scoped>
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  background-color: $yellow;;
+
+  border-bottom: $border;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  height: 60px;
+  padding: 0;
+  z-index: 100;
+
+  div {
+    font-size: 2rem;
+    margin: 0;
+    font-family: "Sixtyfour", sans-serif;
+    padding-left: 1rem
+  }
+
+  nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    a, button {
+      height: 100%;
+      border-left: $border;
+      text-align: center;
+      display: grid;
+      place-items: center;
+      padding: 0 1rem;
+      background: $yellow;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background: $black;;
+        color: $yellow;
+      }
+    }
+  }
+}
+</style>
