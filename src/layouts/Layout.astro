@@ -1,6 +1,6 @@
 ---
 import CommonHeader from '../components/common/Header.astro';
-import EmailButton from '../components/common/EmailButton.astro';
+import AppSticky from '../components/common/AppSticky.astro';
 import CommonFooter from '../components/common/Footer.astro';
 import '../scss/reset.scss';
 import '../scss/variables.scss';
@@ -21,9 +21,9 @@ import '@fontsource/space-grotesk';
 		<CommonHeader/>
 		<main>
 			<slot />
-			<!-- <EmailButton /> -->
 		</main>
-		<CommonFooter />
+		<AppSticky />
+		<CommonFooter class="app__footer"/>
 	</body>
 </html>
 
@@ -37,6 +37,6 @@ import '@fontsource/space-grotesk';
 	}
 
 	main {
-  	padding: 2rem 2rem 0;;
+  	padding: 2rem 2rem 0;
 	}
 </style>

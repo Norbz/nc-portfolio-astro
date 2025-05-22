@@ -1,16 +1,17 @@
 ---
 import { Icon } from "astro-icon/components";
-const { tag, href, email, domain, text } = Astro.props;
+const { className } = Astro.props;
 
-const icon = "uil:envelope";
+const icon = "lucide:copy";
 ---
 
-<nav>
-    <button class="email-button">
+<button client.visible class={`email-button ${className}`} data-email="hello" data-domain="nicolaschesne.fr">
+    <div class="action">
+        <span>hello@nicolaschesne.fr</span>
         <Icon name={icon} size="24" />
-        <span client.visible>hello@nicolaschesne.fr</span>
-    </button>
-</nav>
+    </div>
+    <span class="result" client.visible>copied in clipboard !</span>
+</button>
 
 <script>
     const buttons = document.querySelectorAll(".email-button");
@@ -29,62 +30,69 @@ const icon = "uil:envelope";
 </script>
 
 <style lang="scss">
-    nav {
-        position: sticky;
-        bottom: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
+        
         .email-button {
-            display: flex;
-            appearance: none;
-            border: 0;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-            height: 60px;
-            width: 240px;
-            color: $yellow;
-            background: black;
+            position: relative;
+            font-family: $mainFont;
+            font-size: 1.2rem;
+            padding: 1rem;
+            box-shadow: 5px 5px #1b1b1b45;
+            border: $border;
+            @include set-color();
+            margin: auto;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             &:hover {
-                background: $black;
-                color: $yellow;
+                @include set-color(true);
             }
 
-            &:visited {
-                color: black !important;
+            &.inverted {
+                @include set-color(true);
+                box-shadow: none;
+                border: none;
+            }
+            &:hover.inverted {
+                @include set-color();
             }
 
-            &:after {
-                content: "";
-                width: 0;
+            .action {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                justify-content: center;
                 transition: all 0.2s ease-in-out;
             }
 
+            .result {
+                opacity: 0;
+                padding: 0 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--textColor);
+                color: var(--mainColor);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, 0);
+                width: max-content;
+                transition: all 0.2s ease-in-out;
+            }
+            
+
             &.copied {
-                color: $yellow;
-                background: $black;
-                &:after {
-                    content: "Email copied to the clipboard";
-                    // position: absolute;
-                    // top: 0;
-                    // left: 0;
-                    // right: 0;
-                    // bottom: 0;
-                    height: 100%;
-                    width: auto;
-                    padding: 0 1rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background-color: $black;
-                    color: $yellow;
+                color: var(--mainColor);
+                background: var(--textColor);
+
+                .action {
+                    opacity: 0;
+                    transform: translateY(-50%);
+                }
+                .result {
+                    opacity: 1;
+                    transform: translate(-50%, -50%);
                 }
             }
         }
-    }
+
 </style>

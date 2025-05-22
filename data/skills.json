@@ -1,0 +1,10 @@
+[
+  {"id":"lucide:code", "label":"HTML, CSS, Javascript"},
+  {"id":"lucide:file-json", "label":"Vue, Nuxt, Tailwind"},
+  {"id":"lucide:server", "label":"NodeJS, Express, Strapi, Directus"},
+  {"id":"lucide:cloud", "label":"Firebase, AWS, Github"},
+  {"id":"lucide:earth", "label":"Eco-friendly software development"},
+  {"id":"lucide:slack", "label":"Project Management"},
+  {"id":"lucide:search", "label":"Carbon Footprint Analysis"},
+  {"id":"lucide:chart-pie", "label":"Environmental Impact Reporting"}
+]

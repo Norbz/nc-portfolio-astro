@@ -15,9 +15,18 @@ const projects = defineCollection({
         image: image(),
         date: z.coerce.date(),
         tags: z.array(z.string()),
-        co2: z.number()
+        co2: z.number(),
+        url: z.string().optional(),
+        github: z.string().optional(),
+      })
+});
+
+const skills = defineCollection({
+  loader: file("data/skills.json"),
+  schema: z.object({
+        label:z.string(),
       })
 });
 
 // 4. Exporter un seul objet « collections » pour enregistrer votre/vos collection(s)
-export const collections = { projects };
+export const collections = { projects, skills };

@@ -3,11 +3,6 @@
   font-family: $mainFont;
 }
 
-@mixin secondaryFont {
-  font-family: $secondaryFont;
-  font-variation-settings: "BLED" 0, "SCAN" -33;
-}
-
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -18,5 +13,16 @@
   font-size: $min-size;
   @include desktop() {
     font-size: $max-size;
+  }
+}
+
+
+@mixin set-color($inverted:false){
+  @if $inverted {
+    color: var(--mainColor);
+    background-color: var(--textColor);
+  } @else {
+    color: var(--textColor);
+    background-color: var(--mainColor);
   }
 }

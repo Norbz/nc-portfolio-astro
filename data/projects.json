@@ -4,11 +4,13 @@
     "name": "Astro",
     "client": "Monnaie de paris",
     "agency": "La Chose",
-    "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
+    "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris Une collection née sous le signe des astres, développée pour la Monnaie de Paris Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
     "image": "../src/assets/imgs/projects/astro.png",
-    "date": "2023-10-01",
-    "tags": ["VueJS"],
-    "co2": 0.5
+    "date": "2025-10-01",
+    "tags": ["VueJS", "Custom tools"],
+    "co2": 0.5,
+    "url": "https://www.monnaiedeparis.fr/fr/actualites/2023/collection-astro",
+    "github": "https://www.monnaiedeparis.fr/fr/actualites/2023/collection-astro"
   },
   {
     "id": "dccomics",
@@ -17,9 +19,11 @@
     "agency": "La Chose",
     "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
     "image": "../src/assets/imgs/projects/astro.png",
-    "date": "2023-10-01",
+    "date": "2025-10-01",
     "tags": ["VueJS"],
-    "co2": 0.5
+    "co2": 0.5,
+    "url": "https://www.monnaiedeparis.fr/fr/actualites/2023/collection-astro",
+    "github": "https://www.monnaiedeparis.fr/fr/actualites/2023/collection-astro"
   },
   {
     "id": "astro2",
@@ -50,7 +54,7 @@
     "agency": "La Chose",
     "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
     "image": "../src/assets/imgs/projects/astro.png",
-    "date": "2023-10-01",
+    "date": "2024-10-01",
     "tags": ["VueJS"],
     "co2": 0.5
   },
@@ -61,7 +65,7 @@
     "agency": "La Chose",
     "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
     "image": "../src/assets/imgs/projects/astro.png",
-    "date": "2023-10-01",
+    "date": "2024-10-01",
     "tags": ["VueJS"],
     "co2": 0.5
   }

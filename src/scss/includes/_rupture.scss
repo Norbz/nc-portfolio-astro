@@ -1,6 +1,7 @@
 // Rupture-like Media Query Mixins
 // -------------------------------------
 @use 'sass:list';
+@use 'sass:meta';
 // These default breakpoints will only be used if not previously defined
 // in _config.scss or elsewhere
 
@@ -13,7 +14,7 @@ $desktop-cutoff: list.nth($scale, 5) !default;
 
 // Helper function to get value from scale
 @function get-scale-value($index) {
-  @if type-of($index) == 'number' and unitless($index) and $index < length($scale) {
+  @if meta.type-of($index) == 'number' and unitless($index) and $index < length($scale) {
     @return list.nth($scale, $index + 1); // +1 because SCSS is 1-indexed while Rupture scale is 0-indexed
   }
   @return $index;
@@ -58,9 +59,9 @@ $desktop-cutoff: list.nth($scale, 5) !default;
 
 // +at(measure)
 @mixin at($index) {
-  @if type-of($index) == 'number' and unitless($index) and $index < length($scale) - 1 {
-    $from: nth($scale, $index + 1);
-    $to: nth($scale, $index + 2);
+  @if meta.type-of($index) == 'number' and unitless($index) and $index < length($scale) - 1 {
+    $from: list.nth($scale, $index + 1);
+    $to: list.nth($scale, $index + 2);
     @media screen and (min-width: $from) and (max-width: ($to - 1px)) {
       @content;
     }

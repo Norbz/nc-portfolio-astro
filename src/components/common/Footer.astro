@@ -1,47 +1,107 @@
 ---
 import EmailButton from './EmailButton.astro';
+import Skills from '../skills/Layout.astro';
 import { Icon } from 'astro-icon/components';
 ---
+
+<div class="sup__footer">
+  <Skills />
+</div>
 <footer>
-  <address>hello@nicolaschesne.fr</address>
+  <!-- <EmailButton className="inverted"/> -->
+   <div class="name">
+     <p>Nicolas Chesné</p>
+     <p>Fullstack developer</p>
+     <p>Based in Paris</p>
+   </div>
   <aside>
-    <Icon name="lucide:sprout" size="14" />
-    <p>This page generates 0.01g co2eq</p>
+    <div>
+      <Icon name="lucide:sprout" size="16" />
+      <a href="https://www.websitecarbon.com/website/nicolaschesne-fr/">This page generates 0.03g co2eq</a>
+    </div>
+    <p class="copyright">© {new Date().getFullYear()} Nicolas Chesné</p>
   </aside>
 </footer>
 
 <style lang="scss">
+  .sup__footer {
+    padding: 0 2rem;
+    margin-top: var(--headerHeight);
+  }
   footer {
     display: flex;
-    justify-content: space-between;
-    color: $yellow;
+    color: var(--mainColor);
+    background-color: var(--textColor);
+    z-index: 100;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    background-color: black;
-    padding: 4rem 2rem 2rem;
+    padding: 4rem 2rem 2rem;;
+    gap: 2rem;
 
-     @include mobile() {
+    .name {
+      display: flex;
       flex-direction: column;
-      padding: 2rem 2rem 0.2rem;
-     }
-
-    address {
+      align-items: center;
       text-align: center;
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      
+      p {
+        font-size: 3rem;
+        margin: 0;
+        line-height: 1.1;
+        
+        &:last-child {
+          font-size: 2rem;
+        }
 
-      @include mobile() {
-        font-size: 1.2rem;
+        @include below(3) {
+          font-size: 2.5rem;
+          
+          &:last-child {
+            font-size: 1.5rem;
+          }
+        }
       }
+    }
+
+    p {
+      font-size: 3rem;
+      margin: 0;
+      text-align: center;
+    }
+
+    .email {
+      justify-self: center;
+      align-items: center;
+      @include set-color(true);
     }
 
     aside {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 1rem;
-      p {
-        font-size: 0.8rem;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 2rem;
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
+      // margin-bottom: 1rem;
+      p, a {
+        font-size: 0.8rem;
+        color: var(--mainColor);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+    
+    .copyright {
+      justify-self: center;
+      font-size: 0.8rem;
+      text-align: center;
     }
   }
 </style>

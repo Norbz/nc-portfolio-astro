@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components'
 ---
 <div>
-  <p class="inverted"><Icon name="lucide:hand-metal" />Hi, I am</p>
+  <p class="hello inverted"><Icon name="lucide:message-circle" />Hi, I am</p>
   <h1><span>Nicolas Chesné</span><span>a French <Icon class="food" name="lucide:croissant" /></span><span>fullstack freelancer</span></h1>
 </div>
 
@@ -11,18 +11,16 @@ div {
   margin: 3rem auto 5rem;
   max-width: 1400px;
   p {
-    margin: 1rem 0;
+    margin: 0.6rem 0;
 
-    &.inverted {
-      color: $yellow;
-      background-color: $black;
+    &.hello {
       padding: 0.5rem 1rem;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      width: fit-content
+      width: fit-content;
     }
   }
   h1 {
@@ -47,14 +45,14 @@ div {
     }
 
     .food {
-      animation: 2s giggle infinite;
+      animation: 1.8s giggle infinite;
 
       @keyframes giggle {
         0% {
           transform: rotate(0deg);
         }
         50% {
-          transform: rotate(10deg);
+          transform: rotate(18deg);
         }
         100% {
           transform: rotate(0deg);

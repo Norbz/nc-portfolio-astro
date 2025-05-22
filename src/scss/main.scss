@@ -5,8 +5,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: $mainFont;
-  color: $black;
-  background: $yellow;
+  color: var(--textColor);
+  background: var(--mainColor);
   
 }
 
@@ -28,20 +28,19 @@ h1 {
     font-size: 6.8rem;
   }
 }
-h2 {
-  font-size: 2.5rem;
+h2, h3, h4 {
   margin: 0;
   padding: 0;
+  line-height: 1;
+}
+h2 {
+  font-size: 2.5rem;
 }
 h3 {
   font-size: 2rem;
-  margin: 0;
-  padding: 0;
 }
 h4 {
-  font-size: 1.2rem;
-  margin: 0;
-  padding: 0;
+  font-size: 1.5rem;
 }
 
 p, ul, li, a {
@@ -54,4 +53,12 @@ section {
   margin: 8rem auto;
   max-width: 1920px;
   padding: 0;
+
+  &:last-child {
+    margin-bottom: 6rem;
+  }
+}
+
+.inverted {
+  @include set-color(true);
 }

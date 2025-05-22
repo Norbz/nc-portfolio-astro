@@ -4,14 +4,13 @@ import { Icon } from 'astro-icon/components'
 const { project } = Astro.props;
 ---
 <li>
+  <img
+    class="image"
+    loading="lazy"
+    src={project.image.src} alt={`A Screenshot of the ${project.name} project`} />
   <article class="project-card">
-    <img
-      class="image"
-      loading="lazy"
-      src={project.image.src} alt={`A Screenshot of the ${project.name} project`} />
-    <span><Icon name="lucide:sprout" size="16"/>{ project.co2 }g co2eq</span>
-    <h3>{project.name}</h3>
-    {project.agency && <h4>{project.agency}</h4>}
+    <h3>{project.name} <span class="co2"><Icon name="lucide:sprout" size="16"/>{ project.co2 }g co2eq</span></h3>
+    {project.agency && <p class="agency"><Icon name="lucide:heart-handshake" />{project.agency}</p>}
     <p>{ project.description }</p>
     <ul>
       {project.tags && project.tags.map((tag: String) => (
@@ -20,29 +19,58 @@ const { project } = Astro.props;
         </li>
       ))}
     </ul>
+  {(project.url || project.github) && 
+    <nav class="links">
+      {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" class="inverted">View <Icon name="lucide:eye" size="16" /></a>}
+      {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">Sources <Icon name="lucide:github" size="16" /></a>}
+    </nav>
+  }
   </article>
 </li>
 <style lang="scss">
-li {
+  li {
+  $bp: calc(720px + ($layoutMargin * 5));
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: center;
+
+  @include below($bp) {
+    flex-direction: column;
+    flex-shrink: 1;
+  }
+
+  .image {
+    mix-blend-mode: multiply;
+    margin: 0;
+    width: 100%;
+    max-width: 360px;
+    flex-shrink: 1;
+    //border: $border;
+  }
   article {
     position: relative;
-    max-width: 360px;
+    max-width: 500px;
+    min-width: 360px;
     display: flex;
     flex-direction: column;
     width: 100%;
-    .image {
-      mix-blend-mode: multiply;
-      margin: 0;
-      width: 100%;
-      //border: $border;
+    height: 100%;
+
+    @include below($bp) {
+      max-width: 360px;
+      min-width: 0;
     }
 
-    span {
-      position: absolute;
-      top: 200px;
-      right: 1px;
-      background: black;
-      color: $yellow;
+    h3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: $border;
+      margin-bottom: 0.8rem;
+    }
+    .co2 {
       padding: 0.2rem;
       margin:0;
       font-size: 0.8rem;
@@ -51,21 +79,57 @@ li {
       align-items: center;
       justify-content: flex-start;
       flex-direction: row-reverse;
-      margin-bottom: 5px;
       gap: 0.5rem;
     }
+
+    .agency {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;;
+    }
+
+    p {
+      margin: 0 0 0.5rem;
+      text-overflow: ellipsis;
+    }
+
 
     ul {
       display: flex;
       flex-wrap: wrap;
       margin-top: 0.5rem;
-      gap: 0.8rem;
+      gap: 0.3rem;
+      margin-bottom: 0.5rem;
+
+      // position: absolute;
+      // bottom: 0;
     }
     li {
+        background: var(--textColor);
+        color: var(--mainColor);
         padding: 0.2rem;
-        background: black;
-        color: $yellow;
         font-size: 0.8rem;
+      }
+    }
+    nav.links {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+      margin-top: auto;
+      a {
+        @include set-color(false);
+        border: $border;
+        padding: 0.2rem;
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 0.5rem;
+        &:hover {
+          @include set-color(true);
+        }
       }
     }
   }

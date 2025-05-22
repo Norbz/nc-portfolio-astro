@@ -1,64 +1,29 @@
 ---
 import {Icon} from 'astro-icon/components'
+import { getCollection } from 'astro:content';
+
+const skills = await getCollection('skills');
 ---
 
 <div>
     <ul>
-        <li>
-            <Icon name="lucide:code" />HTML, CSS, Javascript
-        </li>
-        <li>
-            <Icon name="lucide:file-json" />Vue, Nuxt, Tailwind
-        </li>
-        <li>
-            <Icon name="lucide:server" />NodeJS, Express, Strapi, Directus
-        </li>
-        <li>
-            <Icon name="lucide:cloud" />Firebase, AWS, Github
-        </li>
-        <li>
-            <Icon name="lucide:earth" />Eco-friendly software development
-        </li>
-        <li>
-            <Icon name="lucide:slack" />Project Management
-        </li>
-        <li>
-            <Icon name="lucide:search" />Carbon Footprint Analysis
-        </li>
-        <li>
-            <Icon name="lucide:chart-pie" />Environmental Impact Reporting
-        </li>
+        {skills.map(skill => (
+            <li class="skill">
+                <Icon name={skill.id}/>{skill.data.label}
+            </li>
+        ))}
     </ul>
-    <ul>
-        <li>
-            <Icon name="lucide:code" />HTML, CSS, Javascript
-        </li>
-        <li>
-            <Icon name="lucide:file-json" />Vue, Nuxt, Tailwind
-        </li>
-        <li>
-            <Icon name="lucide:server" />NodeJS, Express, Strapi, Directus
-        </li>
-        <li>
-            <Icon name="lucide:cloud" />Firebase, AWS, Github
-        </li>
-        <li>
-            <Icon name="lucide:earth" />Eco-friendly software development
-        </li>
-        <li>
-            <Icon name="lucide:slack" />Project Management
-        </li>
-        <li>
-            <Icon name="lucide:search" />Carbon Footprint Analysis
-        </li>
-        <li>
-            <Icon name="lucide:chart-pie" />Environmental Impact Reporting
-        </li>
+      <ul>
+        {skills.map(skill => (
+            <li class="skill">
+                <Icon name={skill.id}/>{skill.data.label}
+            </li>
+        ))}
     </ul>
 </div>
 <style lang="scss">
     div {
-        margin: -2rem;
+        margin: 0 -2rem;
         display: flex;
         overflow: clip;
         ul {
@@ -67,8 +32,8 @@ import {Icon} from 'astro-icon/components'
             display: flex;
             flex-shrink: 0;
             width: max-content;
-            background: black;
-            color: $yellow;
+            background: var(--textColor);
+            color: var(--mainColor);
             animation: slide-left var(--duration, 10s) linear infinite;
             animation-delay: calc(-1 * var(--duration, 10s));
             gap: 0.2rem;

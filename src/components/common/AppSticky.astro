@@ -1,0 +1,42 @@
+---
+import EmailButton from './EmailButton.astro';
+---
+<nav class="app__sticky">
+  <EmailButton class="" />
+</nav>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    const body = document.body;
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        body.classList.add('footer__visible');
+      } else {
+        body.classList.remove('footer__visible');
+      }
+    });
+  });
+  const footer = document.querySelector('footer');
+  if (footer) {
+    // obs.observe(footer);
+  }
+
+</script>
+
+<style lang="scss">
+  .app__sticky {
+    position: sticky;
+    bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.2s ease-in-out;
+  }
+</style>
+
+<style lang="scss" is:global>
+  .footer__visible .app__sticky {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
