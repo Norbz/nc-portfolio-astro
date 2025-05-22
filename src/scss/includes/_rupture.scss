@@ -36,7 +36,7 @@ $desktop-cutoff: list.nth($scale, 5) !default;
 // +below(measure)
 @mixin below($measure) {
   $breakpoint: get-scale-value($measure);
-  @media screen and (max-width: ($breakpoint - 1px)) {
+  @media screen and (max-width: calc($breakpoint - 1px)) {
     @content;
   }
 }

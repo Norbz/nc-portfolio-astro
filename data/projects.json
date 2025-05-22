@@ -9,5 +9,60 @@
     "date": "2023-10-01",
     "tags": ["VueJS"],
     "co2": 0.5
+  },
+  {
+    "id": "dccomics",
+    "name": "DC Comics",
+    "client": "Monnaie de paris",
+    "agency": "La Chose",
+    "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
+    "image": "../src/assets/imgs/projects/astro.png",
+    "date": "2023-10-01",
+    "tags": ["VueJS"],
+    "co2": 0.5
+  },
+  {
+    "id": "astro2",
+    "name": "Astro",
+    "client": "Monnaie de paris",
+    "agency": "La Chose",
+    "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
+    "image": "../src/assets/imgs/projects/astro.png",
+    "date": "2023-10-01",
+    "tags": ["VueJS"],
+    "co2": 0.5
+  },
+  {
+    "id": "dccomics2",
+    "name": "DC Comics",
+    "client": "Monnaie de paris",
+    "agency": "La Chose",
+    "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
+    "image": "../src/assets/imgs/projects/astro.png",
+    "date": "2023-10-01",
+    "tags": ["VueJS"],
+    "co2": 0.5
+  },
+  {
+    "id": "astro3",
+    "name": "Astro",
+    "client": "Monnaie de paris",
+    "agency": "La Chose",
+    "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
+    "image": "../src/assets/imgs/projects/astro.png",
+    "date": "2023-10-01",
+    "tags": ["VueJS"],
+    "co2": 0.5
+  },
+  {
+    "id": "dccomics3",
+    "name": "DC Comics",
+    "client": "Monnaie de paris",
+    "agency": "La Chose",
+    "description": "Une collection née sous le signe des astres, développée pour la Monnaie de Paris",
+    "image": "../src/assets/imgs/projects/astro.png",
+    "date": "2023-10-01",
+    "tags": ["VueJS"],
+    "co2": 0.5
   }
 ]

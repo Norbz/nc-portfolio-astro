@@ -14,9 +14,13 @@ const { icon } = Astro.props;
 <style lang="scss">
 li {
   min-width: 300px;
-  width: 300px;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  
+  @include above(calc(600px + ($layoutMargin * 3))) {
+    width: 300px;
+  }
   
   .icon {
     align-self: flex-end;

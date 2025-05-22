@@ -7,21 +7,23 @@ const { project } = Astro.props;
   <article class="project-card">
     <img
       class="image"
+      loading="lazy"
       src={project.image.src} alt={`A Screenshot of the ${project.name} project`} />
     <span><Icon name="lucide:sprout" size="16"/>{ project.co2 }g co2eq</span>
     <h3>{project.name}</h3>
-    <!-- <!-- <h4 v-if="project.agency">{ project.agency }</h4> -->
+    {project.agency && <h4>{project.agency}</h4>}
     <p>{ project.description }</p>
-    <!-- <ul>
-      <!-- <li v-for="(tag, index) in project.tags" :key="index">
-        { tag }
-      </li>
-    </ul> -->
+    <ul>
+      {project.tags && project.tags.map((tag: String) => (
+        <li>
+          {tag}
+        </li>
+      ))}
+    </ul>
   </article>
 </li>
 <style lang="scss">
 li {
-
   article {
     position: relative;
     max-width: 360px;
@@ -32,12 +34,13 @@ li {
       mix-blend-mode: multiply;
       margin: 0;
       width: 100%;
+      //border: $border;
     }
 
     span {
-      // position: absolute;
-      // top: 200px;
-      // right: 1px;
+      position: absolute;
+      top: 200px;
+      right: 1px;
       background: black;
       color: $yellow;
       padding: 0.2rem;
@@ -62,6 +65,7 @@ li {
         padding: 0.2rem;
         background: black;
         color: $yellow;
+        font-size: 0.8rem;
       }
     }
   }

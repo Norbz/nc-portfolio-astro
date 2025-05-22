@@ -1,13 +1,13 @@
 // Global styles
 // @use "reset" as *; // Import the reset styles
 
-
 body {
   margin: 0;
   padding: 0;
   font-family: $mainFont;
   color: $black;
   background: $yellow;
+  
 }
 
 // You can use the rupture mixins here too
@@ -39,13 +39,13 @@ h3 {
   padding: 0;
 }
 h4 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin: 0;
   padding: 0;
 }
 
 p, ul, li, a {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin: 0;
   padding: 0;
 }
@@ -54,11 +54,4 @@ section {
   margin: 8rem auto;
   max-width: 1920px;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 4rem;
-
-  >:last-child {
-    justify-self: flex-end;
-  }
 }

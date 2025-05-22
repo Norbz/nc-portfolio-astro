@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components'
 ---
 <div>
-  <p class="inverted">Hi, I am</p>
+  <p class="inverted"><Icon name="lucide:hand-metal" />Hi, I am</p>
   <h1><span>Nicolas Chesné</span><span>a French <Icon class="food" name="lucide:croissant" /></span><span>fullstack freelancer</span></h1>
 </div>
 
@@ -17,7 +17,12 @@ div {
       color: $yellow;
       background-color: $black;
       padding: 0.5rem 1rem;
-      display: inline;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: fit-content
     }
   }
   h1 {
