@@ -7,6 +7,8 @@ const { project } = Astro.props;
   <img
     class="image"
     loading="lazy"
+    width="360"
+    height="240"
     src={project.image.src} alt={`A Screenshot of the ${project.name} project`} />
   <article class="project-card">
     <h3>{project.name} <span class="co2"><Icon name="lucide:sprout" size="16"/>{ project.co2 }g co2eq</span></h3>
