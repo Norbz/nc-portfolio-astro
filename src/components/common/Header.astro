@@ -72,13 +72,13 @@ import { Icon } from "astro-icon/components";
                 align-items: center;
                 padding: 0;
                 min-width: 60px;
-                color: black;
-                background: $yellow;
+                color: var(--textColor);
+                background: var(--mainColor);
                 cursor: pointer;
                 transition: all 0.2s ease-in-out;
                 &:hover {
-                    background: $black;
-                    color: $yellow;
+                    background: var(--textColor);
+                    color: var(--mainColor);
                 }
 
                 &:visited {
@@ -94,8 +94,8 @@ import { Icon } from "astro-icon/components";
               }
 
               &.copied {
-                color: $yellow;
-                background: $black;
+                color: var(--mainColor);
+                background: var(--textColor);
                 &:after {
                     content: "Email copied to the clipboard";
                     // position: absolute;
@@ -109,8 +109,8 @@ import { Icon } from "astro-icon/components";
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    background-color: $black;
-                    color: $yellow;
+                    background-color: var(--textColor);
+                    color: var(--mainColor);
                 }
               }
             }
