@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.1](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.0.0...nc-portfolio-astro-v1.0.1) (2025-06-10)
+
+
+### 💅 Enhancements
+
+* Adding security headers (in meta since GH pages doesn't support custom headers) ([0efe5c5](https://github.com/Norbz/nc-portfolio-astro/commit/0efe5c5ec38d1d2345a16804e00824b861c8a46a))
+
+
+### 📚 Documentation
+
+* Adding Readme ([2256d76](https://github.com/Norbz/nc-portfolio-astro/commit/2256d76ff431dfa65c355e3f3be287069f77a558))
+
+
+### ⚙️ Chores
+
+* Updated Astro ([c352904](https://github.com/Norbz/nc-portfolio-astro/commit/c352904dd4d9a0ffd3b761460b5ef5f8b99242d9))
+
 ## [1.0.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v0.0.1...nc-portfolio-astro-v1.0.0) (2025-06-10)
 
 
