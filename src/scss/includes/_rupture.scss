@@ -2,6 +2,7 @@
 // -------------------------------------
 @use 'sass:list';
 @use 'sass:meta';
+@use 'sass:math';
 // These default breakpoints will only be used if not previously defined
 // in _config.scss or elsewhere
 
@@ -14,7 +15,7 @@ $desktop-cutoff: list.nth($scale, 5) !default;
 
 // Helper function to get value from scale
 @function get-scale-value($index) {
-  @if meta.type-of($index) == 'number' and unitless($index) and $index < length($scale) {
+  @if meta.type-of($index) == 'number' and math.is-unitless($index) and $index < list.length($scale) {
     @return list.nth($scale, $index + 1); // +1 because SCSS is 1-indexed while Rupture scale is 0-indexed
   }
   @return $index;
@@ -59,7 +60,7 @@ $desktop-cutoff: list.nth($scale, 5) !default;
 
 // +at(measure)
 @mixin at($index) {
-  @if meta.type-of($index) == 'number' and unitless($index) and $index < length($scale) - 1 {
+  @if meta.type-of($index) == 'number' and math.is-unitless($index) and $index < list.length($scale) - 1 {
     $from: list.nth($scale, $index + 1);
     $to: list.nth($scale, $index + 2);
     @media screen and (min-width: $from) and (max-width: ($to - 1px)) {
