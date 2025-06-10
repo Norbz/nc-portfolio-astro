@@ -1,48 +1,36 @@
-# Astro Starter Kit: Basics
+# Nicolas Chesné - Portfolio
 
-```sh
-npm create astro@latest -- --template basics
-```
+Hi.
+This is the source code of my [portfolio](https://nicolaschesne.fr), built with [Astro](https://astro.build/).
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Who am I?
+I'm Nicolas Chesné, a web developer with a passion for creating efficient and user-friendly web applications. I specialize in modern web technologies and frameworks, and I'm always eager to learn and explore new tools.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+My favorite stack includes VueJS and NuxtJS, combined with headless frameworks such as Strapi or Directus, but most importantly, I love choosing the right tool for the job, whether it's a static site generator, a headless CMS, or a full-fledged framework.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+For every project I work on, I strive to deliver high-quality code, maintainable architecture, and a seamless user experience.
+For the last 3 years, I have also been working on reducing the carbon footprint of my projects, and I am always looking for ways to improve the sustainability of my work.
 
-## 🚀 Project Structure
+## What is this repository?
+This repository contains the source code of my personal [portfolio](https://nicolaschesne.fr), which serves as a showcase of my work and skills as a web developer.
 
-Inside of your Astro project, you'll see the following folders and files:
+## How is it built?
+As I was chasing the goal of having the most sustainable, most lightweight portfolio I could get, I ditched by beloved Nuxt stack for this project and decided to build it with Astro and pure vanilla JS.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+For the images, I used a custom bayer algorythim to convert them to a pixelated format, which reduces their size and improves loading times. They are then displayed with a multiply blend mode to make them blend with the solid background color.
+This idea came from [Low Tech Magazine](https://solar.lowtechmagazine.com/about/the-solar-website/), although I ported the algorithm to nodeJS as I didn't want to use a python script just for this.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+The result is a fast, lightweight, and efficient portfolio that showcases my work without unnecessary bloat, that generates only 0.01g of CO2eq according to the [Sustainable Web Design model](https://sustainablewebdesign.org/estimating-digital-emissions/) 🌱.
 
-## 🧞 Commands
+I believe it showcases that sustainable webdesign doesn't have to be a compromise on quality or user experience.
 
-All commands are run from the root of the project, from a terminal:
+> 💡 This portfolio, once compiled, only weight around 70kB (depending on the latests projects), which means I could store it 20 times on a single floppy disk! 
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## How is it deployed?
+I am using [Release Please](https://github.com/googleapis/release-please-action) to keep tracks of [releases](/releases). Once a release is created, the code is automatically deployed to GitHub Pages using GitHub Actions.
 
-## 👀 Want to learn more?
+Sadly, Github pages isn't 100% powered by renewable energy so I may change the hosting solution in the future.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 👀 Want to get in touch?
+
+Feel free to reach out to me via my [portfolio](https://nicolaschesne.fr), or even by opening an issue here, because why not?
