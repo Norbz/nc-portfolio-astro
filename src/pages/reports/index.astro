@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+const hardware = await getCollection('hardware');
+const reports = await getCollection('reports');
+---
+<Layout>
+  <h1>Reports</h1>
+  
+</Layout>

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "mbp",
+    "name": "MacBook Pro 14 inch M2 Max.",
+    "description": "My main computer.",
+    "icon": "desktop_mac",
+    "purchaseDate": "2023-07-01",
+    "wattage": 60,
+    "lifecycle_co2": 312,
+    "lifecycle_lifespan": 4,
+    "emboddied_co2_percent": 0.8,
+    "estimated_lifespan": 5,
+    "source": "https://www.apple.com/environment/pdf/products/notebooks/14-inch_MacBook_Pro_PER_Jan2023.pdf",
+    "comments": "Apple uses a 4-year lifespan for its life cycle analysis, adjusted to 5 years for my usage."
+  }
+]

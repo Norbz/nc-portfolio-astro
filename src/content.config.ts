@@ -1,10 +1,8 @@
-// 1. Importer des utilitaires depuis `astro:content`
 import { defineCollection, z } from 'astro:content';
-
-// 2. Importer un ou plusieurs chargeurs
 import { glob, file } from 'astro/loaders';
 
-// 3. Définir votre/vos collection(s)
+
+// Projects displayed on the portfolio's page
 const projects = defineCollection({
   loader: file("data/projects.json"),
   schema: ({ image }) => z.object({
@@ -21,6 +19,7 @@ const projects = defineCollection({
       })
 });
 
+// simple list of skills to create the never ending scroll of skills
 const skills = defineCollection({
   loader: file("data/skills.json"),
   schema: z.object({
@@ -28,5 +27,35 @@ const skills = defineCollection({
       })
 });
 
-// 4. Exporter un seul objet « collections » pour enregistrer votre/vos collection(s)
-export const collections = { projects, skills };
+
+// A list of the hardware used to produce my projects, detailing their lifecycle CO2 and lifespan
+const hardware = defineCollection({
+  loader: file("data/hardware.json"),
+  schema: z.object({
+        name:z.string(),
+        description:z.string(),
+        icon:z.string(),
+        purchaseDate:z.coerce.date(),
+        wattage:z.number().optional(),
+        lifecycle_co2:z.number(),
+        lifecycle_lifespan:z.number(),
+        emboddied_co2_percent:z.number(),
+        estimated_lifespan:z.number().optional(),
+        source:z.string().optional(),
+        comments:z.string().optional()
+      })
+});
+
+// reports holds the CO2 reports of my productions, including "emboddied" CO2 based on my hardware
+const reports = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: "data/reports" }),
+  schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        date: z.coerce.date(),
+        tags: z.array(z.string()),
+      })
+});
+
+// Export the collections to be used in the Astro project
+export const collections = { projects, skills, hardware, reports };
