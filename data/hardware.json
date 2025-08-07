@@ -3,7 +3,7 @@
     "id": "mbp",
     "name": "MacBook Pro 14 inch M2 Max.",
     "description": "My main computer.",
-    "icon": "desktop_mac",
+    "icon": "lucide:laptop",
     "purchaseDate": "2023-07-01",
     "wattage": 60,
     "lifecycle_co2": 312,

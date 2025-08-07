@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import HardwareCard from './HardwareCard.astro';
+
+// Get all hardware devices
+const hardwareList = await getCollection('hardware');
+
+// Helper to calculate duration (years since purchase)
+const duration = Astro.props;
+---
+<section class="hardware-list">
+  {hardwareList.map(device => (
+    <HardwareCard hardware={device.data} duration={duration} />
+  ))}
+</section>
+<style lang="scss">
+.hardware-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+</style>

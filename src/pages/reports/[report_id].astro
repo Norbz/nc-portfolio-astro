@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import Hero from '../../components/reports/Hero.astro';
 import TwoColumnsSection from '../../components/common/TwoColumnsSection.astro';
+import HardwareReport from '../../components/reports/hardware/HardwareReport.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 const reports = await getCollection('reports');
 
@@ -23,12 +24,6 @@ const { Content, headings } = await render(report);
 console.log(Content, headings);
 ---
 <Layout>
-  <Hero>{report.data.title}</Hero>
-  <TwoColumnsSection>
-    <Fragment slot="title">About this report</Fragment>
-    <p>This report aims to get a rough idea of the overall environmental impacts of a project on 2 metrics, GHG emissions and water consumption, taking embodied energy into account.</p>
-    <p>Embodied energy is the energy used for production, and is different than the energy used for exploitation.</p>
-    <p>This report will outline the hardware and services used for production and try to be as accurate as possible.</p>
-    <p>For exploitation, different scores from different tools will be discussed.</p>
-  </TwoColumnsSection>
+  <Content></Content>
+  <HardwareReport></HardwareReport>
 </Layout>
