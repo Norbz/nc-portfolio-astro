@@ -1,5 +1,17 @@
 [
   {
+    "id": "partage",
+    "name": "Partage.org",
+    "client": "Partage",
+    "agency": "Strike",
+    "description": "An updated corporate website for the NGO Partage revealing their new visual identity with a strong focus on carbon footprint reduction and performances.",
+    "image": "../src/assets/imgs/projects/partage.png",
+    "date": "2025-09-01",
+    "tags": ["Tech Lead", "Impact audits", "CI/CD", "Wordpress"],
+    "co2": 0.2,
+    "url": "https://www.monnaiedeparis.fr/fr/collection-astro#/"
+  },
+  {
     "id": "astro",
     "name": "Astro",
     "client": "Monnaie de paris",
