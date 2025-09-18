@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.0.1...nc-portfolio-astro-v1.1.0) (2025-09-18)
+
+
+### 🚀 New Features
+
+* Adding CV file ([12f241b](https://github.com/Norbz/nc-portfolio-astro/commit/12f241b066fcbef2c3fdaf65c4f625851edfe41b))
+
+
+### ⚙️ Chores
+
+* Upgrading Astro deps ([0613a2d](https://github.com/Norbz/nc-portfolio-astro/commit/0613a2df7372d994fb26589d4546aedda9450abe))
+
 ## [1.0.1](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.0.0...nc-portfolio-astro-v1.0.1) (2025-09-17)
 
 
