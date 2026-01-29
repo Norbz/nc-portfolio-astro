@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.1.0...nc-portfolio-astro-v1.2.0) (2026-01-29)
+
+
+### 🚀 New Features
+
+* Adding late 2025 projects ([8e8b469](https://github.com/Norbz/nc-portfolio-astro/commit/8e8b469811e5cc6451bd72b76e55275b5b1b3a35))
+
 ## [1.1.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.0.1...nc-portfolio-astro-v1.1.0) (2025-09-18)
 
 
