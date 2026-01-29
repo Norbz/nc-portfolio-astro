@@ -1,5 +1,17 @@
 [
   {
+    "id": "genie",
+    "name": "Le Génie Français",
+    "client": "Monnaie de Paris",
+    "agency": "La Chose",
+    "description": "French Genious, using the WebGL player made for la Monnaie to showcase the coins",
+    "image": "../src/assets/imgs/projects/genie.png",
+    "date": "2026-01-27",
+    "tags": ["VueJS", "Custom tools"],
+    "co2": 0.7,
+    "url": "https://www.monnaiedeparis.fr/le-genie-francais"
+  },
+  {
     "id": "partage",
     "name": "Partage.org",
     "client": "Partage",
@@ -9,12 +21,24 @@
     "date": "2025-09-01",
     "tags": ["Tech Lead", "Impact audits", "CI/CD", "Wordpress"],
     "co2": 0.2,
-    "url": "https://www/partage.org"
+    "url": "https://www.partage.org"
+  },
+  {
+    "id": "branche-archi-social",
+    "name": "Branche Architecture - Prestations Sociales",
+    "client": "Branche Architecture",
+    "agency": "Strike",
+    "description": "Small flexible module to wrap administrative complexity to find the right form to request your social benefits.",
+    "image": "../src/assets/imgs/projects/branche-archi.png",
+    "date": "2025-06-26",
+    "tags": ["Wordpress", "jQuery", "PHP"],
+    "co2": 0.7,
+    "url": "https://www.branche-architecture.fr/action-sociale/nos-solutions/"
   },
   {
     "id": "astro",
     "name": "Astro",
-    "client": "Monnaie de paris",
+    "client": "Monnaie de Paris",
     "agency": "La Chose",
     "description": "A collection born under the stars... The webpage is optimized but the magento's theme isn't",
     "image": "../src/assets/imgs/projects/astro.png",
@@ -26,7 +50,7 @@
   {
     "id": "dccomics",
     "name": "DC Comics",
-    "client": "Monnaie de paris",
+    "client": "Monnaie de Paris",
     "agency": "La Chose",
     "description": "DC Comics heroes collection. The webpage is optimized but the magento's theme isn't",
     "image": "../src/assets/imgs/projects/dccomics.png",
