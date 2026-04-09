@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.2.0...nc-portfolio-astro-v1.3.0) (2026-04-09)
+
+
+### 🚀 New Features
+
+* Adding base hardware list ([08f8294](https://github.com/Norbz/nc-portfolio-astro/commit/08f8294d559405e9d319420b2a917183eb90426e))
+* Adding report pages with hardware, services, and use energy sections ! 🌱 ([08f8294](https://github.com/Norbz/nc-portfolio-astro/commit/08f8294d559405e9d319420b2a917183eb90426e))
+
 ## [1.2.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.1.0...nc-portfolio-astro-v1.2.0) (2026-01-29)
 
 
