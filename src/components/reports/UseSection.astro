@@ -1,0 +1,221 @@
+---
+import { Icon } from "astro-icon/components";
+import TwoColumnsSection from "../common/TwoColumnsSection.astro";
+import MetricCard from "./MetricCard.astro";
+
+interface UseMetrics {
+    page_weight_kb?: number;
+    co2_per_view_g?: number;
+    requests?: number;
+    performance_score?: number;
+    notes?: string;
+}
+
+interface Props {
+    metrics?: UseMetrics;
+}
+const { metrics } = Astro.props;
+
+const hasMetrics =
+    metrics &&
+    Object.keys(metrics).some(
+        (k) => k !== "notes" && metrics[k as keyof UseMetrics] !== undefined,
+    );
+---
+
+<TwoColumnsSection titleLevel={2}>
+    <span slot="title">Use<br />energy</span>
+
+    <div class="use-content">
+        {
+            hasMetrics && (
+                <div class="metrics-grid">
+                    {metrics?.co2_per_view_g !== undefined && (
+                        <div class="metric-featured">
+                            <MetricCard
+                                label="CO₂ per page view"
+                                value={metrics.co2_per_view_g}
+                                unit="g"
+                                icon="lucide:wind"
+                                accent={true}
+                            />
+                        </div>
+                    )}
+                    <div class="metrics-details">
+                        {metrics?.page_weight_kb !== undefined && (
+                            <MetricCard
+                                label="Page weight"
+                                value={metrics.page_weight_kb}
+                                unit="kB"
+                                icon="lucide:weight"
+                            />
+                        )}
+                        {metrics?.requests !== undefined && (
+                            <MetricCard
+                                label="HTTP requests"
+                                value={metrics.requests}
+                                icon="lucide:network"
+                            />
+                        )}
+                        {metrics?.performance_score !== undefined && (
+                            <MetricCard
+                                label="Performance score"
+                                value={metrics.performance_score}
+                                unit="/ 100"
+                                icon="lucide:gauge"
+                            />
+                        )}
+                        {metrics?.dom_elements !== undefined && (
+                            <MetricCard
+                                label="DOM elements"
+                                value={metrics.dom_elements}
+                                icon="lucide:code"
+                            />
+                        )}
+                    </div>
+                </div>
+            )
+        }
+
+        {
+            metrics?.notes && (
+                <div class="notes-block">
+                    <h3>Context &amp; constraints</h3>
+                    <p>{metrics.notes}</p>
+                </div>
+            )
+        }
+
+        <div class="narrative"><slot /></div>
+
+        {
+            metrics?.websitecarbon_url && (
+                <div class="carbon-badge-block">
+                    <p class="badge-label">
+                        <Icon name="lucide:leaf" size="16" />
+                        Independent carbon check
+                    </p>
+                    <a
+                        href={metrics.websitecarbon_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="carbon-link"
+                    >
+                        Check on websitecarbon.com{" "}
+                        <Icon name="lucide:external-link" size="14" />
+                    </a>
+                </div>
+            )
+        }
+    </div>
+</TwoColumnsSection>
+
+<style lang="scss">
+    .use-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .metrics-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .metric-featured {
+        :global(.metric-card) {
+            box-sizing: border-box;
+        }
+    }
+
+    .metrics-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .notes-block {
+        border-left: 4px solid var(--textColor);
+        padding-left: 1.5rem;
+
+        h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+    }
+
+    .narrative {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        :global(h2),
+        :global(h3) {
+            font-size: 1.4rem;
+            margin-top: 0.5rem;
+        }
+
+        :global(p) {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        :global(ul),
+        :global(ol) {
+            padding-left: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        :global(ul) {
+            list-style: disc;
+        }
+        :global(ol) {
+            list-style: decimal;
+        }
+
+        :global(li) {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+    }
+
+    .carbon-badge-block {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .badge-label {
+            font-size: 0.85rem;
+            opacity: 0.6;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin: 0;
+        }
+
+        .carbon-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+            color: var(--textColor);
+            border: $border;
+            box-shadow: $shadow;
+            padding: 0.4rem 1rem;
+            width: fit-content;
+            transition: box-shadow 0.15s ease;
+
+            &:hover {
+                box-shadow: none;
+            }
+        }
+    }
+</style>

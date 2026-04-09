@@ -1,7 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components'
 
-const { project } = Astro.props;
+const { project, reportId, reportCo2 } = Astro.props;
+const displayCo2 = reportCo2 !== undefined ? `${reportCo2}g` : `${project.co2}g`;
 ---
 <li>
   <img
@@ -11,7 +12,10 @@ const { project } = Astro.props;
     height="240"
     src={project.image.src} alt={`A Screenshot of the ${project.name} project`} />
   <article class="project-card">
-    <h3>{project.name} <span class="co2"><Icon name="lucide:sprout" size="16"/>{ project.co2 }g co2eq</span></h3>
+    <h3>{project.name} {reportId
+      ? <a href={`/reports/${reportId}`} class="co2"><Icon name="lucide:sprout" size="16"/>{displayCo2} co2eq</a>
+      : <span class="co2"><Icon name="lucide:sprout" size="16"/>{displayCo2} co2eq</span>
+    }</h3>
     {project.agency && <p class="agency"><Icon name="lucide:heart-handshake" />{project.agency}</p>}
     <p>{ project.description }</p>
     <ul>
@@ -21,7 +25,7 @@ const { project } = Astro.props;
         </li>
       ))}
     </ul>
-  {(project.url || project.github) && 
+  {(project.url || project.github) &&
     <nav class="links">
       {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" class="inverted">View <Icon name="lucide:eye" size="16" /></a>}
       {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">Sources <Icon name="lucide:github" size="16" /></a>}
@@ -82,6 +86,12 @@ const { project } = Astro.props;
       justify-content: flex-start;
       flex-direction: row-reverse;
       gap: 0.5rem;
+      color: var(--textColor);
+      text-decoration: none;
+
+      &:is(a):hover {
+        text-decoration: underline;
+      }
     }
 
     .agency {

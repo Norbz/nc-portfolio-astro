@@ -1,53 +1,186 @@
 ---
-import { Icon } from 'astro-icon/components'
-const { hardware, duration } = Astro.props;
+import { Icon } from "astro-icon/components";
+import {
+    computeDailyCO2,
+    computeHardwareCO2ForProject,
+    computeDeviceEnergyForProject,
+    computeEffectiveLifespanDays,
+    isUsingActualLifespan,
+    round,
+} from "../../utils/co2";
+
+const { hardware, durationDays } = Astro.props;
+
+const dailyCO2 = round(computeDailyCO2(hardware), 4);
+const effectiveDays = computeEffectiveLifespanDays(hardware);
+const lifespanLabel = isUsingActualLifespan(hardware) ? "Effective lifespan" : "Estimated lifespan";
+const projectCO2 = durationDays
+    ? round(computeHardwareCO2ForProject(hardware, durationDays), 3)
+    : null;
+const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
+    ? round(computeDeviceEnergyForProject(hardware, durationDays), 2)
+    : null;
 ---
+
 <article class="hardware-card">
-  <Icon name={hardware.icon} class="icon" />
-  <div class="info">
-    <h3>{hardware.name}</h3>
-    <p>{hardware.description}</p>
-    <p><strong>Duration:</strong> {duration} years</p>
-    <p><strong>CO₂ lifecycle:</strong> {hardware.lifecycle_co2} kg</p>
-    <p><strong>Lifespan:</strong> {hardware.lifecycle_lifespan} years</p>
-    {hardware.wattage && <p><strong>Wattage:</strong> {hardware.wattage} W</p>}
-    {hardware.source && <p><a href={hardware.source} target="_blank">Source</a></p>}
-    {hardware.comments && <p class="comments">{hardware.comments}</p>}
-  </div>
+    <Icon name={hardware.icon} class="icon" />
+    <div class="info">
+        <h3>{hardware.name}</h3>
+        <p class="description">{hardware.description}</p>
+        <ul class="stats">
+            <li>
+                <span class="label">Daily CO₂</span><span class="value"
+                    >{dailyCO2} kg/day</span
+                >
+            </li>
+            {hardware.ratio !== undefined && hardware.ratio !== 1 && (
+                <li>
+                    <span class="label">Usage ratio</span>
+                    <span class="value">{hardware.ratio * 100}% of workday</span>
+                </li>
+            )}
+            <li>
+                <span class="label">{lifespanLabel}</span><span class="value"
+                    >{effectiveDays} days</span
+                >
+            </li>
+            {
+                hardware.water_per_day_l && (
+                    <li>
+                        <>
+                            <span class="label">Daily water</span>
+                            <span class="value">
+                                {hardware.water_per_day_l} L/day
+                            </span>
+                        </>
+                    </li>
+                )
+            }
+            {
+                projectCO2 !== null && (
+                    <li class="project-contribution">
+                        <span class="label">This project</span>
+                        <span class="project-values">
+                            <span class="value highlight">{projectCO2} kg CO₂</span>
+                            {projectKwh !== null && (
+                                <span class="value kwh">{projectKwh} kWh</span>
+                            )}
+                        </span>
+                    </li>
+                )
+            }
+        </ul>
+        {
+            hardware.source && (
+                <a
+                    href={hardware.source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="source"
+                >
+                    Source <Icon name="lucide:external-link" size="12" />
+                </a>
+            )
+        }
+        {hardware.comments && <p class="comments">{hardware.comments}</p>}
+    </div>
 </article>
+
 <style lang="scss">
-.hardware-card {
-  display: flex;
-  gap: 1.5rem;
-  background: $yellow;
-  border: $border;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  align-items: flex-start;
-  .icon {
-    width: 64px;
-    height: 64px;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+    .hardware-card {
+        display: flex;
+        gap: 1.5rem;
+        background: var(--mainColor);
+        border: $border;
+        box-shadow: $shadow;
+        padding: 1.5rem;
+        align-items: flex-start;
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+
+        .info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            h3 {
+                font-size: 1.1rem;
+                margin: 0;
+            }
+
+            .description {
+                font-size: 0.9rem;
+                opacity: 0.7;
+            }
+
+            .stats {
+                list-style: none;
+                margin: 0.5rem 0 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.2rem;
+
+                li {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 0.9rem;
+                    gap: 1rem;
+
+                    .label {
+                        opacity: 0.6;
+                    }
+
+                    .value {
+                        font-variant-numeric: tabular-nums;
+                        font-weight: 400;
+                    }
+
+                    &.project-contribution {
+                        margin-top: 0.4rem;
+                        padding-top: 0.4rem;
+                        border-top: 1px solid var(--textColor);
+                        align-items: flex-start;
+
+                        .project-values {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-end;
+                            gap: 0.2rem;
+                        }
+
+                        .highlight {
+                            @include set-color(true);
+                            padding: 0.1rem 0.4rem;
+                        }
+
+                        .kwh {
+                            font-size: 0.8rem;
+                            opacity: 0.6;
+                        }
+                    }
+                }
+            }
+
+            .source {
+                font-size: 0.8rem;
+                color: var(--textColor);
+                display: inline-flex;
+                align-items: center;
+                gap: 0.2rem;
+                margin-top: 0.2rem;
+            }
+
+            .comments {
+                font-size: 0.8rem;
+                opacity: 0.6;
+                margin: 0;
+            }
+        }
     }
-  }
-  .info {
-    flex: 1;
-    h3 {
-      margin: 0 0 0.5rem 0;
-      font-size: 1.2rem;
-    }
-    p {
-      margin: 0.2rem 0;
-      font-size: 1rem;
-    }
-    .comments {
-      font-style: italic;
-      color: $black;
-      opacity: 0.7;
-    }
-  }
-}
 </style>

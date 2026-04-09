@@ -1,29 +1,102 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { Icon } from 'astro-icon/components';
-import Hero from '../../components/reports/Hero.astro';
-import TwoColumnsSection from '../../components/common/TwoColumnsSection.astro';
-import HardwareReport from '../../components/reports/hardware/HardwareReport.astro';
-import { getCollection, getEntry, render } from 'astro:content';
-const reports = await getCollection('reports');
-
-const pages = reports.map((report) => ({
-    params: { report_id: report.id }
-  }))
+import Layout from "../../layouts/Layout.astro";
+import ReportHero from "../../components/reports/ReportHero.astro";
+import EmbodiedSection from "../../components/reports/EmbodiedSection.astro";
+import UseSection from "../../components/reports/UseSection.astro";
+import { getCollection, getEntry, render } from "astro:content";
+import {
+    computeHardwareCO2ForProject,
+    computeServiceCO2ForProject,
+    round,
+} from "../../utils/co2";
 
 export async function getStaticPaths() {
-  const reports = await getCollection('reports');
-  return reports.map((report) => ({
-    params: { report_id: report.id },
-    props: { report },
-  }))
+    const reports = await getCollection("reports");
+    return reports.map((report) => ({
+        params: { report_id: report.id },
+        props: { report },
+    }));
 }
 
 const { report } = Astro.props;
-const { Content, headings } = await render(report);
-console.log(Content, headings);
+const { Content } = await render(report);
+
+const {
+    title,
+    description,
+    date,
+    accent,
+    duration_days,
+    hardware_used,
+    services_used,
+    use_metrics,
+    project_id,
+    tags,
+    icon,
+} = report.data;
+
+// Load hardware and services
+const allHardware = await getCollection("hardware");
+const allServices = await getCollection("services");
+
+const hardwareItems = allHardware.filter((h) => hardware_used.includes(h.id));
+const servicesItems = allServices.filter((s) => services_used.includes(s.id));
+
+// Load linked project if any
+const project = project_id ? await getEntry("projects", project_id) : null;
+const projectUrl = project?.data.url;
+const client = project?.data.client;
+
+// Compute totals for the hero
+const totalEmbodiedKg = round(
+    hardwareItems.reduce(
+        (sum, h) => sum + computeHardwareCO2ForProject(h.data, duration_days),
+        0,
+    ) +
+        servicesItems.reduce(
+            (sum, s) =>
+                sum + computeServiceCO2ForProject(s.data, duration_days),
+            0,
+        ) /
+            1000,
+    3,
+);
 ---
-<Layout>
-  <Content></Content>
-  <HardwareReport></HardwareReport>
+
+<Layout
+    accent={accent}
+    title={`${title} — Eco Report`}
+    description={description}
+>
+    <ReportHero
+        title={title}
+        date={date}
+        description={description}
+        totalEmbodiedKg={totalEmbodiedKg}
+        client={client}
+        projectUrl={projectUrl}
+        tags={tags}
+        icon={icon}
+    />
+
+    <div class="report-sections">
+        <EmbodiedSection
+            hardwareItems={hardwareItems}
+            servicesItems={servicesItems}
+            durationDays={duration_days}
+        />
+
+        <UseSection metrics={use_metrics}>
+            <Content />
+        </UseSection>
+    </div>
 </Layout>
+
+<style lang="scss">
+    .report-sections {
+        :global(section) {
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+        }
+    }
+</style>

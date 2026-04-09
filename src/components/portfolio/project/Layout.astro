@@ -2,7 +2,30 @@
 import Card from './Card.astro'
 
 import { getCollection } from 'astro:content';
+import { computeHardwareCO2ForProject, computeServiceCO2ForProject, round } from '../../../utils/co2';
+
 const projects = await getCollection('projects');
+const reports = await getCollection('reports');
+const allHardware = await getCollection('hardware');
+const allServices = await getCollection('services');
+
+// For each report with a project_id, compute its total CO₂ (same formula as reports pages)
+const reportDataByProjectId = Object.fromEntries(
+  reports
+    .filter(r => r.data.project_id)
+    .map(r => {
+      const { hardware_used, services_used, duration_days } = r.data;
+      const hardwareItems = allHardware.filter(h => hardware_used.includes(h.id));
+      const servicesItems = allServices.filter(s => services_used.includes(s.id));
+      const totalKg = round(
+        hardwareItems.reduce((sum, h) => sum + computeHardwareCO2ForProject(h.data, duration_days), 0) +
+        servicesItems.reduce((sum, s) => sum + computeServiceCO2ForProject(s.data, duration_days), 0) / 1000,
+        3
+      );
+      const co2PerView = r.data.use_metrics?.co2_per_view_g;
+      return [r.data.project_id, { id: r.id, totalKg, co2PerView }];
+    })
+);
 
 // Sort projects by date in descending order (newest first)
 const sortedProjects = [...projects].sort((a, b) => {
@@ -32,7 +55,12 @@ const groupedProjectYears = Object.keys(projectsByYear)
       <h3 class="year-header">{group.year}</h3>
       <ul>
         {group.projects.map(proj => (
-          <Card id={proj.id} project={proj.data}/>
+          <Card
+            id={proj.id}
+            project={proj.data}
+            reportId={reportDataByProjectId[proj.id]?.id}
+            reportCo2={reportDataByProjectId[proj.id]?.co2PerView}
+          />
         ))}
       </ul>
     </div>

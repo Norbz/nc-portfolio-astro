@@ -1,10 +1,138 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getCollection, getEntry, render } from 'astro:content';
-const hardware = await getCollection('hardware');
-const reports = await getCollection('reports');
+import ReportCard from '../../components/reports/ReportCard.astro';
+import { Icon } from 'astro-icon/components';
+import { getCollection, getEntry } from 'astro:content';
+import { computeHardwareCO2ForProject, computeServiceCO2ForProject, round } from '../../utils/co2';
+
+const allReports = await getCollection('reports');
+const allHardware = await getCollection('hardware');
+const allServices = await getCollection('services');
+
+// Sort by date, newest first
+const reports = allReports.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Precompute totals and load linked projects for each report
+const reportCards = await Promise.all(reports.map(async (report) => {
+  const { hardware_used, services_used, duration_days, project_id } = report.data;
+
+  const hardwareItems = allHardware.filter(h => hardware_used.includes(h.id));
+  const servicesItems = allServices.filter(s => services_used.includes(s.id));
+
+  const totalEmbodiedKg = round(
+    hardwareItems.reduce((sum, h) => sum + computeHardwareCO2ForProject(h.data, duration_days), 0) +
+    servicesItems.reduce((sum, s) => sum + computeServiceCO2ForProject(s.data, duration_days), 0) / 1000,
+    3
+  );
+
+  const project = project_id ? await getEntry('projects', project_id) : null;
+  const client = project?.data.client;
+
+  return { report, totalEmbodiedKg, client };
+}));
 ---
-<Layout>
-  <h1>Reports</h1>
-  
+
+<Layout
+  title="Eco Reports — Nicolas Chesné"
+  description="Per-project eco footprint reports: embodied CO₂ from hardware and services, use energy metrics."
+>
+  <header class="reports-hero inverted">
+    <div class="hero-inner">
+      <h1>
+        <span>Eco</span>
+        <span>Reports</span>
+        <span class="sprout"><Icon name="lucide:sprout" /></span>
+      </h1>
+      <p>
+        Each project report details its embodied CO₂ (hardware &amp; services amortised over build time)
+        and use energy (page weight, CO₂ per view, performance).
+      </p>
+    </div>
+  </header>
+
+  <section class="reports-section">
+    {reportCards.length === 0 ? (
+      <p class="empty">No reports yet.</p>
+    ) : (
+      <ul class="reports-grid">
+        {reportCards.map(({ report, totalEmbodiedKg, client }) => (
+          <ReportCard
+            report={report}
+            totalEmbodiedKg={totalEmbodiedKg}
+            client={client}
+          />
+        ))}
+      </ul>
+    )}
+  </section>
 </Layout>
+
+<style lang="scss">
+.reports-hero {
+  @include set-color(true);
+  border-bottom: $border;
+  margin: calc(-1 * var(--layoutMargin)) calc(-1 * var(--layoutMargin)) 0;
+
+  .hero-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem var(--layoutMargin) 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  h1 {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    font-size: 5rem;
+    line-height: 0.9;
+
+    @include desktop() {
+      font-size: 9rem;
+    }
+
+    span:nth-child(2) {
+      align-self: flex-end;
+    }
+
+    .sprout {
+      align-self: flex-start;
+      font-size: 3rem;
+      color: $yellow;
+      animation: 1.8s grow infinite;
+
+      @keyframes grow {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+      }
+    }
+  }
+
+  p {
+    max-width: 600px;
+    opacity: 0.7;
+    font-size: 1.1rem;
+  }
+}
+
+.reports-section {
+  margin: 4rem auto;
+  max-width: 1400px;
+}
+
+.reports-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.empty {
+  opacity: 0.5;
+  font-size: 1.1rem;
+}
+</style>

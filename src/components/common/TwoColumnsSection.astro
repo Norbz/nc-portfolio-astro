@@ -18,19 +18,31 @@ section {
   max-width: 1920px;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr;
   grid-gap: 4rem;
 
+  @include above(calc(600px + ($sectionGap + ($layoutMargin * 2)))) {
+    grid-template-columns: 220px 1fr;
+  }
+
+  @include above(990px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
   >:last-child {
-    justify-self: flex-end;
+    min-width: 0;
   }
   h2, h3, h4 {
-    // place-content: center;
     @include above(calc(600px + ($sectionGap + ($layoutMargin * 2)))) {
+      font-size: 1.6rem;
       height: fit-content;
       position: sticky;
       top: 60px;
       padding-top: 1rem;
+    }
+
+    @include above(990px) {
+      font-size: 2.5rem;
     }
   }
 }
