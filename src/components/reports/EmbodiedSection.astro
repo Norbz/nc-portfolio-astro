@@ -1,0 +1,235 @@
+---
+import { Icon } from "astro-icon/components";
+import TwoColumnsSection from "../common/TwoColumnsSection.astro";
+import HardwareCard from "../hardware/HardwareCard.astro";
+import {
+    computeHardwareCO2ForProject,
+    computeServiceCO2ForProject,
+    computeServiceEnergyForProject,
+    round,
+} from "../../utils/co2";
+
+interface Props {
+    hardwareItems: any[];
+    servicesItems: any[];
+    durationDays: number;
+}
+const { hardwareItems, servicesItems, durationDays } = Astro.props;
+
+const totalHardwareCO2 = round(
+    hardwareItems.reduce(
+        (sum, h) => sum + computeHardwareCO2ForProject(h.data, durationDays),
+        0,
+    ),
+    3,
+);
+const totalServicesCO2g = round(
+    servicesItems.reduce(
+        (sum, s) => sum + computeServiceCO2ForProject(s.data, durationDays),
+        0,
+    ),
+    1,
+);
+const totalServicesKwh = round(
+    servicesItems.reduce(
+        (sum, s) => sum + computeServiceEnergyForProject(s.data, durationDays),
+        0,
+    ),
+    2,
+);
+---
+
+<TwoColumnsSection titleLevel={2}>
+    <span slot="title">Manufacturing<br />footprint</span>
+
+    <div class="embodied-content">
+        <p class="section-intro">
+            CO₂ embodied in hardware manufacturing, amortised over the actual
+            duration of this project ({durationDays} working days). Keeping devices
+            longer reduces this figure.
+        </p>
+
+        <div class="hardware-list">
+            {
+                hardwareItems.map((device) => (
+                    <HardwareCard
+                        hardware={device.data}
+                        durationDays={durationDays}
+                    />
+                ))
+            }
+        </div>
+
+        {
+            servicesItems.length > 0 && (
+                <div class="services-block">
+                    <h3>Services</h3>
+                    <ul class="services-list">
+                        {servicesItems.map((service) => (
+                            <li class="service-item">
+                                <Icon name={service.data.icon} size="20" />
+                                <div class="service-info">
+                                    <span class="service-name">
+                                        {service.data.name}
+                                    </span>
+                                    <span class="service-desc">
+                                        {service.data.description}
+                                    </span>
+                                    {service.data.comments && (
+                                        <span class="service-methodology">
+                                            {service.data.comments}
+                                        </span>
+                                    )}
+                                </div>
+                                <div class="service-metrics">
+                                    <span class="service-co2">
+                                        {round(computeServiceCO2ForProject(service.data, durationDays), 1)} g CO₂
+                                    </span>
+                                    {service.data.kwh_per_month && (
+                                        <span class="service-kwh">
+                                            {round(computeServiceEnergyForProject(service.data, durationDays), 2)} kWh
+                                        </span>
+                                    )}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )
+        }
+
+        <div class="total-bar">
+            <span class="total-label">Total embodied</span>
+            <span class="total-value">{totalHardwareCO2} kg CO₂</span>
+            {
+                servicesItems.length > 0 && (
+                    <span class="total-services">
+                        + {totalServicesCO2g} g services · {totalServicesKwh} kWh
+                    </span>
+                )
+            }
+        </div>
+    </div>
+</TwoColumnsSection>
+
+<style lang="scss">
+    .embodied-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .section-intro {
+        font-size: 1rem;
+        opacity: 0.7;
+        max-width: 600px;
+    }
+
+    .hardware-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .services-block {
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .services-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        border: $border;
+        box-shadow: $shadow;
+    }
+
+    .service-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        border-bottom: $border;
+        background: var(--mainColor);
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .service-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+
+            .service-name {
+                font-size: 1rem;
+            }
+
+            .service-desc {
+                font-size: 0.8rem;
+                opacity: 0.6;
+            }
+
+            .service-methodology {
+                font-size: 0.75rem;
+                opacity: 0.5;
+                font-style: italic;
+                margin-top: 0.2rem;
+            }
+        }
+
+        .service-metrics {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .service-co2 {
+            font-size: 0.85rem;
+            font-variant-numeric: tabular-nums;
+            @include set-color(true);
+            padding: 0.15rem 0.5rem;
+        }
+
+        .service-kwh {
+            font-size: 0.8rem;
+            font-variant-numeric: tabular-nums;
+            opacity: 0.6;
+        }
+    }
+
+    .total-bar {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border: $border;
+        box-shadow: $shadow;
+        padding: 1rem 1.5rem;
+        @include set-color(true);
+        flex-wrap: wrap;
+
+        .total-label {
+            opacity: 0.6;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .total-value {
+            font-size: 1.4rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .total-services {
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+    }
+</style>

@@ -1,0 +1,64 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    label: string;
+    value: string | number;
+    unit?: string;
+    icon?: string;
+    accent?: boolean;
+}
+const { label, value, unit, icon, accent = false } = Astro.props;
+---
+
+<div class:list={["metric-card", { accent }]}>
+    {icon && <Icon name={icon} class="metric-icon" size="20" />}
+    <div class="metric-value">
+        <span class="value">{value}</span>
+        {unit && <span class="unit">{unit}</span>}
+    </div>
+    <p class="metric-label">{label}</p>
+</div>
+
+<style lang="scss">
+    .metric-card {
+        border: $border;
+        box-shadow: $shadow;
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        background: var(--mainColor);
+
+        &.accent {
+            @include set-color(true);
+        }
+
+        .metric-icon {
+            opacity: 0.5;
+        }
+
+        .metric-value {
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+
+            .value {
+                font-size: 2rem;
+                line-height: 1;
+                font-variant-numeric: tabular-nums;
+            }
+
+            .unit {
+                font-size: 0.85rem;
+                opacity: 0.6;
+            }
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            opacity: 0.6;
+            margin: 0;
+        }
+    }
+</style>

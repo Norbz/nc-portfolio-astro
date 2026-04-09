@@ -1,22 +1,29 @@
 ---
-import CommonHeader from '../components/common/Header.astro';
-import AppSticky from '../components/common/AppSticky.astro';
-import CommonFooter from '../components/common/Footer.astro';
+import CommonHeader from '../components/common/ui/Header.astro';
+import AppSticky from '../components/common/ui/AppSticky.astro';
+import CommonFooter from '../components/common/ui/Footer.astro';
 import '../scss/reset.scss';
 import '../scss/variables.scss';
 import '../scss/main.scss';
 
 import '@fontsource/space-grotesk';
+
+interface Props {
+  accent?: string;
+  title?: string;
+  description?: string;
+}
+const { accent, title, description } = Astro.props;
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" style={accent ? `--mainColor: ${accent}` : ''}>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Nicolas Chesné - Fullstack Freelance Developer</title>
+		<title>{title ?? 'Nicolas Chesné - Fullstack Freelance Developer'}</title>
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="Nicolas Chesné - Full stack Freelance Developer - Based in Paris - 20 years of experience" />
+		<meta name="description" content={description ?? 'Nicolas Chesné - Full stack Freelance Developer - Based in Paris - 20 years of experience'} />
 		<meta name="keywords" content="freelance, developer, fullstack, web, javascript, strapi, vue, nodejs, paris, sustainable web design" />
 		<meta name="author" content="Nicolas Chesné" />
 		<meta name="robots" content="index, follow" />
@@ -30,11 +37,11 @@ import '@fontsource/space-grotesk';
 		<meta property="og:site_name" content="Nicolas Chesné" />
 		<meta property="og:locale" content="en_US" />
 
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';" />
+		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';" />
 		<meta http-equiv="X-Content-Type-Options" content="nosniff" />
 		<meta http-equiv="X-Frame-Options" content="DENY" />
 		<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-		<meta http-equiv="Permissions-Policy" content="" />
+		<meta http-equiv="Permissions-Policy" content="" /> -->
 		
 		<!-- Twitter Card data -->
 		<meta name="twitter:card" content="summary_large_image" />

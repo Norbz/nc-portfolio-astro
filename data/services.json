@@ -1,0 +1,42 @@
+[
+  {
+    "id": "github",
+    "name": "GitHub",
+    "icon": "uil:github",
+    "description": "Code hosting and CI/CD pipelines.",
+    "co2_per_month_g": 5,
+    "kwh_per_month": 0.1,
+    "source": "https://github.blog/engineering/engineering-principles/environmental-sustainability-github/",
+    "comments": "GitHub runs on Azure with renewable energy commitments. ~5g CO₂/month and ~0.1 kWh/month per active repository is a conservative proxy for storage and CI/CD."
+  },
+  {
+    "id": "s3",
+    "name": "S3 / Static Hosting",
+    "icon": "lucide:cloud",
+    "description": "Asset storage and static file hosting.",
+    "co2_per_month_g": 8,
+    "kwh_per_month": 0.5,
+    "source": "https://www.thegreenwebfoundation.org/",
+    "comments": "Estimate based on ~0.001 kgCO₂/GB transferred at ~8 GB/month for a typical portfolio project. Energy estimate: ~0.5 kWh/month."
+  },
+  {
+    "id": "claude-code",
+    "name": "Claude Code (AI)",
+    "icon": "lucide:bot",
+    "description": "AI-assisted development via Anthropic's Claude.",
+    "co2_per_month_g": 200,
+    "kwh_per_month": 2.4,
+    "source": "https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use/",
+    "comments": "GPT-4o benchmarks: ~0.3–0.43 Wh/query. Claude Code sessions are heavier (large context, file reads, long outputs) — estimated 3× multiplier → ~0.003 kWh/session. 40 sessions/day × 20 workdays × 0.003 kWh ≈ 2.4 kWh/month. At ~300 gCO₂/kWh (Anthropic partial renewables) ≈ 200g CO₂/month."
+  },
+  {
+    "id": "gmail",
+    "name": "Gmail (Google Workspace)",
+    "icon": "lucide:mail",
+    "description": "Professional email for client communication.",
+    "co2_per_month_g": 12,
+    "kwh_per_month": 0.04,
+    "source": "https://sustainability.google/reports/",
+    "comments": "Counted actual sent mail: ~40 emails over 20 workdays (~2/day). 40 emails/month × 0.3g CO₂/email = 12g CO₂/month. kWh estimated at ~0.001 kWh/email → 0.04 kWh/month. Google Workspace runs on carbon-neutral infrastructure."
+  }
+]

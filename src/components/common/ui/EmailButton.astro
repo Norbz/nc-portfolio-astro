@@ -1,0 +1,100 @@
+---
+import { Icon } from "astro-icon/components";
+const { className } = Astro.props;
+
+const icon = "lucide:copy";
+---
+
+<button
+    client.visible
+    class={`email-button ${className}`}
+    data-email="hello"
+    data-domain="nicolaschesne.fr"
+>
+    <div class="action">
+        <span>hello@nicolaschesne.fr</span>
+        <Icon name={icon} size="24" />
+    </div>
+    <span class="result" client.visible>copied in clipboard !</span>
+</button>
+
+<script>
+    const buttons = document.querySelectorAll(".email-button");
+    buttons.forEach((button) => {
+        const btn = button as HTMLElement;
+        btn.addEventListener("click", () => {
+            const email = `${btn.dataset.email}@${btn.dataset.domain}`;
+            navigator.clipboard.writeText(email).then(() => {
+                btn?.classList.add("copied");
+                setTimeout(() => {
+                    btn?.classList.remove("copied");
+                }, 2000);
+            });
+        });
+    });
+</script>
+
+<style lang="scss">
+    .email-button {
+        position: relative;
+        font-family: $mainFont;
+        font-size: 1.2rem;
+        padding: 1rem;
+        box-shadow: $shadow;
+        border: $border;
+        @include set-color();
+        margin: auto;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        &:hover {
+            @include set-color(true);
+        }
+
+        &.inverted {
+            @include set-color(true);
+            box-shadow: none;
+            border: none;
+        }
+        &:hover.inverted {
+            @include set-color();
+        }
+
+        .action {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .result {
+            opacity: 0;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--textColor);
+            color: var(--mainColor);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            width: max-content;
+            transition: all 0.2s ease-in-out;
+        }
+
+        &.copied {
+            color: var(--mainColor);
+            background: var(--textColor);
+
+            .action {
+                opacity: 0;
+                transform: translateY(-50%);
+            }
+            .result {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+</style>

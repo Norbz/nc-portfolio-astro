@@ -1,0 +1,178 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    title: string;
+    date: Date;
+    description: string;
+    totalEmbodiedKg: number;
+    client?: string;
+    projectUrl?: string;
+    tags?: string[];
+    icon?: string;
+}
+const {
+    title,
+    date,
+    description,
+    totalEmbodiedKg,
+    client,
+    projectUrl,
+    tags,
+    icon,
+} = Astro.props;
+
+const formattedDate = date.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+});
+---
+
+<header class="report-hero inverted">
+    <div class="hero-inner">
+        <div class="meta">
+            {client && <span class="client">{client}</span>}
+            <time datetime={date.toISOString()}>{formattedDate}</time>
+        </div>
+
+        <h1>{title}</h1>
+        <span class="sprout"><Icon name={`lucide:${icon || "sprout"}`} /></span>
+
+        <p class="description">{description}</p>
+
+        <div class="bottom-row">
+            <div class="tags">
+                {tags && tags.map((tag) => <span class="tag">{tag}</span>)}
+            </div>
+            <div class="actions">
+                {
+                    projectUrl && (
+                        <a
+                            href={projectUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="project-link"
+                        >
+                            View project{" "}
+                            <Icon name="lucide:external-link" size="16" />
+                        </a>
+                    )
+                }
+            </div>
+        </div>
+    </div>
+</header>
+
+<style lang="scss">
+    .report-hero {
+        @include set-color(true);
+        border-bottom: $border;
+        margin: calc(-1 * var(--layoutMargin)) calc(-1 * var(--layoutMargin)) 0;
+
+        .hero-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem var(--layoutMargin) 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.6;
+
+            .client {
+                font-weight: 400;
+                &::after {
+                    content: "—";
+                    margin-left: 1rem;
+                }
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--mainColor);
+            line-height: 1;
+
+            @include tablet() {
+                font-size: 4rem;
+            }
+
+            @include desktop() {
+                font-size: 6rem;
+            }
+        }
+
+        .sprout {
+            display: inline-flex;
+            font-size: 2.5rem;
+            color: var(--mainColor);
+            svg {
+                animation: 1.8s grow infinite;
+
+                @keyframes grow {
+                    0%,
+                    100% {
+                        transform: rotate(0);
+                    }
+                    50% {
+                        transform: rotate(18deg);
+                    }
+                    100% {
+                        transform: rotate(0);
+                    }
+                }
+            }
+        }
+
+        .description {
+            font-size: 1.1rem;
+            max-width: 700px;
+            opacity: 0.8;
+        }
+
+        .bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+
+            .tag {
+                font-size: 0.85rem;
+                border: $border;
+                padding: 0.2rem 0.6rem;
+                color: var(--mainColor);
+                border-color: var(--mainColor);
+            }
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+            color: var(--textColor);
+            background: var(--mainColor);
+            border: $border;
+            border-color: var(--mainColor);
+            padding: 0.4rem 1rem;
+            box-shadow: $shadow;
+            transition: box-shadow 0.15s ease;
+
+            &:hover {
+                box-shadow: none;
+            }
+        }
+    }
+</style>
