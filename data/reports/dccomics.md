@@ -2,7 +2,7 @@
 title: "Monnaie de Paris — DC Comics Collection"
 description: "A VueJS single-page application embedded in a Magento theme for the DC Comics coin collection. Page-level optimisation was possible, the Magento shell was not."
 project_id: "dccomics"
-duration_days: 40
+duration_days: 38
 hardware_used: ["mbp-m2", "screen34", "ipad", "samsung-s9", "accessories"]
 services_used: ["github", "s3", "claude-code", "gmail"]
 use_metrics:

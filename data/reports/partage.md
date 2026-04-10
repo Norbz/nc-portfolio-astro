@@ -3,7 +3,7 @@ title: "Partage.org"
 description: "NGO website built on Wordpress with ACF Blocks, Tailwind and vanilla Javascript. The project was a complete redesign and development of the website to match the new branding and to fix previous catastrophic response times."
 project_id: "partage"
 accent: "#f7b088"
-duration_days: 4
+duration_days: 65
 hardware_used: ["mbp-m2", "screen34", "ipad", "samsung-s9", "accessories"]
 services_used: ["github", "claude-code", "gmail"]
 use_metrics:
