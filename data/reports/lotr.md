@@ -5,7 +5,7 @@ project_id: "lotr"
 accent: "#fbbf24"
 duration_days: 40
 hardware_used: ["mbp-m2", "screen34", "ipad", "samsung-s9", "accessories"]
-services_used: ["github", "s3", "claude-code-heavy", "gmail"]
+services_used: ["github", d d"claude-code-heavy", "gmail"]
 use_metrics:
     page_weight_kb: 5423
     co2_per_view_g: 0.8

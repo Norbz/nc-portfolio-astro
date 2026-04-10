@@ -24,19 +24,25 @@ export interface ServiceData {
  * silently change on each rebuild as time passes.
  * Safe for new devices: max(1000, 3) = 1000 → no distortion.
  */
+/** Calendar days → working days (200 days/year model: 5/7 of calendar days) */
+function toWorkingDays(calendarDays: number): number {
+  return Math.floor(calendarDays * 5 / 7);
+}
+
 export function computeEffectiveLifespanDays(device: HardwareData, referenceDate: Date): number {
-  const daysSincePurchase = Math.max(0, Math.floor(
+  const calendarDays = Math.max(0, Math.floor(
     (referenceDate.getTime() - new Date(device.purchaseDate).getTime()) / 86_400_000
   ));
-  return Math.max(device.estimated_lifespan_days, daysSincePurchase);
+  const workingDays = toWorkingDays(calendarDays);
+  return Math.max(device.estimated_lifespan_days, workingDays);
 }
 
 /** Returns true when the device had already outlived its estimated lifespan at the reference date */
 export function isUsingActualLifespan(device: HardwareData, referenceDate: Date): boolean {
-  const daysSincePurchase = Math.max(0, Math.floor(
+  const calendarDays = Math.max(0, Math.floor(
     (referenceDate.getTime() - new Date(device.purchaseDate).getTime()) / 86_400_000
   ));
-  return daysSincePurchase > device.estimated_lifespan_days;
+  return toWorkingDays(calendarDays) > device.estimated_lifespan_days;
 }
 
 /**

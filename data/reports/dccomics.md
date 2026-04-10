@@ -4,7 +4,7 @@ description: "A VueJS single-page application embedded in a Magento theme for th
 project_id: "dccomics"
 duration_days: 38
 hardware_used: ["mbp-m2", "screen34", "ipad", "samsung-s9", "accessories"]
-services_used: ["github", "s3", "claude-code", "gmail"]
+services_used: ["github", "claude-code", "gmail"]
 use_metrics:
     websitecarbon_url: "https://www.websitecarbon.com/website/monnaiedeparis-fr-fr-dc-comics/"
     page_weight_kb: 434

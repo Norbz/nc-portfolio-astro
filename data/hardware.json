@@ -25,9 +25,9 @@
     "wattage": 5,
     "daily_hours": 3,
     "lifecycle_co2": 73.5,
-    "manufacturer_lifespan_days": 1050,
+    "manufacturer_lifespan_days": 600,
     "use_phase_percent": 0.099,
-    "estimated_lifespan_days": 2100,
+    "estimated_lifespan_days": 1200,
     "water_per_day_l": 0.06307,
     "source": "https://www.samsung.com/global/sustainability/media/pdf/Galaxy_S23_Plus_Environmental_Report_EN_230201.pdf",
     "comments": "Based on S23 data, increased by 25% (arbitrary). Samsung's data uses 3-year lifespan; adjusted to 6 years actual use. Usage phase = 9.9%."

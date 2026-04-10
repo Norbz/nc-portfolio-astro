@@ -5,7 +5,7 @@ project_id: "astro"
 accent: "#A78BFA"
 duration_days: 40
 hardware_used: ["mbp-m2", "screen34", "ipad", "samsung-s9", "accessories"]
-services_used: ["github", "s3", "gmail"]
+services_used: ["github", "gmail"]
 use_metrics:
     page_weight_kb: 1738
     co2_per_view_g: 0.56

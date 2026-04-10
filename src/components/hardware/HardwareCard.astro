@@ -30,9 +30,8 @@ const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
         <p class="description">{hardware.description}</p>
         <ul class="stats">
             <li>
-                <span class="label">Daily CO₂</span><span class="value"
-                    >{dailyCO2} kg/day</span
-                >
+                <span class="label">Daily CO₂</span>
+                <span class="value">{dailyCO2} kg/day</span>
             </li>
             {hardware.ratio !== undefined && hardware.ratio !== 1 && (
                 <li>
@@ -41,49 +40,57 @@ const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
                 </li>
             )}
             <li>
-                <span class="label">{lifespanLabel}</span><span class="value"
-                    >{effectiveDays} days</span
-                >
+                <span class="label">{lifespanLabel}</span>
+                <span class="value">{effectiveDays} days</span>
             </li>
-            {
-                hardware.water_per_day_l && (
-                    <li>
-                        <>
-                            <span class="label">Daily water</span>
-                            <span class="value">
-                                {hardware.water_per_day_l} L/day
-                            </span>
-                        </>
-                    </li>
-                )
-            }
-            {
-                projectCO2 !== null && (
-                    <li class="project-contribution">
-                        <span class="label">This project</span>
-                        <span class="project-values">
-                            <span class="value highlight">{projectCO2} kg CO₂</span>
-                            {projectKwh !== null && (
-                                <span class="value kwh">{projectKwh} kWh</span>
-                            )}
-                        </span>
-                    </li>
-                )
-            }
+            {projectCO2 !== null && (
+                <li class="project-contribution">
+                    <span class="label">This project</span>
+                    <span class="project-values">
+                        <span class="value highlight">{projectCO2} kg CO₂</span>
+                        {projectKwh !== null && (
+                            <span class="value kwh">{projectKwh} kWh</span>
+                        )}
+                    </span>
+                </li>
+            )}
         </ul>
-        {
-            hardware.source && (
-                <a
-                    href={hardware.source}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="source"
-                >
-                    Source <Icon name="lucide:external-link" size="12" />
-                </a>
-            )
-        }
-        {hardware.comments && <p class="comments">{hardware.comments}</p>}
+
+        <details class="methodology">
+            <summary>Details</summary>
+            <ul class="methodology-stats">
+                {hardware.wattage && (
+                    <li>
+                        <span class="label">Wattage</span>
+                        <span class="value">{hardware.wattage} W</span>
+                    </li>
+                )}
+                <li>
+                    <span class="label">Use phase</span>
+                    <span class="value">{Math.round(hardware.use_phase_percent * 100)}%</span>
+                </li>
+                <li>
+                    <span class="label">Lifecycle CO₂</span>
+                    <span class="value">{hardware.lifecycle_co2} kg</span>
+                </li>
+                {hardware.water_per_day_l && (
+                    <li>
+                        <span class="label">Daily water</span>
+                        <span class="value">{hardware.water_per_day_l} L/day</span>
+                    </li>
+                )}
+            </ul>
+            {(hardware.comments || hardware.source) && (
+                <div class="methodology-note">
+                    {hardware.comments && <p>{hardware.comments}</p>}
+                    {hardware.source && (
+                        <a href={hardware.source} target="_blank" rel="noopener noreferrer" class="source">
+                            Source <Icon name="lucide:external-link" size="11" />
+                        </a>
+                    )}
+                </div>
+            )}
+        </details>
     </div>
 </article>
 
@@ -168,19 +175,75 @@ const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
                 }
             }
 
-            .source {
-                font-size: 0.8rem;
-                color: var(--textColor);
-                display: inline-flex;
-                align-items: center;
-                gap: 0.2rem;
-                margin-top: 0.2rem;
-            }
+            .methodology {
+                margin-top: 0.75rem;
+                border-top: 1px solid var(--textColor);
+                padding-top: 0.5rem;
 
-            .comments {
-                font-size: 0.8rem;
-                opacity: 0.6;
-                margin: 0;
+                summary {
+                    font-size: 0.8rem;
+                    opacity: 0.5;
+                    cursor: pointer;
+                    list-style: none;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.3rem;
+                    user-select: none;
+
+                    &::-webkit-details-marker { display: none; }
+
+                    &::after {
+                        content: "↓";
+                        font-size: 0.7rem;
+                        transition: transform 0.15s ease;
+                    }
+                }
+
+                &[open] summary::after {
+                    transform: rotate(180deg);
+                }
+
+                .methodology-stats {
+                    list-style: none;
+                    margin: 0.5rem 0 0;
+                    padding: 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.2rem;
+
+                    li {
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 0.85rem;
+                        gap: 1rem;
+
+                        .label { opacity: 0.6; }
+                        .value { font-variant-numeric: tabular-nums; }
+                    }
+                }
+
+                .methodology-note {
+                    margin-top: 0.5rem;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.3rem;
+
+                    p {
+                        font-size: 0.78rem;
+                        opacity: 0.55;
+                        margin: 0;
+                        font-style: italic;
+                    }
+
+                    .source {
+                        font-size: 0.75rem;
+                        color: var(--textColor);
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.2rem;
+                        opacity: 0.6;
+                    }
+                }
             }
         }
     }

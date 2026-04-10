@@ -50,6 +50,15 @@ const totalServicesKwh = round(
             longer reduces this figure.
         </p>
 
+        <p class="methodology-note">
+            Each device's lifecycle CO₂ is sourced from manufacturer environmental reports,
+            adjusted where needed. The figure is spread over an estimated professional
+            lifespan (200 working days/year). If a device outlives that estimate, its daily
+            cost decreases — rewarding longer retention. Use phase percentages and wattage
+            are manufacturer estimates or measured proxies; exact values will vary with
+            real usage patterns.
+        </p>
+
         <div class="hardware-list">
             {
                 hardwareItems.map((device) => (
@@ -125,6 +134,14 @@ const totalServicesKwh = round(
         font-size: 1rem;
         opacity: 0.7;
         max-width: 600px;
+    }
+
+    .methodology-note {
+        font-size: 0.85rem;
+        opacity: 0.5;
+        font-style: italic;
+        max-width: 600px;
+        margin-top: -1rem;
     }
 
     .hardware-list {
