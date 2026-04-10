@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.4.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.3.1...nc-portfolio-astro-v1.4.0) (2026-04-10)
+
+
+### 🚀 New Features
+
+* Adding details about the different metrics on the report ([aae567f](https://github.com/Norbz/nc-portfolio-astro/commit/aae567f1d30891468a5f5e4f14514772cf2c129a))
+
+
+### 🔥 Bug Fixes
+
+* Normalized duration across hardware as some where using calendar days and other workdays ([1e5f694](https://github.com/Norbz/nc-portfolio-astro/commit/1e5f694e4f93b784638972d143a615de63d957b2))
+
+
+### 📝 Content
+
+* Fixed some project durations ([4db5b5b](https://github.com/Norbz/nc-portfolio-astro/commit/4db5b5bead87d892d076d7c75090598aec083745))
+
 ## [1.3.1](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.3.0...nc-portfolio-astro-v1.3.1) (2026-04-10)
 
 
