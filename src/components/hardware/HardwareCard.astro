@@ -152,22 +152,24 @@ const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
                     gap: 1rem;
                     position: relative;
 
-                    &[data-tooltip]:hover::before {
-                        content: attr(data-tooltip);
-                        position: absolute;
-                        bottom: calc(100% + 6px);
-                        left: 0;
-                        width: max-content;
-                        max-width: 280px;
-                        background: var(--textColor);
-                        color: var(--mainColor);
-                        font-size: 0.75rem;
-                        line-height: 1.4;
-                        padding: 0.4rem 0.6rem;
-                        border: 1px solid var(--mainColor);
-                        pointer-events: none;
-                        z-index: 10;
-                        white-space: normal;
+                    @media (hover: hover) {
+                        &[data-tooltip]:hover::before {
+                            content: attr(data-tooltip);
+                            position: absolute;
+                            bottom: calc(100% + 6px);
+                            left: 0;
+                            width: max-content;
+                            max-width: 280px;
+                            background: var(--textColor);
+                            color: var(--mainColor);
+                            font-size: 0.75rem;
+                            line-height: 1.4;
+                            padding: 0.4rem 0.6rem;
+                            border: 1px solid var(--mainColor);
+                            pointer-events: none;
+                            z-index: 10;
+                            white-space: normal;
+                        }
                     }
 
                     .label {
@@ -268,22 +270,24 @@ const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
                         width: 100%;
                         position: relative;
 
-                        &[data-tooltip]:hover::before {
-                            content: attr(data-tooltip);
-                            position: absolute;
-                            bottom: calc(100% + 6px);
-                            left: 0;
-                            width: max-content;
-                            max-width: 280px;
-                            background: var(--textColor);
-                            color: var(--mainColor);
-                            font-size: 0.75rem;
-                            line-height: 1.4;
-                            padding: 0.4rem 0.6rem;
-                            border: 1px solid var(--mainColor);
-                            pointer-events: none;
-                            z-index: 10;
-                            white-space: normal;
+                        @media (hover: hover) {
+                            &[data-tooltip]:hover::before {
+                                content: attr(data-tooltip);
+                                position: absolute;
+                                bottom: calc(100% + 6px);
+                                left: 0;
+                                width: max-content;
+                                max-width: 280px;
+                                background: var(--textColor);
+                                color: var(--mainColor);
+                                font-size: 0.75rem;
+                                line-height: 1.4;
+                                padding: 0.4rem 0.6rem;
+                                border: 1px solid var(--mainColor);
+                                pointer-events: none;
+                                z-index: 10;
+                                white-space: normal;
+                            }
                         }
 
                         .label { opacity: 0.6; }
