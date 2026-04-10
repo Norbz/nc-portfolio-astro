@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.1](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.3.0...nc-portfolio-astro-v1.3.1) (2026-04-10)
+
+
+### 🔥 Bug Fixes
+
+* Fixed a future case where emboddied energy would keep going down even after I replaced my laptop ([c174d70](https://github.com/Norbz/nc-portfolio-astro/commit/c174d709a5e0fadd7a7e8022e26ec4979f86230f))
+* Fixed dates being in french format ([c174d70](https://github.com/Norbz/nc-portfolio-astro/commit/c174d709a5e0fadd7a7e8022e26ec4979f86230f))
+
+
+### 📝 Content
+
+* Added Strike, and Partage reports ([c174d70](https://github.com/Norbz/nc-portfolio-astro/commit/c174d709a5e0fadd7a7e8022e26ec4979f86230f))
+* Adding LOTR collection, and astro, genie, dccomics, and LOTR reports ([0c23cd3](https://github.com/Norbz/nc-portfolio-astro/commit/0c23cd32b872c379f05e73c81939becce26bd4fe))
+
 ## [1.3.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.2.0...nc-portfolio-astro-v1.3.0) (2026-04-09)
 
 
