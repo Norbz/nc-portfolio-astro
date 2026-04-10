@@ -23,7 +23,7 @@ The Génie Français page is a VueJS SPA embedded inside a Magento 2 theme. Deve
 
 - 3D WebGL model of the coin built with BabylonJS, only with heightmap from the engraving industrial process.
 - Custom Vue2 platform that allows using the magento e-commerce functionality inside the Vue app.
-- Auto Image optimisation at compile time
+- Auto Image optimisation at compile time, picture format are always manually selected to ensure the best compression possible.
 
 ## Constraints
 

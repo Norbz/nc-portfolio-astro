@@ -1,5 +1,20 @@
 [
   {
+    "id": "lotr",
+    "name": "Le Seigneur des anneaux",
+    "client": "Monnaie de Paris",
+    "agency": "La Chose",
+    "description": "A collection to rule them all...",
+    "image": "../src/assets/imgs/projects/lotr.png",
+    "date": "2026-03-23",
+    "tags": [
+      "VueJS",
+      "Custom tools"
+    ],
+    "co2": 0.7,
+    "url": "https://www.monnaiedeparis.fr/fr/le-seigneur-des-anneaux#/"
+  },
+  {
     "id": "genie",
     "name": "Le Génie Français",
     "client": "Monnaie de Paris",
