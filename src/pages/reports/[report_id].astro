@@ -24,7 +24,6 @@ const { Content } = await render(report);
 const {
     title,
     description,
-    date,
     accent,
     duration_days,
     hardware_used,
@@ -46,11 +45,14 @@ const servicesItems = allServices.filter((s) => services_used.includes(s.id));
 const project = project_id ? await getEntry("projects", project_id) : null;
 const projectUrl = project?.data.url;
 const client = project?.data.client;
+const date = project?.data.date ?? report.data.date;
+// Freeze longevity reward at project end; fall back to build time if no date available
+const referenceDate = date ?? new Date();
 
 // Compute totals for the hero
 const totalEmbodiedKg = round(
     hardwareItems.reduce(
-        (sum, h) => sum + computeHardwareCO2ForProject(h.data, duration_days),
+        (sum, h) => sum + computeHardwareCO2ForProject(h.data, duration_days, referenceDate),
         0,
     ) +
         servicesItems.reduce(
@@ -84,6 +86,7 @@ const totalEmbodiedKg = round(
             hardwareItems={hardwareItems}
             servicesItems={servicesItems}
             durationDays={duration_days}
+            referenceDate={referenceDate}
         />
 
         <UseSection metrics={use_metrics}>

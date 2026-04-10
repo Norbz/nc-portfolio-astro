@@ -1,11 +1,10 @@
 ---
 title: "Branche Architecture — Prestations Sociales"
 description: "A small app to list social benefits and redirects user to the corresponding form."
-date: "2025-06-01"
 project_id: "branche-archi-social"
 accent: "#34d399"
 duration_days: 4
-hardware_used: ["mbp", "screen34", "ipad", "samsung-s9", "accessories"]
+hardware_used: ["mbp-m2", "screen34", "ipad", "samsung-s9", "accessories"]
 services_used: ["github", "gmail"]
 use_metrics:
     page_weight_kb: 486080

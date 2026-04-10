@@ -14,11 +14,13 @@ const reportDataByProjectId = Object.fromEntries(
   reports
     .filter(r => r.data.project_id)
     .map(r => {
-      const { hardware_used, services_used, duration_days } = r.data;
+      const { hardware_used, services_used, duration_days, project_id } = r.data;
       const hardwareItems = allHardware.filter(h => hardware_used.includes(h.id));
       const servicesItems = allServices.filter(s => services_used.includes(s.id));
+      const linkedProject = projects.find(p => p.id === project_id);
+      const referenceDate = linkedProject?.data.date ?? new Date();
       const totalKg = round(
-        hardwareItems.reduce((sum, h) => sum + computeHardwareCO2ForProject(h.data, duration_days), 0) +
+        hardwareItems.reduce((sum, h) => sum + computeHardwareCO2ForProject(h.data, duration_days, referenceDate), 0) +
         servicesItems.reduce((sum, s) => sum + computeServiceCO2ForProject(s.data, duration_days), 0) / 1000,
         3
       );

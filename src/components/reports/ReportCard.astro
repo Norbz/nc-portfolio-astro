@@ -3,13 +3,14 @@ import { Icon } from "astro-icon/components";
 
 interface Props {
     report: any;
-    totalEmbodiedKg: number;
+    co2PerView?: number;
     client?: string;
+    date?: Date;
 }
-const { report, totalEmbodiedKg, client } = Astro.props;
-const { title, description, date, accent, tags, project_id } = report.data;
+const { report, co2PerView, client, date } = Astro.props;
+const { title, description, accent, tags, project_id } = report.data;
 
-const formattedDate = date.toLocaleDateString("fr-FR", {
+const formattedDate = date?.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
 });
@@ -20,7 +21,7 @@ const formattedDate = date.toLocaleDateString("fr-FR", {
         <div class="card-top">
             <div class="card-meta">
                 {client && <span class="client">{client}</span>}
-                <time datetime={date.toISOString()}>{formattedDate}</time>
+                {date && <time datetime={date.toISOString()}>{formattedDate}</time>}
             </div>
             <h2>{title}</h2>
             <p class="card-description">{description}</p>
@@ -37,10 +38,14 @@ const formattedDate = date.toLocaleDateString("fr-FR", {
                             ))
                 }
             </div>
-            <span class="co2-badge">
-                <Icon name="lucide:sprout" size="14" />
-                {totalEmbodiedKg} kg CO₂
-            </span>
+            {
+                co2PerView !== undefined && (
+                    <span class="co2-badge">
+                        <Icon name="lucide:wind" size="14" />
+                        {co2PerView} g CO₂/view
+                    </span>
+                )
+            }
         </div>
     </a>
 </li>
@@ -65,7 +70,6 @@ const formattedDate = date.toLocaleDateString("fr-FR", {
             height: 100%;
             box-sizing: border-box;
             color: var(--textColor);
-            border-left: 6px solid var(--textColor);
             background: var(--mainColor);
             text-decoration: none;
         }

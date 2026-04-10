@@ -69,7 +69,7 @@ const reports = defineCollection({
   schema: z.object({
         title: z.string(),
         description: z.string(),
-        date: z.coerce.date(),
+        date: z.coerce.date().optional(),
     tags: z.array(z.string()),
         icon: z.string().optional(),
         project_id: z.string().optional(),

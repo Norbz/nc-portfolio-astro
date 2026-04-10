@@ -1,11 +1,10 @@
 ---
 title: "Monnaie de Paris — Le Génie Français"
 description: "A VueJS single-page application embedded in a Magento theme for the Génie Français coin collection."
-date: "2025-06-01"
 project_id: "genie"
 accent: "#61A5FA"
 duration_days: 45
-hardware_used: ["mbp", "screen34", "ipad", "samsung-s9", "accessories"]
+hardware_used: ["mbp-m2", "screen34", "ipad", "samsung-s9", "accessories"]
 services_used: ["github", "s3", "claude-code", "gmail"]
 use_metrics:
     page_weight_kb: 7644
@@ -13,8 +12,8 @@ use_metrics:
     requests: 122
     performance_score: 61
     dom_elements: 1582
-    notes: "The VueJS app itself is optimised (tree-shaken, lazy-loaded assets). The surrounding Magento theme loads ~300 kB over 120 network requests of legacy scripts that cannot be removed."
-tags: ["VueJS", "Magento", "Monnaie de Paris"]
+    notes: "The VueJS app itself is optimised. The surrounding Magento theme loads ~300 kB over 120 network requests of legacy scripts that cannot be removed. 3D textures are high definition to preserve the details of the coin engraving, which contributes to the page weight.  Metrics are based in real production environment and reflect the whole website, not just my developments"
+tags: ["VueJS", "Magento", "WebGL"]
 icon: "leaf"
 ---
 

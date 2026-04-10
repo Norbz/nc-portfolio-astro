@@ -1,11 +1,10 @@
 ---
 title: "Monnaie de Paris — Astro Collection"
 description: "A VueJS single-page application embedded in a Magento theme for the Astro coin collection. Page-level optimisation was possible; the Magento shell was not."
-date: "2025-04-01"
 project_id: "astro"
 accent: "#A78BFA"
 duration_days: 40
-hardware_used: ["mbp", "screen34", "ipad", "samsung-s9", "accessories"]
+hardware_used: ["mbp-m2", "screen34", "ipad", "samsung-s9", "accessories"]
 services_used: ["github", "s3", "claude-code", "gmail"]
 use_metrics:
     page_weight_kb: 1738
@@ -13,8 +12,8 @@ use_metrics:
     requests: 119
     performance_score: 85
     dom_elements: 1615
-    notes: "The VueJS app itself is optimised (tree-shaken, lazy-loaded assets). The surrounding Magento theme loads ~300 kB of legacy scripts that cannot be removed."
-tags: ["VueJS", "Magento", "Monnaie de Paris"]
+    notes: "The VueJS app itself is optimised. The surrounding Magento theme loads ~300 kB of legacy scripts that cannot be removed. Homepage feature high resolutions pictures."
+tags: ["VueJS", "Magento"]
 icon: "zodiac-scorpio"
 ---
 

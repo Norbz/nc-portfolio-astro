@@ -3,33 +3,22 @@ import Layout from '../../layouts/Layout.astro';
 import ReportCard from '../../components/reports/ReportCard.astro';
 import { Icon } from 'astro-icon/components';
 import { getCollection, getEntry } from 'astro:content';
-import { computeHardwareCO2ForProject, computeServiceCO2ForProject, round } from '../../utils/co2';
-
 const allReports = await getCollection('reports');
-const allHardware = await getCollection('hardware');
-const allServices = await getCollection('services');
 
-// Sort by date, newest first
-const reports = allReports.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-// Precompute totals and load linked projects for each report
-const reportCards = await Promise.all(reports.map(async (report) => {
-  const { hardware_used, services_used, duration_days, project_id } = report.data;
-
-  const hardwareItems = allHardware.filter(h => hardware_used.includes(h.id));
-  const servicesItems = allServices.filter(s => services_used.includes(s.id));
-
-  const totalEmbodiedKg = round(
-    hardwareItems.reduce((sum, h) => sum + computeHardwareCO2ForProject(h.data, duration_days), 0) +
-    servicesItems.reduce((sum, s) => sum + computeServiceCO2ForProject(s.data, duration_days), 0) / 1000,
-    3
-  );
-
+// Load linked projects and precompute data for each report
+const reportCards = await Promise.all(allReports.map(async (report) => {
+  const { project_id } = report.data;
   const project = project_id ? await getEntry('projects', project_id) : null;
   const client = project?.data.client;
+  const date = project?.data.date ?? report.data.date;
+  const co2PerView = report.data.use_metrics?.co2_per_view_g;
 
-  return { report, totalEmbodiedKg, client };
+  return { report, co2PerView, client, date };
 }));
+
+// Sort by date, newest first
+reportCards.sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0));
 ---
 
 <Layout
@@ -55,11 +44,12 @@ const reportCards = await Promise.all(reports.map(async (report) => {
       <p class="empty">No reports yet.</p>
     ) : (
       <ul class="reports-grid">
-        {reportCards.map(({ report, totalEmbodiedKg, client }) => (
+        {reportCards.map(({ report, co2PerView, client, date }) => (
           <ReportCard
             report={report}
-            totalEmbodiedKg={totalEmbodiedKg}
+            co2PerView={co2PerView}
             client={client}
+            date={date}
           />
         ))}
       </ul>

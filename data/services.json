@@ -13,21 +13,31 @@
     "id": "s3",
     "name": "S3 / Static Hosting",
     "icon": "lucide:cloud",
-    "description": "Asset storage and static file hosting.",
+    "description": "Asset storage and static file hosting. Demo or Staging environments only.",
     "co2_per_month_g": 8,
     "kwh_per_month": 0.5,
     "source": "https://www.thegreenwebfoundation.org/",
-    "comments": "Estimate based on ~0.001 kgCO₂/GB transferred at ~8 GB/month for a typical portfolio project. Energy estimate: ~0.5 kWh/month."
+    "comments": "Estimate based on ~0.001 kgCO₂/GB transferred at ~8 GB/month. Energy estimate: ~0.5 kWh/month."
   },
   {
     "id": "claude-code",
     "name": "Claude Code (AI)",
     "icon": "lucide:bot",
-    "description": "AI-assisted development via Anthropic's Claude.",
+    "description": "Occasional AI assistance, to write tools, CI/CD scripts, or documentation.",
+    "co2_per_month_g": 20,
+    "kwh_per_month": 0.24,
+    "source": "https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use/",
+    "comments": "GPT-4o benchmarks: ~0.3–0.43 Wh/query. Claude Code sessions estimated at 3× multiplier → ~0.003 kWh/session. Light use: ~4 sessions/day × 20 workdays × 0.003 kWh ≈ 0.24 kWh/month. At ~300 gCO₂/kWh (Anthropic partial renewables) ≈ 20g CO₂/month."
+  },
+  {
+    "id": "claude-code-heavy",
+    "name": "Claude Code (AI)",
+    "icon": "lucide:bot",
+    "description": "AI-assisted development for refactoring, code review, or feature development.",
     "co2_per_month_g": 200,
     "kwh_per_month": 2.4,
     "source": "https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use/",
-    "comments": "GPT-4o benchmarks: ~0.3–0.43 Wh/query. Claude Code sessions are heavier (large context, file reads, long outputs) — estimated 3× multiplier → ~0.003 kWh/session. 40 sessions/day × 20 workdays × 0.003 kWh ≈ 2.4 kWh/month. At ~300 gCO₂/kWh (Anthropic partial renewables) ≈ 200g CO₂/month."
+    "comments": "GPT-4o benchmarks: ~0.3–0.43 Wh/query. Claude Code sessions are heavier — estimated 3× multiplier → ~0.003 kWh/session. Heavy use estimated at 40 sessions/day × 20 workdays × 0.003 kWh ≈ 2.4 kWh/month. At ~300 gCO₂/kWh ≈ 200g CO₂/month."
   },
   {
     "id": "gmail",

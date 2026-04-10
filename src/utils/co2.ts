@@ -1,5 +1,5 @@
 // CO2 computation utilities for eco footprint reports
-// All computations happen at build time — `new Date()` reflects the build/deploy date.
+// All computations happen at build time.
 
 export interface HardwareData {
   purchaseDate: Date;
@@ -19,22 +19,23 @@ export interface ServiceData {
 }
 
 /**
- * Effective lifespan = max(estimated_lifespan_days, actual days owned so far).
- * Rewarding: if you keep a device longer than planned, daily CO2 drops.
- * Safe: on day 3 after purchase, max(1000, 3) = 1000 → no distortion.
+ * Effective lifespan = max(estimated_lifespan_days, days owned at reference date).
+ * referenceDate should be the project end date — freezes the value so reports don't
+ * silently change on each rebuild as time passes.
+ * Safe for new devices: max(1000, 3) = 1000 → no distortion.
  */
-export function computeEffectiveLifespanDays(device: HardwareData): number {
-  const daysSincePurchase = Math.floor(
-    (Date.now() - new Date(device.purchaseDate).getTime()) / 86_400_000
-  );
+export function computeEffectiveLifespanDays(device: HardwareData, referenceDate: Date): number {
+  const daysSincePurchase = Math.max(0, Math.floor(
+    (referenceDate.getTime() - new Date(device.purchaseDate).getTime()) / 86_400_000
+  ));
   return Math.max(device.estimated_lifespan_days, daysSincePurchase);
 }
 
-/** Returns true when the device has already outlived its estimated lifespan */
-export function isUsingActualLifespan(device: HardwareData): boolean {
-  const daysSincePurchase = Math.floor(
-    (Date.now() - new Date(device.purchaseDate).getTime()) / 86_400_000
-  );
+/** Returns true when the device had already outlived its estimated lifespan at the reference date */
+export function isUsingActualLifespan(device: HardwareData, referenceDate: Date): boolean {
+  const daysSincePurchase = Math.max(0, Math.floor(
+    (referenceDate.getTime() - new Date(device.purchaseDate).getTime()) / 86_400_000
+  ));
   return daysSincePurchase > device.estimated_lifespan_days;
 }
 
@@ -45,8 +46,8 @@ export function isUsingActualLifespan(device: HardwareData): boolean {
  *   co2_rectified = embodied_co2 + use_co2_per_day × effective_lifespan
  *   daily_co2 = co2_rectified / effective_lifespan
  */
-export function computeDailyCO2(device: HardwareData): number {
-  const effectiveLifespan = computeEffectiveLifespanDays(device);
+export function computeDailyCO2(device: HardwareData, referenceDate: Date): number {
+  const effectiveLifespan = computeEffectiveLifespanDays(device, referenceDate);
   const embodied_co2 = device.lifecycle_co2 * (1 - device.use_phase_percent);
   const use_co2_per_day_mfr =
     (device.lifecycle_co2 * device.use_phase_percent) / device.manufacturer_lifespan_days;
@@ -56,13 +57,14 @@ export function computeDailyCO2(device: HardwareData): number {
 
 /**
  * Total CO2 (kg) attributed to a project for one hardware device.
- * duration_days = number of working days the device was used for this project.
+ * referenceDate = project end date (freezes the longevity reward at completion time).
  */
 export function computeHardwareCO2ForProject(
   device: HardwareData,
-  duration_days: number
+  duration_days: number,
+  referenceDate: Date
 ): number {
-  return computeDailyCO2(device) * duration_days * (device.ratio ?? 1);
+  return computeDailyCO2(device, referenceDate) * duration_days * (device.ratio ?? 1);
 }
 
 /**

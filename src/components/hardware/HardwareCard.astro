@@ -9,13 +9,14 @@ import {
     round,
 } from "../../utils/co2";
 
-const { hardware, durationDays } = Astro.props;
+const { hardware, durationDays, referenceDate } = Astro.props;
 
-const dailyCO2 = round(computeDailyCO2(hardware), 4);
-const effectiveDays = computeEffectiveLifespanDays(hardware);
-const lifespanLabel = isUsingActualLifespan(hardware) ? "Effective lifespan" : "Estimated lifespan";
+const ref: Date = referenceDate ?? new Date();
+const dailyCO2 = round(computeDailyCO2(hardware, ref), 4);
+const effectiveDays = computeEffectiveLifespanDays(hardware, ref);
+const lifespanLabel = isUsingActualLifespan(hardware, ref) ? "Effective lifespan" : "Estimated lifespan";
 const projectCO2 = durationDays
-    ? round(computeHardwareCO2ForProject(hardware, durationDays), 3)
+    ? round(computeHardwareCO2ForProject(hardware, durationDays, ref), 3)
     : null;
 const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
     ? round(computeDeviceEnergyForProject(hardware, durationDays), 2)
