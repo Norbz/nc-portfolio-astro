@@ -15,11 +15,14 @@ interface Props {
     durationDays: number;
     referenceDate: Date;
 }
-const { hardwareItems, servicesItems, durationDays, referenceDate } = Astro.props;
+const { hardwareItems, servicesItems, durationDays, referenceDate } =
+    Astro.props;
 
 const totalHardwareCO2 = round(
     hardwareItems.reduce(
-        (sum, h) => sum + computeHardwareCO2ForProject(h.data, durationDays, referenceDate),
+        (sum, h) =>
+            sum +
+            computeHardwareCO2ForProject(h.data, durationDays, referenceDate),
         0,
     ),
     3,
@@ -46,17 +49,18 @@ const totalServicesKwh = round(
     <div class="embodied-content">
         <p class="section-intro">
             CO₂ embodied in hardware manufacturing, amortised over the actual
-            duration of this project ({durationDays} working days). Keeping devices
-            longer reduces this figure.
+            duration of this project. Keeping devices longer reduces this
+            figure.
         </p>
 
         <p class="methodology-note">
-            Each device's lifecycle CO₂ is sourced from manufacturer environmental reports,
-            adjusted where needed. The figure is spread over an estimated professional
-            lifespan (200 working days/year). If a device outlives that estimate, its daily
-            cost decreases — rewarding longer retention. Use phase percentages and wattage
-            are manufacturer estimates or measured proxies; exact values will vary with
-            real usage patterns.
+            Each device's lifecycle CO₂ is sourced from manufacturer
+            environmental reports, adjusted where needed. The figure is spread
+            over an estimated professional lifespan (200 working days/year). If
+            a device outlives that estimate, its daily cost decreases —
+            rewarding longer retention. Use phase percentages and wattage are
+            manufacturer estimates or measured proxies; exact values will vary
+            with real usage patterns.
         </p>
 
         <div class="hardware-list">
@@ -94,11 +98,25 @@ const totalServicesKwh = round(
                                 </div>
                                 <div class="service-metrics">
                                     <span class="service-co2">
-                                        {round(computeServiceCO2ForProject(service.data, durationDays), 1)} g CO₂
+                                        {round(
+                                            computeServiceCO2ForProject(
+                                                service.data,
+                                                durationDays,
+                                            ),
+                                            1,
+                                        )}{" "}
+                                        g CO₂
                                     </span>
                                     {service.data.kwh_per_month && (
                                         <span class="service-kwh">
-                                            {round(computeServiceEnergyForProject(service.data, durationDays), 2)} kWh
+                                            {round(
+                                                computeServiceEnergyForProject(
+                                                    service.data,
+                                                    durationDays,
+                                                ),
+                                                2,
+                                            )}{" "}
+                                            kWh
                                         </span>
                                     )}
                                 </div>
@@ -115,7 +133,8 @@ const totalServicesKwh = round(
             {
                 servicesItems.length > 0 && (
                     <span class="total-services">
-                        + {totalServicesCO2g} g services · {totalServicesKwh} kWh
+                        + {totalServicesCO2g} g services · {totalServicesKwh}{" "}
+                        kWh
                     </span>
                 )
             }
@@ -131,14 +150,13 @@ const totalServicesKwh = round(
     }
 
     .section-intro {
-        font-size: 1rem;
-        opacity: 0.7;
+        font-size: 1.2rem;
         max-width: 600px;
     }
 
     .methodology-note {
-        font-size: 0.85rem;
-        opacity: 0.5;
+        font-size: 0.9rem;
+        opacity: 0.7;
         font-style: italic;
         max-width: 600px;
         margin-top: -1rem;

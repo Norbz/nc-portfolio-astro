@@ -45,7 +45,8 @@ const hardware = defineCollection({
         estimated_lifespan_days: z.number(),
         water_per_day_l: z.number().optional(),
         source: z.string().optional(),
-        comments: z.string().optional()
+        comments: z.string().optional(),
+        methodology: z.string().optional()
       })
 });
 

@@ -7,11 +7,12 @@ interface Props {
     unit?: string;
     icon?: string;
     accent?: boolean;
+    tooltip?: string;
 }
-const { label, value, unit, icon, accent = false } = Astro.props;
+const { label, value, unit, icon, accent = false, tooltip } = Astro.props;
 ---
 
-<div class:list={["metric-card", { accent }]}>
+<div class:list={["metric-card", { accent }]} data-tooltip={tooltip}>
     {icon && <Icon name={icon} class="metric-icon" size="20" />}
     <div class="metric-value">
         <span class="value">{value}</span>
@@ -29,13 +30,31 @@ const { label, value, unit, icon, accent = false } = Astro.props;
         flex-direction: column;
         gap: 0.4rem;
         background: var(--mainColor);
+        position: relative;
+
+        &[data-tooltip]:hover::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 0;
+            width: max-content;
+            max-width: 300px;
+            background: var(--textColor);
+            color: var(--mainColor);
+            font-size: 0.75rem;
+            line-height: 1.4;
+            padding: 0.4rem 0.6rem;
+            border: 1px solid var(--mainColor);
+            pointer-events: none;
+            z-index: 10;
+            white-space: normal;
+        }
 
         &.accent {
             @include set-color(true);
         }
 
         .metric-icon {
-            opacity: 0.5;
         }
 
         .metric-value {

@@ -32,6 +32,14 @@ const hasMetrics =
         {
             hasMetrics && (
                 <div class="metrics-grid">
+                    <p class="metrics-disclaimer">
+                        CO₂ estimates for web pages vary significantly across
+                        measurement models, server infrastructure, CDN coverage,
+                        and user devices. Values differ between tools and change
+                        over time as content evolves. Figures here use the
+                        Sustainable Web Design model as a baseline and reflect a
+                        few snapshots after project delivery.
+                    </p>
                     {metrics?.co2_per_view_g !== undefined && (
                         <div class="metric-featured">
                             <MetricCard
@@ -40,6 +48,7 @@ const hasMetrics =
                                 unit="g"
                                 icon="lucide:wind"
                                 accent={true}
+                                tooltip="Estimated CO₂ emitted per page view, covering data transfer, CDN, and end-user device. Based on the Sustainable Web Design model. Exact values are disputed and vary by methodology."
                             />
                         </div>
                     )}
@@ -50,6 +59,7 @@ const hasMetrics =
                                 value={metrics.page_weight_kb}
                                 unit="kB"
                                 icon="lucide:weight"
+                                tooltip="Total transfer size of all resources on initial page load (HTML, CSS, JS, images). Lower is generally better."
                             />
                         )}
                         {metrics?.requests !== undefined && (
@@ -57,6 +67,7 @@ const hasMetrics =
                                 label="HTTP requests"
                                 value={metrics.requests}
                                 icon="lucide:network"
+                                tooltip="Number of network requests on initial load. Each request adds latency and energy overhead."
                             />
                         )}
                         {metrics?.performance_score !== undefined && (
@@ -65,6 +76,7 @@ const hasMetrics =
                                 value={metrics.performance_score}
                                 unit="/ 100"
                                 icon="lucide:gauge"
+                                tooltip="Lighthouse performance score (0–100). Measures loading speed, interactivity, and visual stability."
                             />
                         )}
                         {metrics?.dom_elements !== undefined && (
@@ -72,6 +84,7 @@ const hasMetrics =
                                 label="DOM elements"
                                 value={metrics.dom_elements}
                                 icon="lucide:code"
+                                tooltip="Number of DOM nodes on the page. A high count increases rendering cost and memory usage on end-user devices."
                             />
                         )}
                     </div>
@@ -123,6 +136,14 @@ const hasMetrics =
         display: flex;
         flex-direction: column;
         gap: 1rem;
+    }
+
+    .metrics-disclaimer {
+        font-size: 0.9rem;
+        opacity: 0.7;
+        font-style: italic;
+        max-width: 600px;
+        margin: 0;
     }
 
     .metric-featured {

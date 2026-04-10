@@ -5,7 +5,7 @@
     "description": "My main computer.",
     "icon": "lucide:laptop",
     "purchaseDate": "2023-07-01",
-    "wattage": 60,
+    "wattage": 20,
     "daily_hours": 8,
     "lifecycle_co2": 312,
     "manufacturer_lifespan_days": 800,
@@ -18,11 +18,11 @@
   {
     "id": "samsung-s9",
     "name": "Samsung S9",
-    "description": "My daily phone.",
+    "description": "My daily phone. Used for communication and testing",
     "icon": "lucide:smartphone",
     "purchaseDate": "2018-06-01",
     "ratio": 0.2,
-    "wattage": 5,
+    "wattage": 4.5,
     "daily_hours": 3,
     "lifecycle_co2": 73.5,
     "manufacturer_lifespan_days": 600,
@@ -30,16 +30,16 @@
     "estimated_lifespan_days": 1200,
     "water_per_day_l": 0.06307,
     "source": "https://www.samsung.com/global/sustainability/media/pdf/Galaxy_S23_Plus_Environmental_Report_EN_230201.pdf",
-    "comments": "Based on S23 data, increased by 25% (arbitrary). Samsung's data uses 3-year lifespan; adjusted to 6 years actual use. Usage phase = 9.9%."
+    "comments": "Based on S23 data, increased by 25% (arbitrary). Samsung's data assumes a 3-year lifespan."
   },
   {
     "id": "ipad",
     "name": "iPad 7th Gen",
-    "description": "My secondary tablet.",
+    "description": "A quite dated iPad, only used for testing purposes.",
     "icon": "lucide:tablet",
     "purchaseDate": "2019-01-01",
     "ratio": 0.1,
-    "wattage": 10,
+    "wattage": 7,
     "daily_hours": 2,
     "lifecycle_co2": 73.5,
     "manufacturer_lifespan_days": 600,
@@ -47,7 +47,7 @@
     "estimated_lifespan_days": 1200,
     "water_per_day_l": 0.10535,
     "source": "https://www.apple.com/environment/pdf/products/ipad/iPad_PER_sept2019.pdf",
-    "comments": "Apple uses a 3-year lifespan; adjusted to 5 years for my usage."
+    "comments": "Apple uses a 3-year lifespan."
   },
   {
     "id": "screen34",
