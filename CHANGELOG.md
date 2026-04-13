@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.1](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.4.0...nc-portfolio-astro-v1.4.1) (2026-04-13)
+
+
+### 🔥 Bug Fixes
+
+* Fixed iPad reporting the wrong CO2 value ([b959aa8](https://github.com/Norbz/nc-portfolio-astro/commit/b959aa80ac1ae3cee21f2af23f9eaaaf38414055))
+* Here and there small TS fixes and folder reorganization ([b959aa8](https://github.com/Norbz/nc-portfolio-astro/commit/b959aa80ac1ae3cee21f2af23f9eaaaf38414055))
+* Removed tooltip for mobiles as they make it difficult to read ([a98d525](https://github.com/Norbz/nc-portfolio-astro/commit/a98d5259a0b4de45415525f4fbd1b89b783a80bd))
+
 ## [1.4.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.3.1...nc-portfolio-astro-v1.4.0) (2026-04-10)
 
 
