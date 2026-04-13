@@ -7,24 +7,32 @@ import {
     computeEffectiveLifespanDays,
     isUsingActualLifespan,
     round,
-} from "../../utils/co2";
+} from "../../../utils/co2";
 
 const { hardware, durationDays, referenceDate } = Astro.props;
 
 const ref: Date = referenceDate ?? new Date();
 const dailyCO2 = round(computeDailyCO2(hardware, ref), 4);
 const effectiveDays = computeEffectiveLifespanDays(hardware, ref);
-const lifespanLabel = isUsingActualLifespan(hardware, ref) ? "Effective lifespan" : "Estimated lifespan";
+const lifespanLabel = isUsingActualLifespan(hardware, ref)
+    ? "Effective lifespan"
+    : "Estimated lifespan";
 
 const embodiedCO2 = hardware.lifecycle_co2 * (1 - hardware.use_phase_percent);
-const useCO2PerDayMfr = (hardware.lifecycle_co2 * hardware.use_phase_percent) / hardware.manufacturer_lifespan_days;
-const actualLifecycleCO2 = round(embodiedCO2 + useCO2PerDayMfr * effectiveDays, 1);
+const useCO2PerDayMfr =
+    (hardware.lifecycle_co2 * hardware.use_phase_percent) /
+    hardware.manufacturer_lifespan_days;
+const actualLifecycleCO2 = round(
+    embodiedCO2 + useCO2PerDayMfr * effectiveDays,
+    1,
+);
 const projectCO2 = durationDays
     ? round(computeHardwareCO2ForProject(hardware, durationDays, ref), 3)
     : null;
-const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
-    ? round(computeDeviceEnergyForProject(hardware, durationDays), 2)
-    : null;
+const projectKwh =
+    durationDays && hardware.wattage && hardware.daily_hours
+        ? round(computeDeviceEnergyForProject(hardware, durationDays), 2)
+        : null;
 ---
 
 <article class="hardware-card">
@@ -33,19 +41,27 @@ const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
         <h3>{hardware.name}</h3>
         <p class="description">{hardware.description}</p>
         <ul class="stats">
-            <li data-tooltip="Manufacturing CO₂ spread over the device's effective lifespan. Longer retention lowers this figure.">
+            <li
+                data-tooltip="Manufacturing CO₂ spread over the device's effective lifespan. Longer retention lowers this figure."
+            >
                 <span class="label">Daily CO₂</span>
                 <span class="value">{dailyCO2} kg/day</span>
             </li>
-            {hardware.ratio !== undefined && hardware.ratio !== 1 && (
-                <li data-tooltip="Fraction of the workday this device is used for professional work.">
-                    <span class="label">Usage ratio</span>
-                    <span class="value">{hardware.ratio * 100}% of workday</span>
-                </li>
-            )}
-            <li data-tooltip={lifespanLabel === "Effective lifespan"
-                ? "Device has outlived its estimated lifespan — daily CO₂ is now lower than the manufacturer's baseline."
-                : "Target working-day lifespan (200 days/year model). Daily CO₂ decreases once the device outlives this."}>
+            {
+                hardware.ratio !== undefined && hardware.ratio !== 1 && (
+                    <li data-tooltip="Fraction of the workday this device is used for professional work.">
+                        <span class="label">Usage ratio</span>
+                        <span class="value">
+                            {hardware.ratio * 100}% of workday
+                        </span>
+                    </li>
+                )
+            }
+            <li
+                data-tooltip={lifespanLabel === "Effective lifespan"
+                    ? "Device has outlived its estimated lifespan — daily CO₂ is now lower than the manufacturer's baseline."
+                    : "Target working-day lifespan (200 days/year model). Daily CO₂ decreases once the device outlives this."}
+            >
                 <span class="label">{lifespanLabel}</span>
                 <span class="value">{effectiveDays} days</span>
             </li>
@@ -53,55 +69,94 @@ const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
                 <details class="methodology">
                     <summary>Details</summary>
                     <ul class="methodology-stats">
-                        {hardware.wattage && (
-                            <li data-tooltip="Average power draw under typical workload.">
-                                <span class="label">Wattage</span>
-                                <span class="value">{hardware.wattage} W</span>
-                            </li>
-                        )}
-                        <li data-tooltip="Share of total lifecycle CO₂ attributed to energy consumption during use, vs. manufacturing.">
+                        {
+                            hardware.wattage && (
+                                <li data-tooltip="Average power draw under typical workload.">
+                                    <span class="label">Wattage</span>
+                                    <span class="value">
+                                        {hardware.wattage} W
+                                    </span>
+                                </li>
+                            )
+                        }
+                        <li
+                            data-tooltip="Share of total lifecycle CO₂ attributed to energy consumption during use, vs. manufacturing."
+                        >
                             <span class="label">Use phase</span>
-                            <span class="value">{Math.round(hardware.use_phase_percent * 100)}%</span>
+                            <span class="value"
+                                >{
+                                    Math.round(hardware.use_phase_percent * 100)
+                                }%</span
+                            >
                         </li>
-                        <li data-tooltip="Total CO₂ as reported in the manufacturer's environmental report, for their stated lifespan.">
-                            <span class="label">Manufacturer lifecycle CO₂</span>
-                            <span class="value">{hardware.lifecycle_co2} kg</span>
+                        <li
+                            data-tooltip="Total CO₂ as reported in the manufacturer's environmental report, for their stated lifespan."
+                        >
+                            <span class="label">Manufacturer lifecycle CO₂</span
+                            >
+                            <span class="value"
+                                >{hardware.lifecycle_co2} kg</span
+                            >
                         </li>
-                        <li data-tooltip="Recalculated lifecycle CO₂ based on actual usage duration. Higher than the manufacturer figure when the device is kept past its estimated lifespan.">
+                        <li
+                            data-tooltip="Recalculated lifecycle CO₂ based on actual usage duration. Higher than the manufacturer figure when the device is kept past its estimated lifespan."
+                        >
                             <span class="label">Actual lifecycle CO₂</span>
                             <span class="value">{actualLifecycleCO2} kg</span>
                         </li>
-                        {hardware.water_per_day_l && (
-                            <li data-tooltip="Virtual water embedded in manufacturing, amortised over daily use.">
-                                <span class="label">Daily water</span>
-                                <span class="value">{hardware.water_per_day_l} L/day</span>
-                            </li>
-                        )}
+                        {
+                            hardware.water_per_day_l && (
+                                <li data-tooltip="Virtual water embedded in manufacturing, amortised over daily use.">
+                                    <span class="label">Daily water</span>
+                                    <span class="value">
+                                        {hardware.water_per_day_l} L/day
+                                    </span>
+                                </li>
+                            )
+                        }
                     </ul>
-                    {hardware.methodology && (
-                        <p class="methodology-detail">{hardware.methodology}</p>
-                    )}
+                    {
+                        hardware.methodology && (
+                            <p class="methodology-detail">
+                                {hardware.methodology}
+                            </p>
+                        )
+                    }
                 </details>
             </li>
-            {projectCO2 !== null && (
-                <li class="project-contribution" data-tooltip="CO₂ attributed to this device for the project duration, scaled by usage ratio.">
-                    <span class="label">This project</span>
-                    <span class="project-values">
-                        <span class="value highlight">{projectCO2} kg CO₂</span>
-                        {projectKwh !== null && (
-                            <span class="value kwh">{projectKwh} kWh</span>
-                        )}
-                    </span>
-                </li>
-            )}
+            {
+                projectCO2 !== null && (
+                    <li
+                        class="project-contribution"
+                        data-tooltip="CO₂ attributed to this device for the project duration, scaled by usage ratio."
+                    >
+                        <span class="label">This project</span>
+                        <span class="project-values">
+                            <span class="value highlight">
+                                {projectCO2} kg CO₂
+                            </span>
+                            {projectKwh !== null && (
+                                <span class="value kwh">{projectKwh} kWh</span>
+                            )}
+                        </span>
+                    </li>
+                )
+            }
         </ul>
 
         {hardware.comments && <p class="comments">{hardware.comments}</p>}
-        {hardware.source && (
-            <a href={hardware.source} target="_blank" rel="noopener noreferrer" class="source">
-                Source <Icon name="lucide:external-link" size="12" />
-            </a>
-        )}
+        {
+            hardware.source && (
+                <a
+                    href={hardware.source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="source"
+                >
+                    Source <Icon name="lucide:external-link" size="12" />
+                </a>
+            )
+        }
     </div>
 </article>
 
@@ -241,7 +296,9 @@ const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
                     gap: 0.3rem;
                     user-select: none;
 
-                    &::-webkit-details-marker { display: none; }
+                    &::-webkit-details-marker {
+                        display: none;
+                    }
 
                     &::after {
                         content: "↓";
@@ -290,7 +347,9 @@ const projectKwh = durationDays && hardware.wattage && hardware.daily_hours
                             }
                         }
 
-                        .label { opacity: 0.6; }
+                        .label {
+                            opacity: 0.6;
+                        }
                         .value {
                             font-variant-numeric: tabular-nums;
                             text-align: right;

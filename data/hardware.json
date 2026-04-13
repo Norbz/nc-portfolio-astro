@@ -41,7 +41,7 @@
     "ratio": 0.1,
     "wattage": 7,
     "daily_hours": 2,
-    "lifecycle_co2": 73.5,
+    "lifecycle_co2": 87,
     "manufacturer_lifespan_days": 600,
     "use_phase_percent": 0.14,
     "estimated_lifespan_days": 1200,
@@ -68,7 +68,7 @@
   {
     "id": "accessories",
     "name": "Accessories",
-    "description": "Chargers, mice, keyboards and other peripherals.",
+    "description": "Chargers, ISP box and other peripherals.",
     "icon": "lucide:cable",
     "purchaseDate": "2020-01-01",
     "wattage": 10,
@@ -77,6 +77,6 @@
     "manufacturer_lifespan_days": 1600,
     "use_phase_percent": 0.4,
     "estimated_lifespan_days": 1600,
-    "comments": "Includes MacBook charger (~4 kg), IPS internet box (~40 kg), and ethernet cable (~1 kg). No mouse — trackpad used. Use phase at 0.4 reflects the always-on nature of the internet box. Daily hours scoped to work use only."
+    "comments": "Includes MacBook charger (~4 kg), IPS internet box (~40 kg), cables (~1 kg)... Use phase at 0.4 reflects the always-on nature of the internet box. Daily hours scoped to work use only."
   }
 ]

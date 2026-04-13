@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import TwoColumnsSection from "../common/TwoColumnsSection.astro";
-import HardwareCard from "../hardware/HardwareCard.astro";
+import HardwareCard from "./hardware/HardwareCard.astro";
 import {
     computeHardwareCO2ForProject,
     computeServiceCO2ForProject,
@@ -57,10 +57,10 @@ const totalServicesKwh = round(
             Each device's lifecycle CO₂ is sourced from manufacturer
             environmental reports, adjusted where needed. The figure is spread
             over an estimated professional lifespan (200 working days/year). If
-            a device outlives that estimate, its daily cost decreases —
-            rewarding longer retention. Use phase percentages and wattage are
-            manufacturer estimates or measured proxies; exact values will vary
-            with real usage patterns.
+            a device outlives that estimate, its daily cost decreases, rewarding
+            longer retention. Use phase percentages and wattage are manufacturer
+            estimates or measured proxies, exact values will vary with real
+            usage patterns.
         </p>
 
         <div class="hardware-list">

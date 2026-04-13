@@ -47,12 +47,14 @@ const projectUrl = project?.data.url;
 const client = project?.data.client;
 const date = project?.data.date ?? report.data.date;
 // Freeze longevity reward at project end; fall back to build time if no date available
-const referenceDate = date ?? new Date();
+const referenceDate: Date = date ?? new Date();
 
 // Compute totals for the hero
 const totalEmbodiedKg = round(
     hardwareItems.reduce(
-        (sum, h) => sum + computeHardwareCO2ForProject(h.data, duration_days, referenceDate),
+        (sum, h) =>
+            sum +
+            computeHardwareCO2ForProject(h.data, duration_days, referenceDate),
         0,
     ) +
         servicesItems.reduce(
@@ -72,7 +74,7 @@ const totalEmbodiedKg = round(
 >
     <ReportHero
         title={title}
-        date={date}
+        date={referenceDate}
         description={description}
         totalEmbodiedKg={totalEmbodiedKg}
         client={client}
