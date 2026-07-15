@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.4.1...nc-portfolio-astro-v1.5.0) (2026-07-15)
+
+
+### 🚀 New Features
+
+* Adding GDPR friendly umami analytics ([612b771](https://github.com/Norbz/nc-portfolio-astro/commit/612b7718e4ac1c05f10a604c250b872ae8fa8b46))
+
 ## [1.4.1](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.4.0...nc-portfolio-astro-v1.4.1) (2026-04-13)
 
 
