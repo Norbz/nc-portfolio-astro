@@ -14,6 +14,8 @@ interface Props {
   description?: string;
 }
 const { accent, title, description } = Astro.props;
+const umamiHost = import.meta.env.PUBLIC_UMAMI_HOST;
+const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 ---
 <!doctype html>
 <html lang="en" style={accent ? `--mainColor: ${accent}` : ''}>
@@ -23,6 +25,16 @@ const { accent, title, description } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		{umamiHost && umamiWebsiteId && (
+			<script
+				is:inline
+				defer
+				src={`${umamiHost}/script.js`}
+				data-website-id={umamiWebsiteId}
+				data-do-not-track="true"
+				data-performance="true"
+			/>
+		)}
 		<meta name="description" content={description ?? 'Nicolas Chesné - Full stack Freelance Developer - Based in Paris - 20 years of experience'} />
 		<meta name="keywords" content="freelance, developer, fullstack, web, javascript, strapi, vue, nodejs, paris, sustainable web design" />
 		<meta name="author" content="Nicolas Chesné" />
