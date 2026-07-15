@@ -2,6 +2,7 @@
 import CommonHeader from '../components/common/ui/Header.astro';
 import AppSticky from '../components/common/ui/AppSticky.astro';
 import CommonFooter from '../components/common/ui/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
 import '../scss/reset.scss';
 import '../scss/variables.scss';
 import '../scss/main.scss';
@@ -23,6 +24,7 @@ const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 		<meta charset="UTF-8" />
 		<title>{title ?? 'Nicolas Chesné - Fullstack Freelance Developer'}</title>
 		<meta name="viewport" content="width=device-width" />
+		<ClientRouter />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		{umamiHost && umamiWebsiteId && (
@@ -62,12 +64,12 @@ const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 		<meta name="twitter:image" content="/og-image.png" />
 	</head>
 	<body>
-		<CommonHeader/>
+		<CommonHeader />
 		<main>
 			<slot />
 		</main>
 		<AppSticky />
-		<CommonFooter class="app__footer"/>
+		<CommonFooter class="app__footer" />
 	</body>
 </html>
 
@@ -82,5 +84,54 @@ const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 
 	main {
   	padding: 2rem 2rem 0;
+	}
+</style>
+
+<!--
+	Page transition: a solid black curtain that sweeps right -> left.
+	Phase 1 (0 -> 50%): the old page is clipped away from the right edge,
+	revealing the black backdrop underneath -> the screen becomes fully black.
+	Phase 2 (50 -> 100%): the new page is drawn in from the right over the black.
+	Hard clip edges only, no opacity fades — matches the "everything at the cut"
+	design system. Reduced-motion users get an instant cut (no sweep).
+-->
+<style is:global>
+	::view-transition {
+		background-color: #000;
+	}
+
+	/* Avoid the browser's default cross-fade; we drive the motion ourselves. */
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		mix-blend-mode: normal;
+	}
+
+	::view-transition-old(root) {
+		z-index: 2;
+		animation: curtain-cover 0.55s cubic-bezier(0.76, 0, 0.24, 1) both;
+	}
+
+	::view-transition-new(root) {
+		z-index: 1;
+		animation: curtain-reveal 0.55s cubic-bezier(0.76, 0, 0.24, 1) both;
+	}
+
+	@keyframes curtain-cover {
+		0%   { clip-path: inset(0 0 0 0); }
+		50%  { clip-path: inset(0 100% 0 0); }
+		100% { clip-path: inset(0 100% 0 0); }
+	}
+
+	@keyframes curtain-reveal {
+		0%   { clip-path: inset(0 0 0 100%); }
+		50%  { clip-path: inset(0 0 0 100%); }
+		100% { clip-path: inset(0 0 0 0); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		::view-transition-old(root),
+		::view-transition-new(root) {
+			animation: none;
+		}
 	}
 </style>
