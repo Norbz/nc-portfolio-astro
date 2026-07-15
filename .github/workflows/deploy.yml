@@ -19,16 +19,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install, build, and upload your site
-        uses: withastro/action@v3
+        uses: withastro/action@v6
         env:
           PUBLIC_UMAMI_HOST: ${{ secrets.PUBLIC_UMAMI_HOST }}
           PUBLIC_UMAMI_WEBSITE_ID: ${{ secrets.PUBLIC_UMAMI_WEBSITE_ID }}
         # with:
-            # path: . # L'emplacement racine de votre projet Astro dans le dépôt. (facultatif)
-            # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (facultatif)
-            # package-manager: npm # Le gestionnaire de paquets Node qui doit être utilisé pour installer les dépendances et build votre site. Détecté automatiquement en fonction de votre lockfile. (facultatif)
+        # path: . # L'emplacement racine de votre projet Astro dans le dépôt. (facultatif)
+        # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (facultatif)
+        # package-manager: npm # Le gestionnaire de paquets Node qui doit être utilisé pour installer les dépendances et build votre site. Détecté automatiquement en fonction de votre lockfile. (facultatif)
 
   deploy:
     needs: build
