@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.5.0...nc-portfolio-astro-v1.6.0) (2026-07-15)
+
+
+### 🚀 New Features
+
+* Adding transition-view 😍 ([2cd28b7](https://github.com/Norbz/nc-portfolio-astro/commit/2cd28b72c3825667df2238229dd30d95a1ce190e))
+
+
+### ⚙️ Chores
+
+* Updated to Astro 7.x ([2cd28b7](https://github.com/Norbz/nc-portfolio-astro/commit/2cd28b72c3825667df2238229dd30d95a1ce190e))
+
 ## [1.5.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.4.1...nc-portfolio-astro-v1.5.0) (2026-07-15)
 
 
