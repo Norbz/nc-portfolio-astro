@@ -24,7 +24,25 @@ The result is a fast, lightweight, and efficient portfolio that showcases my wor
 
 I believe it showcases that sustainable webdesign doesn't have to be a compromise on quality or user experience.
 
-> 💡 This portfolio, once compiled, only weight around 70kB (depending on the latests projects), which means I could store it 20 times on a single floppy disk! 
+The homepage's floppy-disk comparison uses the compiled HTML and its local assets,
+including all eight project images, CSS, JavaScript, favicon, and every font subset
+and fallback referenced by the CSS. It measures file bytes before HTTP compression,
+against a standard 1.44 MB floppy's 1,474,560 bytes. This is a conservative storage
+comparison, not a measurement of browser network traffic. Other pages, the downloadable
+CV, social-preview images, and external analytics are outside this homepage scope.
+
+To refresh the comparison after changing the site:
+
+```sh
+npm run build
+npm run measure:footprint -- --write
+npm run build
+npm run measure:footprint
+```
+
+The measurement lists every included file and also reports the complete `dist/` size.
+The displayed values live in `data/footprint.json`; the final measurement should match
+them (repeat the update/build if rounding changes). No measurement code is sent to the browser.
 
 ## How is it deployed?
 I am using [Release Please](https://github.com/googleapis/release-please-action) to keep tracks of [releases](/releases). Once a release is created, the code is automatically deployed to GitHub Pages using GitHub Actions.

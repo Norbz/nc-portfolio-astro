@@ -1,0 +1,189 @@
+---
+import { usedPercent, kilobytes } from '../../../data/footprint.json';
+
+const freePercent = Number((100 - usedPercent).toFixed(1));
+// Each cell represents 5% of the disk; the last occupied cell is partial.
+const cells = Array.from({ length: 20 }, (_, index) => ({
+    x: 82 + (index % 10) * 16,
+    y: 186 + Math.floor(index / 10) * 30,
+    fill: Math.min(1, Math.max(0, usedPercent / 5 - index)),
+}));
+---
+
+<section id="small-by-design" class="footprint" aria-labelledby="footprint-title">
+    <floppy-footprint>
+        <div class="illustration">
+            <svg viewBox="0 0 320 320" fill="none" aria-hidden="true">
+                <g class="disk">
+                    <path class="ink" d="M56 42H252L282 72V280H56Z" />
+                    <path class="paper outline" d="M48 34H244L274 64V272H48Z" />
+                    <path class="outline" d="M92 34V110H226V34M108 34V96H210V34" />
+                    <g class="shutter">
+                        <path class="ink" d="M108 34H210V96H108Z" />
+                        <path class="paper" d="M174 44H194V85H174Z" />
+                    </g>
+                    <path class="paper outline" d="M68 132H254V252H68Z" />
+                    <path class="ink" d="M68 132H254V171H68Z" />
+                    <text x="81" y="157" class="label">PORTFOLIO — NC</text>
+                    {cells.map(({ x, y, fill }) => (
+                        <g>
+                            {fill > 0 && <rect x={x} y={y} width={12 * fill} height="22" class="occupied" />}
+                            <rect x={x} y={y} width="12" height="22" class="cell" />
+                        </g>
+                    ))}
+                    <path class="ink" d="M57 249H63V262H57ZM259 249H265V262H259Z" />
+                    <g class="packet">
+                        <path class="ink" d="M0 0H180V120H0Z" />
+                        <g class="window-detail">
+                            <path class="paper" d="M4 4H176V22H4ZM10 34H170V110H10Z" />
+                            <path class="ink" d="M12 10H17V15H12ZM23 10H28V15H23ZM34 10H39V15H34Z" />
+                            <text x="21" y="75" class="window-title">NC_</text>
+                            <path class="ink" d="M22 86H108V90H22ZM22 98H148V102H22Z" />
+                        </g>
+                    </g>
+                </g>
+                <path class="outline" d="M82 288V299H240V288" />
+                <text x="161" y="318" text-anchor="middle" class="caption">1.44 MB · 3.5-INCH DISK</text>
+            </svg>
+        </div>
+
+        <div class="copy">
+            <p class="eyebrow">Small by design</p>
+            <h2 id="footprint-title"><span class="fraction">{usedPercent}<span class="unit">%</span></span><span class="subtitle">of a floppy disk.</span></h2>
+            <p class="description">That’s all this homepage needs.<br />Less data. More room for what matters.</p>
+            <p class="measurement">≈ {kilobytes} kB · page + all local assets, uncompressed.</p>
+            <div class="capacity" aria-label={`${usedPercent} percent used, ${freePercent} percent free`}>
+                <span><i aria-hidden="true"></i>{usedPercent}% used</span>
+                <span>{freePercent}% free</span>
+            </div>
+            <button type="button" hidden aria-label="Replay the floppy disk animation">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 3v7h7" /></svg>
+                Replay
+            </button>
+        </div>
+    </floppy-footprint>
+</section>
+
+<script>
+    class FloppyFootprint extends HTMLElement {
+        observer?: IntersectionObserver;
+
+        connectedCallback() {
+            const button = this.querySelector('button')!;
+            const play = () => {
+                if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                this.classList.remove('playing');
+                void this.offsetWidth;
+                this.classList.add('playing');
+            };
+            button.hidden = false;
+            button.onclick = play;
+            this.observer = new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) {
+                    play();
+                    this.observer?.disconnect();
+                }
+            }, { threshold: 0.5 });
+            this.observer.observe(this.querySelector('.illustration')!);
+        }
+
+        disconnectedCallback() {
+            this.observer?.disconnect();
+        }
+    }
+
+    if (!customElements.get('floppy-footprint')) {
+        customElements.define('floppy-footprint', FloppyFootprint);
+    }
+</script>
+
+<style>
+    .footprint {
+        max-width: 1100px;
+        margin: 5rem auto 6rem;
+        padding-top: 3rem;
+        scroll-margin-top: calc(var(--headerHeight) + 1.5rem);
+        border-top: 1px solid var(--textColor);
+    }
+
+    floppy-footprint {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: center;
+        gap: clamp(2rem, 6vw, 6rem);
+    }
+
+    .illustration {
+        width: min(100%, 360px);
+        justify-self: center;
+    }
+
+    .illustration > svg { display: block; width: 100%; }
+    .ink, .occupied { fill: var(--textColor); }
+    .paper { fill: var(--mainColor); }
+    .outline, .cell { stroke: var(--textColor); stroke-width: 2; }
+    text { font-family: inherit; fill: var(--textColor); }
+    .label { fill: var(--mainColor); font-size: 16px; letter-spacing: 1px; }
+    .caption { font-size: 10px; letter-spacing: 1.2px; }
+    .window-title { font-size: 38px; font-weight: 700; }
+    .disk { transform-origin: 160px 160px; }
+    .packet { opacity: 0; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem; }
+    h2 { margin: 0.6rem 0 1.2rem; }
+    .fraction { display: block; font-size: clamp(5rem, 9vw, 7rem); letter-spacing: -0.08em; line-height: 0.95; }
+    .unit { margin-left: 0.1em; font-size: 0.5em; letter-spacing: 0; }
+    .subtitle { display: block; margin-top: 0.6rem; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400; }
+    .description { font-size: 0.95rem; line-height: 1.6; }
+    .measurement { margin-top: 0.65rem; max-width: 38ch; font-size: 0.7rem; line-height: 1.5; }
+    .capacity { display: flex; justify-content: space-between; gap: 1rem; max-width: 320px; margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid var(--textColor); font-size: 0.75rem; }
+    .capacity span:first-child { display: inline-flex; align-items: center; gap: 0.5rem; }
+    .capacity i { width: 8px; height: 8px; background: var(--textColor); }
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1.25rem;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--textColor);
+        background: var(--mainColor);
+        color: var(--textColor);
+        font: inherit;
+        font-size: 0.75rem;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--textColor);
+    }
+
+    button[hidden] { display: none; }
+    button:hover, button:active { transform: translate(3px, 3px); box-shadow: none; }
+    button:focus-visible { outline: 2px solid var(--textColor); outline-offset: 5px; }
+
+    .playing .packet { animation: save 2.4s cubic-bezier(0.76, 0, 0.24, 1) both; }
+    .playing .window-detail { animation: fold 2.4s both; }
+    .playing .occupied { animation: stored 2.4s steps(1) both; }
+    .playing .shutter { animation: click 2.4s steps(2, end) both; }
+    .playing .disk { animation: settle 2.4s ease-out both; }
+
+    @keyframes save {
+        0%, 20% { opacity: 1; transform: translate(82px, 60px) scale(1); }
+        65% { opacity: 1; transform: translate(82px, 186px) scale(0.066667, 0.183333); }
+        66%, 100% { opacity: 0; transform: translate(82px, 186px) scale(0.066667, 0.183333); }
+    }
+    @keyframes fold { 0%, 25% { opacity: 1; } 55%, 100% { opacity: 0; } }
+    @keyframes stored { 0% { fill: none; } 65%, 100% { fill: var(--textColor); } }
+    @keyframes click { 0%, 65%, 100% { transform: translateX(0); } 75% { transform: translateX(-12px); } }
+    @keyframes settle { 0%, 65%, 100% { transform: rotate(0); } 72% { transform: rotate(-3deg); } 85% { transform: rotate(1deg); } }
+
+    @media (max-width: 600px) {
+        .footprint { margin-top: 3rem; padding-top: 2rem; }
+        floppy-footprint { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+        .illustration { width: min(100%, 250px); }
+        .copy { width: 100%; max-width: 320px; justify-self: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .playing .packet, .playing .window-detail, .playing .occupied,
+        .playing .shutter, .playing .disk { animation: none; }
+        button { display: none; }
+    }
+</style>

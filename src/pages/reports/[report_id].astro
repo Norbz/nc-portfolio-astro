@@ -79,6 +79,7 @@ const totalEmbodiedKg = round(
         totalEmbodiedKg={totalEmbodiedKg}
         client={client}
         projectUrl={projectUrl}
+        projectId={project_id}
         tags={tags}
         icon={icon}
     />
@@ -91,7 +92,7 @@ const totalEmbodiedKg = round(
             referenceDate={referenceDate}
         />
 
-        <UseSection metrics={use_metrics}>
+        <UseSection metrics={use_metrics} projectId={project_id}>
             <Content />
         </UseSection>
     </div>

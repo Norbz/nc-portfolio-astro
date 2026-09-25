@@ -15,8 +15,9 @@ interface UseMetrics {
 
 interface Props {
     metrics?: UseMetrics;
+    projectId?: string;
 }
-const { metrics } = Astro.props;
+const { metrics, projectId } = Astro.props;
 
 const hasMetrics =
     metrics &&
@@ -115,6 +116,8 @@ const hasMetrics =
                         target="_blank"
                         rel="noopener noreferrer"
                         class="carbon-link"
+                        data-umami-event="websitecarbon"
+                        data-umami-event-project={projectId ?? ""}
                     >
                         Check on websitecarbon.com{" "}
                         <Icon name="lucide:external-link" size="14" />

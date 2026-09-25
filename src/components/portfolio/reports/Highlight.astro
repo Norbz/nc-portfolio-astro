@@ -1,0 +1,123 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<section class="reports-highlight">
+    <div class="inner">
+        <div class="head">
+            <div class="intro">
+                <span class="eyebrow">
+                    <Icon name="lucide:sprout" size="16" /> Eco Reports
+                </span>
+                <h2>Every projects are measured.</h2>
+                <p>
+                    For each build I publish a carbon report — embodied CO₂ from
+                    the hardware and services I used, plus real use-energy
+                    metrics.
+                </p>
+            </div>
+            <a href="/reports" class="cta" data-umami-event="view-reports">
+                Explore all reports
+                <Icon name="lucide:arrow-right" size="18" />
+            </a>
+        </div>
+    </div>
+</section>
+
+<style lang="scss">
+    .reports-highlight {
+        /* compact full-bleed band, spaced from footer */
+        // Yellow bg (default colors), simple top/bottom rules + downward shadow — like the header
+        // border-top: $border;
+        // border-bottom: $border;
+        // box-shadow: 0 5px #1b1b1b45;
+        // Full-bleed edge-to-edge, breaking out of the main padding
+        margin: -8rem calc(-1 * var(--layoutMargin)) 8rem;
+
+        .inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2.5rem var(--layoutMargin);
+        }
+
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .intro {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.7;
+        }
+
+        h2 {
+            font-size: 2rem;
+            line-height: 1;
+            margin: 0;
+
+            @include desktop() {
+                font-size: 2.5rem;
+            }
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            opacity: 0.8;
+            max-width: 52ch;
+        }
+
+        .cta {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            padding: 0 0 0.4rem;
+            font-size: 1rem;
+            color: var(--textColor);
+            text-decoration: none;
+
+            // 4px underline that sweeps in left → right on hover
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 4px;
+                background: var(--textColor);
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.3s ease-in-out;
+            }
+
+            &:hover::after {
+                transform: scaleX(1);
+            }
+
+            :global(svg) {
+                transition: transform 0.2s ease-in-out;
+            }
+
+            &:hover :global(svg) {
+                transform: translateX(4px);
+            }
+        }
+    }
+</style>
