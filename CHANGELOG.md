@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.7.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.6.0...nc-portfolio-astro-v1.7.0) (2026-09-25)
+
+
+### 🚀 New Features
+
+* add a small floppy disk comparison ([5c5e148](https://github.com/Norbz/nc-portfolio-astro/commit/5c5e148fa392723ab77dfd658125c3142ecd8d69))
+* highlight eco reports and measured portfolio footprint ([5c5e148](https://github.com/Norbz/nc-portfolio-astro/commit/5c5e148fa392723ab77dfd658125c3142ecd8d69))
+* highlight eco reports and measured portfolio footprint ([#12](https://github.com/Norbz/nc-portfolio-astro/issues/12)) ([5c5e148](https://github.com/Norbz/nc-portfolio-astro/commit/5c5e148fa392723ab77dfd658125c3142ecd8d69))
+
 ## [1.6.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.5.0...nc-portfolio-astro-v1.6.0) (2026-07-15)
 
 
