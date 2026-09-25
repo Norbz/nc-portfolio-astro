@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "dither-images": "node build/dither.js",
     "build": "npm run dither-images && astro build",
+    "measure:footprint": "node build/measure-footprint.js",
     "preview": "astro preview",
     "astro": "astro"
   },

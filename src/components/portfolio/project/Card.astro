@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components'
 
-const { project, reportId, reportCo2 } = Astro.props;
+const { id, project, reportId, reportCo2 } = Astro.props;
 const displayCo2 = reportCo2 !== undefined ? `${reportCo2}g` : `${project.co2}g`;
 ---
 <li>
@@ -27,7 +27,7 @@ const displayCo2 = reportCo2 !== undefined ? `${reportCo2}g` : `${project.co2}g`
     </ul>
   {(project.url || project.github) &&
     <nav class="links">
-      {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" class="inverted">View <Icon name="lucide:eye" size="16" /></a>}
+      {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-view" data-umami-event="view-project" data-umami-event-project={id}>View <Icon name="lucide:eye" size="16" /></a>}
       {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer">Sources <Icon name="lucide:github" size="16" /></a>}
     </nav>
   }
@@ -141,6 +141,24 @@ const displayCo2 = reportCo2 !== undefined ? `${reportCo2}g` : `${project.co2}g`
         gap: 0.5rem;
         &:hover {
           @include set-color(true);
+        }
+
+        &.project-view {
+          background: var(--mainColor);
+          color: var(--textColor);
+          box-shadow: 3px 3px 0 var(--textColor);
+          transition: none;
+
+          &:hover,
+          &:active {
+            transform: translate(3px, 3px);
+            box-shadow: none;
+          }
+
+          &:focus-visible {
+            outline: 2px solid var(--textColor);
+            outline-offset: 5px;
+          }
         }
       }
     }
