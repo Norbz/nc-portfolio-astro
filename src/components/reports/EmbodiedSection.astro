@@ -44,23 +44,23 @@ const totalServicesKwh = round(
 ---
 
 <TwoColumnsSection titleLevel={2}>
-    <span slot="title">Manufacturing<br />footprint</span>
+    <span slot="title">Build<br />footprint</span>
 
     <div class="embodied-content">
         <p class="section-intro">
-            CO₂ embodied in hardware manufacturing, amortised over the actual
-            duration of this project. Keeping devices longer reduces this
-            figure.
+            The build footprint, called embodied CO₂, covers a prorated share
+            of the lifecycle emissions (manufacturing, and use during
+            development) of the hardware and services that went into building
+            this project. Keeping hardware longer reduces it.
         </p>
 
         <p class="methodology-note">
-            Each device's lifecycle CO₂ is sourced from manufacturer
-            environmental reports, adjusted where needed. The figure is spread
-            over an estimated professional lifespan (200 working days/year). If
-            a device outlives that estimate, its daily cost decreases, rewarding
-            longer retention. Use phase percentages and wattage are manufacturer
-            estimates or measured proxies, exact values will vary with real
-            usage patterns.
+            Each device's lifecycle CO₂ comes from its manufacturer's
+            environmental report, adjusted where needed, and is spread over an
+            estimated professional lifespan (200 working days per year). Once a
+            device outlives that estimate, the calculation uses its actual age,
+            and its daily cost keeps decreasing. Use phase shares and wattages
+            are manufacturer figures or measured proxies.
         </p>
 
         <div class="hardware-list">
@@ -133,8 +133,8 @@ const totalServicesKwh = round(
             {
                 servicesItems.length > 0 && (
                     <span class="total-services">
-                        + {totalServicesCO2g} g services · {totalServicesKwh}{" "}
-                        kWh
+                        + {totalServicesCO2g} g CO₂ and {totalServicesKwh}{" "}
+                        kWh from services
                     </span>
                 )
             }

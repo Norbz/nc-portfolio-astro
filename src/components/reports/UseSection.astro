@@ -27,20 +27,17 @@ const hasMetrics =
 ---
 
 <TwoColumnsSection titleLevel={2}>
-    <span slot="title">Use<br />energy</span>
+    <span slot="title">Visit<br />footprint</span>
 
     <div class="use-content">
+        <p class="section-intro">
+            Use-phase CO₂ of the live site for each page view, covering data
+            centres, network transfer and the visitor's device.
+        </p>
+
         {
             hasMetrics && (
                 <div class="metrics-grid">
-                    <p class="metrics-disclaimer">
-                        CO₂ estimates for web pages vary significantly across
-                        measurement models, server infrastructure, CDN coverage,
-                        and user devices. Values differ between tools and change
-                        over time as content evolves. Figures here use the
-                        Sustainable Web Design model as a baseline and reflect a
-                        few snapshots after project delivery.
-                    </p>
                     {metrics?.co2_per_view_g !== undefined && (
                         <div class="metric-featured">
                             <MetricCard
@@ -49,7 +46,7 @@ const hasMetrics =
                                 unit="g"
                                 icon="lucide:wind"
                                 accent={true}
-                                tooltip="Estimated CO₂ emitted per page view, covering data transfer, CDN, and end-user device. Based on the Sustainable Web Design model. Exact values are disputed and vary by methodology."
+                                tooltip="Estimated CO₂ per page view, covering data centres, network transfer and the visitor's device (Sustainable Web Design model)."
                             />
                         </div>
                     )}
@@ -60,7 +57,7 @@ const hasMetrics =
                                 value={metrics.page_weight_kb}
                                 unit="kB"
                                 icon="lucide:weight"
-                                tooltip="Total transfer size of all resources on initial page load (HTML, CSS, JS, images). Lower is generally better."
+                                tooltip="Transfer size of every resource on first load (HTML, CSS, JS, images)."
                             />
                         )}
                         {metrics?.requests !== undefined && (
@@ -68,7 +65,7 @@ const hasMetrics =
                                 label="HTTP requests"
                                 value={metrics.requests}
                                 icon="lucide:network"
-                                tooltip="Number of network requests on initial load. Each request adds latency and energy overhead."
+                                tooltip="Network requests on first load. Each one adds latency and energy."
                             />
                         )}
                         {metrics?.performance_score !== undefined && (
@@ -77,7 +74,7 @@ const hasMetrics =
                                 value={metrics.performance_score}
                                 unit="/ 100"
                                 icon="lucide:gauge"
-                                tooltip="Lighthouse performance score (0–100). Measures loading speed, interactivity, and visual stability."
+                                tooltip="Lighthouse score from 0 to 100, covering loading speed, interactivity and visual stability."
                             />
                         )}
                         {metrics?.dom_elements !== undefined && (
@@ -85,10 +82,16 @@ const hasMetrics =
                                 label="DOM elements"
                                 value={metrics.dom_elements}
                                 icon="lucide:code"
-                                tooltip="Number of DOM nodes on the page. A high count increases rendering cost and memory usage on end-user devices."
+                                tooltip="DOM nodes on the page. More nodes mean more rendering work and memory on the visitor's device."
                             />
                         )}
                     </div>
+                    <p class="metrics-disclaimer">
+                        Figures use the Sustainable Web Design model and come
+                        from a few snapshots taken after delivery. Results vary
+                        with the measurement model, hosting, CDN coverage and
+                        visitor devices, and change as the content evolves.
+                    </p>
                 </div>
             )
         }
@@ -119,7 +122,7 @@ const hasMetrics =
                         data-umami-event="websitecarbon"
                         data-umami-event-project={projectId ?? ""}
                     >
-                        Check on websitecarbon.com{" "}
+                        View on websitecarbon.com{" "}
                         <Icon name="lucide:external-link" size="14" />
                     </a>
                 </div>
@@ -133,6 +136,11 @@ const hasMetrics =
         display: flex;
         flex-direction: column;
         gap: 2rem;
+    }
+
+    .section-intro {
+        font-size: 1.2rem;
+        max-width: 600px;
     }
 
     .metrics-grid {

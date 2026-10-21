@@ -18,7 +18,7 @@
   {
     "id": "samsung-s9",
     "name": "Samsung S9",
-    "description": "My daily phone. Used for communication and testing",
+    "description": "My daily phone, used for communication and testing.",
     "icon": "lucide:smartphone",
     "purchaseDate": "2018-06-01",
     "ratio": 0.2,
@@ -35,7 +35,7 @@
   {
     "id": "ipad",
     "name": "iPad 7th Gen",
-    "description": "A quite dated iPad, only used for testing purposes.",
+    "description": "An older iPad, used only for testing.",
     "icon": "lucide:tablet",
     "purchaseDate": "2019-01-01",
     "ratio": 0.1,
@@ -77,6 +77,6 @@
     "manufacturer_lifespan_days": 1600,
     "use_phase_percent": 0.4,
     "estimated_lifespan_days": 1600,
-    "comments": "Includes MacBook charger (~4 kg), IPS internet box (~40 kg), cables (~1 kg)... Use phase at 0.4 reflects the always-on nature of the internet box. Daily hours scoped to work use only."
+    "comments": "Includes MacBook charger (~4 kg), ISP internet box (~40 kg), cables (~1 kg)... Use phase at 0.4 reflects the always-on internet box. Daily hours scoped to work use only."
   }
 ]

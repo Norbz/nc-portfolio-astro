@@ -1,6 +1,6 @@
 ---
 title: "Partage.org"
-description: "NGO website built on Wordpress with ACF Blocks, Tailwind and vanilla Javascript. The project was a complete redesign and development of the website to match the new branding and to fix previous catastrophic response times."
+description: "NGO website rebuilt on WordPress with ACF Blocks, Tailwind and vanilla JavaScript. The redesign matches the new branding and fixes server response times that had grown past a minute."
 project_id: "partage"
 accent: "#f7b088"
 duration_days: 75
@@ -13,21 +13,22 @@ use_metrics:
     requests: 49
     performance_score: 79
     dom_elements: 650
-    notes: "Most pictures are full width. Few Marketting trackers and  third parties scripts loaded on every pages."
-tags: ["Wordpress", "Tailwind", "VanillaJS"]
+    notes: "Most pictures are full-width. A few marketing trackers and third-party scripts load on every page."
+tags: ["WordPress", "Tailwind", "VanillaJS"]
 icon: "baby"
 ---
 
-## What was done
+## Approach
 
-The Wordpress custom theme uses ACF and ACF blocks to create a modular and flexible content structure. Tailwind allows for a low CSS footprint, but the Wordpress architecture results in a high number of DOM elements.
+The custom WordPress theme uses ACF and ACF Blocks for a modular content structure. Tailwind keeps the CSS small, while the WordPress architecture still produces a high number of DOM elements.
 
-- Uses a custom plugin to generate resized, and optimized images.
-- Plugin usage dropped from near a hundred to 14, resulting in a significant TTFB improvement.
+- Custom plugin that generates resized, optimised images.
+- Plugins cut from nearly a hundred to 14, with a large effect on TTFB.
 
 ## Results
 
-With less tools but far better performance, website conversion rates are actually up since the launch.
+Conversion rates have gone up since launch, with fewer tools and much better performance.
 
-Environmental impacts dropped by 21% while using way more high definition pictures.
-Server response times, and perceived speed metrics dropped by an astonishing 99%, down to an average 100ms TTFB and an average 900ms LCP.
+The environmental impact dropped by 21%, with many more high-definition pictures than before.
+
+Server response time went from over 75 seconds to an average TTFB of 100 ms. The average LCP is now 900 ms.

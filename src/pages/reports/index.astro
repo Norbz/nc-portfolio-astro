@@ -22,8 +22,8 @@ reportCards.sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0));
 ---
 
 <Layout
-  title="Eco Reports — Nicolas Chesné"
-  description="Per-project eco footprint reports: embodied CO₂ from hardware and services, use energy metrics."
+  title="Eco Reports - Nicolas Chesné"
+  description="Per-project eco footprint reports: build footprint (embodied CO₂ from hardware and services) and visit footprint (use-phase metrics)."
 >
   <header class="reports-hero inverted">
     <div class="hero-inner">
@@ -33,8 +33,8 @@ reportCards.sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0));
         <span class="sprout"><Icon name="lucide:sprout" /></span>
       </h1>
       <p>
-        Each project report details its embodied CO₂ (hardware &amp; services amortised over build time)
-        and use energy (page weight, CO₂ per view, performance).
+        Each project report details its build footprint (embodied CO₂ of hardware &amp; services, amortised over
+        the project) and its visit footprint (use-phase energy: page weight, CO₂ per view, performance).
       </p>
     </div>
   </header>

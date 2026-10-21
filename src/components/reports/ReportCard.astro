@@ -10,7 +10,7 @@ interface Props {
 const { report, co2PerView, client, date } = Astro.props;
 const { title, description, accent, tags, project_id } = report.data;
 
-const formattedDate = date?.toLocaleDateString("en-US", {
+const formattedDate = date?.toLocaleDateString("en-GB", {
     year: "numeric",
     month: "long",
 });
@@ -87,7 +87,7 @@ const formattedDate = date?.toLocaleDateString("en-US", {
             opacity: 0.6;
 
             .client::after {
-                content: "—";
+                content: "·";
                 margin-left: 0.75rem;
             }
         }

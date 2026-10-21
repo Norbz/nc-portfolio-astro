@@ -1,6 +1,6 @@
 ---
 title: "Strike"
-description: "The agency website runs on a Nuxt frontend and a Strapi backend, upgraded to Strapi 4 around 2024 to handle i18n."
+description: "The agency website runs on a Nuxt frontend and a Strapi backend, upgraded to Strapi 4 around 2024 for i18n."
 project_id: "strike"
 accent: "#FFFFFF"
 duration_days: 30
@@ -13,18 +13,18 @@ use_metrics:
     requests: 122
     performance_score: 88
     dom_elements: 142
-    notes: "The page weight is due to the autoplay trailer in the homepage"
+    notes: "Most of the page weight comes from the autoplay trailer on the homepage."
 tags: ["VueJS", "Strapi", "Nuxt"]
 icon: "check"
 ---
 
-## What was done
+## Approach
 
-The website uses a classic Nuxt frontend with a Strapi backend
+The website uses a classic Nuxt frontend with a Strapi backend.
 
-- Runs on a tiny VPS with 1vCPU and 2 GB of RAM
-- Very lightweight and snappy even though the frontend uses a lot of autoplay videos
+- Hosted on a small VPS with 1 vCPU and 2 GB of RAM.
+- Very lightweight and snappy, even on mobile, although the frontend uses a lot of autoplay videos.
 
-## Updates
+## Maintenance
 
-Leveraged the decoupled architecture to upgrade Strapi to version 4 around 2024, allowing for better i18n support and improved content management features without affecting the frontend.
+The decoupled architecture allowed an upgrade to Strapi 4 around 2024, for better i18n support and content management, without touching the frontend.

@@ -1,6 +1,6 @@
 ---
-title: "Monnaie de Paris — Astro Collection"
-description: "A VueJS single-page application embedded in a Magento theme for the Astro coin collection. Page-level optimisation was possible, the Magento shell was not."
+title: "Astro Collection"
+description: "A VueJS single-page app for the Astro coin collection, embedded in the Monnaie de Paris Magento store. Page-level optimisation was possible, the Magento shell was not."
 project_id: "astro"
 accent: "#A78BFA"
 duration_days: 40
@@ -12,18 +12,14 @@ use_metrics:
     requests: 119
     performance_score: 85
     dom_elements: 1615
-    notes: "The VueJS app itself is optimised. The surrounding Magento theme loads ~300 kB of legacy scripts that cannot be removed. Homepage feature high resolutions pictures."
+    notes: "The Vue app is optimised. The Magento theme around it loads ~300 kB of legacy scripts (jQuery, RequireJS, Knockout) that the rest of the store depends on, and they count in every figure above. The homepage features high-resolution pictures."
 tags: ["VueJS", "Magento"]
 icon: "zodiac-scorpio"
 ---
 
-## What was done
+## Approach
 
-The Astro Collection page is a VueJS SPA embedded inside a Magento 2 theme. Development focused on keeping the Vue bundle lean while working around Magento's constraints.
+The Astro Collection page is a VueJS SPA embedded in a Magento 2 theme. Optimisation work targeted the Vue bundle, the part of the page this project controls.
 
-- Custom Vue2 platform that allows using the magento e-commerce functionality inside the Vue app.
-- Auto Image optimisation at compile time, picture format are always manually selected to ensure the best compression possible.
-
-## Constraints
-
-Magento's theme injects ~300 kB of scripts (jQuery, RequireJS, Knockout) on every page. These cannot be removed without breaking the rest of the store. The 1.01 g CO₂/view figure reflects this shared overhead.
+- Custom Vue 2 platform that exposes Magento's e-commerce features inside the Vue app.
+- Images optimised at compile time, with each format chosen by hand for the best compression.
