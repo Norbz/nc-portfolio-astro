@@ -32,6 +32,7 @@ const {
     project_id,
     tags,
     icon,
+    team,
 } = report.data;
 
 // Load hardware and services
@@ -69,7 +70,7 @@ const totalEmbodiedKg = round(
 
 <Layout
     accent={accent}
-    title={`${title} — Eco Report`}
+    title={`${title} - Eco Report`}
     description={description}
 >
     <ReportHero
@@ -90,6 +91,7 @@ const totalEmbodiedKg = round(
             servicesItems={servicesItems}
             durationDays={duration_days}
             referenceDate={referenceDate}
+            team={team}
         />
 
         <UseSection metrics={use_metrics} projectId={project_id}>

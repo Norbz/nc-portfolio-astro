@@ -1,6 +1,6 @@
 ---
-title: "Monnaie de Paris — Le Génie Français"
-description: "A VueJS single-page application embedded in a Magento theme for the Génie Français coin collection."
+title: "Le Génie Français"
+description: "A VueJS single-page app for the Génie Français coin collection, embedded in the Monnaie de Paris Magento store, with a 3D WebGL model of the coin."
 project_id: "genie"
 accent: "#61A5FA"
 duration_days: 45
@@ -12,19 +12,15 @@ use_metrics:
     requests: 122
     performance_score: 61
     dom_elements: 1582
-    notes: "The VueJS app itself is optimised. The surrounding Magento theme loads ~300 kB over 120 network requests of legacy scripts that cannot be removed. 3D textures are high definition to preserve the details of the coin engraving, which contributes to the page weight.  Metrics are based in real production environment and reflect the whole website, not just my developments"
+    notes: "The Vue app is optimised. The Magento theme around it loads ~300 kB of legacy scripts over 120 network requests (jQuery, RequireJS, tags and GTM). The 3D textures stay high-definition to keep the details of the coin engraving, which adds to the page weight. Figures come from the production site and cover the whole page around my work."
 tags: ["VueJS", "Magento", "WebGL"]
 icon: "leaf"
 ---
 
-## What was done
+## Approach
 
-The Génie Français page is a VueJS SPA embedded inside a Magento 2 theme. Development focused on keeping the Vue bundle lean while working around Magento's constraints.
+The Génie Français page is a VueJS SPA embedded in a Magento 2 theme. It centres on a 3D model of the coin, rendered in WebGL.
 
-- 3D WebGL model of the coin built with BabylonJS, only with heightmap from the engraving industrial process.
-- Custom Vue2 platform that allows using the magento e-commerce functionality inside the Vue app.
-- Auto Image optimisation at compile time, picture format are always manually selected to ensure the best compression possible.
-
-## Constraints
-
-Magento's theme injects ~300 kB of scripts (jQuery, RequireJS, Tags and GTML) on every page. These cannot be removed without breaking the rest of the store. The 1.01 g CO₂/view figure reflects this shared overhead.
+- 3D WebGL model built with BabylonJS from the heightmap of the industrial engraving process alone.
+- Custom Vue 2 platform that exposes Magento's e-commerce features inside the Vue app.
+- Images optimised at compile time, with each format chosen by hand.

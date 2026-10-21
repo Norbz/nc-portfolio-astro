@@ -5,6 +5,8 @@ import {
     computeHardwareCO2ForProject,
     computeDeviceEnergyForProject,
     computeEffectiveLifespanDays,
+    computeEmbodiedCO2,
+    computeUseCO2PerDay,
     isUsingActualLifespan,
     round,
 } from "../../../utils/co2";
@@ -18,14 +20,10 @@ const lifespanLabel = isUsingActualLifespan(hardware, ref)
     ? "Effective lifespan"
     : "Estimated lifespan";
 
-const embodiedCO2 = hardware.lifecycle_co2 * (1 - hardware.use_phase_percent);
-const useCO2PerDayMfr =
-    (hardware.lifecycle_co2 * hardware.use_phase_percent) /
-    hardware.manufacturer_lifespan_days;
-const actualLifecycleCO2 = round(
-    embodiedCO2 + useCO2PerDayMfr * effectiveDays,
-    1,
-);
+const embodiedCO2 = computeEmbodiedCO2(hardware);
+const useCO2 = computeUseCO2PerDay(hardware) * effectiveDays;
+const actualLifecycleCO2 = round(embodiedCO2 + useCO2, 1);
+const useShare = Math.round((useCO2 / (embodiedCO2 + useCO2)) * 100);
 const projectCO2 = durationDays
     ? round(computeHardwareCO2ForProject(hardware, durationDays, ref), 3)
     : null;
@@ -42,14 +40,14 @@ const projectKwh =
         <p class="description">{hardware.description}</p>
         <ul class="stats">
             <li
-                data-tooltip="Manufacturing CO₂ spread over the device's effective lifespan. Longer retention lowers this figure."
+                data-tooltip="Lifecycle CO₂ (manufacturing and use phase) spread over the device's lifespan in working days. Keeping the device longer lowers this figure."
             >
                 <span class="label">Daily CO₂</span>
                 <span class="value">{dailyCO2} kg/day</span>
             </li>
             {
                 hardware.ratio !== undefined && hardware.ratio !== 1 && (
-                    <li data-tooltip="Fraction of the workday this device is used for professional work.">
+                    <li data-tooltip="Share of the workday this device is used for professional work.">
                         <span class="label">Usage ratio</span>
                         <span class="value">
                             {hardware.ratio * 100}% of workday
@@ -59,19 +57,19 @@ const projectKwh =
             }
             <li
                 data-tooltip={lifespanLabel === "Effective lifespan"
-                    ? "Device has outlived its estimated lifespan — daily CO₂ is now lower than the manufacturer's baseline."
-                    : "Target working-day lifespan (200 days/year model). Daily CO₂ decreases once the device outlives this."}
+                    ? "The device has outlived its estimated lifespan, so its CO₂ is spread over its actual age in working days, which lowers its daily cost."
+                    : "Estimated professional lifespan in working days (200 per year). Daily CO₂ decreases once the device outlives it."}
             >
                 <span class="label">{lifespanLabel}</span>
                 <span class="value">{effectiveDays} days</span>
             </li>
             <li class="details-row">
                 <details class="methodology">
-                    <summary>Details</summary>
+                    <summary>Lifecycle data</summary>
                     <ul class="methodology-stats">
                         {
                             hardware.wattage && (
-                                <li data-tooltip="Average power draw under typical workload.">
+                                <li data-tooltip="Average power draw under a typical workload.">
                                     <span class="label">Wattage</span>
                                     <span class="value">
                                         {hardware.wattage} W
@@ -80,17 +78,15 @@ const projectKwh =
                             )
                         }
                         <li
-                            data-tooltip="Share of total lifecycle CO₂ attributed to energy consumption during use, vs. manufacturing."
+                            data-tooltip="Share of the adjusted lifecycle CO₂ due to electricity during use, at the French grid mix. The rest covers manufacturing, transport and end of life."
                         >
-                            <span class="label">Use phase</span>
+                            <span class="label">CO₂ from use</span>
                             <span class="value"
-                                >{
-                                    Math.round(hardware.use_phase_percent * 100)
-                                }%</span
+                                >{useShare}%</span
                             >
                         </li>
                         <li
-                            data-tooltip="Total CO₂ as reported in the manufacturer's environmental report, for their stated lifespan."
+                            data-tooltip="Lifecycle CO₂ from the manufacturer's environmental report, over the lifespan the manufacturer assumes."
                         >
                             <span class="label">Manufacturer lifecycle CO₂</span
                             >
@@ -99,14 +95,14 @@ const projectKwh =
                             >
                         </li>
                         <li
-                            data-tooltip="Recalculated lifecycle CO₂ based on actual usage duration. Higher than the manufacturer figure when the device is kept past its estimated lifespan."
+                            data-tooltip="Lifecycle CO₂ recalculated over this device's lifespan, with the use phase at the French grid mix instead of the manufacturer's assumption."
                         >
-                            <span class="label">Actual lifecycle CO₂</span>
+                            <span class="label">Adjusted lifecycle CO₂</span>
                             <span class="value">{actualLifecycleCO2} kg</span>
                         </li>
                         {
                             hardware.water_per_day_l && (
-                                <li data-tooltip="Virtual water embedded in manufacturing, amortised over daily use.">
+                                <li data-tooltip="Water used to manufacture the device, spread over each working day of its lifespan.">
                                     <span class="label">Daily water</span>
                                     <span class="value">
                                         {hardware.water_per_day_l} L/day
@@ -128,7 +124,7 @@ const projectKwh =
                 projectCO2 !== null && (
                     <li
                         class="project-contribution"
-                        data-tooltip="CO₂ attributed to this device for the project duration, scaled by usage ratio."
+                        data-tooltip="Daily CO₂ × project duration × usage ratio."
                     >
                         <span class="label">This project</span>
                         <span class="project-values">

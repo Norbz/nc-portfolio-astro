@@ -46,19 +46,33 @@ export function isUsingActualLifespan(device: HardwareData, referenceDate: Date)
 }
 
 /**
- * Daily CO2 (kg) for a hardware device, using the spreadsheet formula:
- *   embodied_co2 = lifecycle_co2 × (1 - use_phase_percent)            ← fixed manufacturing portion
- *   use_co2_per_day = (lifecycle_co2 × use_phase_percent) / manufacturer_lifespan_days
- *   co2_rectified = embodied_co2 + use_co2_per_day × effective_lifespan
- *   daily_co2 = co2_rectified / effective_lifespan
+ * French grid carbon intensity (kg CO2e/kWh): ADEME Base Empreinte,
+ * "Électricité 2025 - mix moyen - consommation", smoothed over 2022-2025.
+ * All devices are used in France.
+ */
+export const FR_GRID_KG_PER_KWH = 0.0461;
+
+/** CO2 (kg) of one working day of use: wattage × daily_hours at the French grid mix. */
+export function computeUseCO2PerDay(device: HardwareData): number {
+  if (!device.wattage || !device.daily_hours) return 0;
+  return (device.wattage * device.daily_hours / 1000) * FR_GRID_KG_PER_KWH;
+}
+
+/** Lifecycle CO2 (kg) without the manufacturer's use phase: manufacturing, transport, end of life. */
+export function computeEmbodiedCO2(device: HardwareData): number {
+  return device.lifecycle_co2 * (1 - device.use_phase_percent);
+}
+
+/**
+ * Daily CO2 (kg) for a hardware device.
+ * The manufacturer's use phase is computed with their own grid assumption, often a
+ * regional or world average, so it is removed and replaced with the device's
+ * consumption at the French grid mix:
+ *   daily_co2 = embodied_co2 / effective_lifespan + use_co2_per_day
  */
 export function computeDailyCO2(device: HardwareData, referenceDate: Date): number {
   const effectiveLifespan = computeEffectiveLifespanDays(device, referenceDate);
-  const embodied_co2 = device.lifecycle_co2 * (1 - device.use_phase_percent);
-  const use_co2_per_day_mfr =
-    (device.lifecycle_co2 * device.use_phase_percent) / device.manufacturer_lifespan_days;
-  const co2_rectified = embodied_co2 + use_co2_per_day_mfr * effectiveLifespan;
-  return co2_rectified / effectiveLifespan;
+  return computeEmbodiedCO2(device) / effectiveLifespan + computeUseCO2PerDay(device);
 }
 
 /**
@@ -73,15 +87,18 @@ export function computeHardwareCO2ForProject(
   return computeDailyCO2(device, referenceDate) * duration_days * (device.ratio ?? 1);
 }
 
+/** Working days in one month of service usage (200 days/year model). */
+const WORKING_DAYS_PER_MONTH = 20;
+
 /**
  * Total CO2 (g) attributed to a project for one service.
- * Uses a simple monthly rate prorated by project duration.
+ * Monthly rates cover 20 working days, the unit of duration_days.
  */
 export function computeServiceCO2ForProject(
   service: ServiceData,
   duration_days: number
 ): number {
-  return (service.co2_per_month_g / 30) * duration_days;
+  return (service.co2_per_month_g / WORKING_DAYS_PER_MONTH) * duration_days;
 }
 
 /**
@@ -104,7 +121,7 @@ export function computeServiceEnergyForProject(
   duration_days: number
 ): number {
   if (!service.kwh_per_month) return 0;
-  return (service.kwh_per_month / 30) * duration_days;
+  return (service.kwh_per_month / WORKING_DAYS_PER_MONTH) * duration_days;
 }
 
 /** Round to N decimal places */

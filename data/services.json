@@ -7,37 +7,74 @@
     "co2_per_month_g": 5,
     "kwh_per_month": 0.1,
     "source": "https://github.blog/engineering/engineering-principles/environmental-sustainability-github/",
-    "comments": "GitHub runs on Azure with renewable energy commitments. ~5g CO₂/month and ~0.1 kWh/month per active repository is a conservative proxy for storage and CI/CD."
+    "comments": "Estimated per active repository for storage and CI/CD, based on GitHub's sustainability reporting.",
+    "calculation_notes": [
+      "Conservative proxy: ~5 g CO2/month and ~0.1 kWh/month per active repository, covering storage and CI/CD.",
+      "GitHub runs on Azure with renewable energy commitments (GitHub sustainability blog).",
+      "Monthly rates cover 20 working days; co2.ts prorates them over the report's duration_days (working days)."
+    ]
   },
   {
     "id": "s3",
     "name": "S3 / Static Hosting",
     "icon": "lucide:cloud",
-    "description": "Asset storage and static file hosting. Demo or Staging environments only.",
+    "description": "Asset storage and static file hosting, for demo and staging environments only.",
     "co2_per_month_g": 8,
     "kwh_per_month": 0.5,
     "source": "https://www.thegreenwebfoundation.org/",
-    "comments": "Estimate based on ~0.001 kgCO₂/GB transferred at ~8 GB/month. Energy estimate: ~0.5 kWh/month."
+    "comments": "Based on the data transferred each month by demo and staging environments, converted with a per-gigabyte carbon factor.",
+    "calculation_notes": [
+      "~8 GB transferred per month by demo and staging environments x ~0.001 kg CO2/GB = ~8 g CO2/month.",
+      "Energy estimate: ~0.5 kWh/month.",
+      "The per-GB factor is linked to the Green Web Foundation; its exact origin is not documented.",
+      "Monthly rates cover 20 working days; co2.ts prorates them over the report's duration_days (working days)."
+    ]
   },
   {
     "id": "claude-code",
     "name": "Claude Code (AI)",
     "icon": "lucide:bot",
-    "description": "Occasional AI assistance, to write tools, CI/CD scripts, or documentation.",
-    "co2_per_month_g": 20,
-    "kwh_per_month": 0.24,
-    "source": "https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use/",
-    "comments": "GPT-4o benchmarks: ~0.3–0.43 Wh/query. Claude Code sessions estimated at 3× multiplier → ~0.003 kWh/session. Light use: ~4 sessions/day × 20 workdays × 0.003 kWh ≈ 0.24 kWh/month. At ~300 gCO₂/kWh (Anthropic partial renewables) ≈ 20g CO₂/month."
+    "description": "Occasional AI assistance for tools, CI/CD scripts or documentation.",
+    "co2_per_month_g": 136,
+    "kwh_per_month": 0.4,
+    "source": "https://github.com/Magnus-Gille/claude-code-energy-monitor",
+    "comments": "Based on my own Claude Code logs for occasional use (real request and token counts), converted to energy with TokenAtlas estimates drawn from published research.",
+    "calculation_notes": [
+      "Energy per request: 5 Wh, measured on the capveggie-mijote-platform project over 28 working days (6 weeks ending 2026-10-20): 11,112 requests, 2.58 billion tokens (98.5% cache reads), 55.9 kWh.",
+      "Excluded days: 2026-10-08 (multi-session security review) and 2026-10-19 (production setup with continuous log reading).",
+      "Tokens read from local Claude Code transcripts (~/.claude/projects/*.jsonl), deduplicated by message id and request id.",
+      "Energy per million tokens (TokenAtlas mid estimates, GPU compute only): 390 Wh input, 1,400 Wh output, 490 Wh cache write, 15 Wh cache read.",
+      "Model mix: 70% Opus, 30% Sonnet, Sonnet weighted at 0.6x Opus (TokenAtlas tiers), so a 0.88 factor.",
+      "Simon Couch's constants (1,950 Wh output, 39 Wh cache read) give about twice as much; Zeke Hausfather measured about 3 kWh per active day for similar volumes.",
+      "Datacenter overhead (cooling, network, CPU) is not included; TokenAtlas suggests 1.5x to 3x.",
+      "Grid: 341 gCO2e/kWh, US average (eGRID 2024), as used by Zeke Hausfather. Anthropic does not publish where requests are served.",
+      "Agentic requests carry long contexts, so the 5 Wh figure is likely an upper bound for lighter use. Older usage (before 2026) had context windows about 4x smaller.",
+      "Monthly rates cover 20 working days; co2.ts prorates them over the report's duration_days (working days).",
+      "Light use: ~4 requests per working day x 20 days x 5 Wh = 0.4 kWh/month; x 341 g = 136 g CO2/month."
+    ]
   },
   {
     "id": "claude-code-heavy",
     "name": "Claude Code (AI)",
     "icon": "lucide:bot",
     "description": "AI-assisted development for refactoring, code review, or feature development.",
-    "co2_per_month_g": 200,
-    "kwh_per_month": 2.4,
-    "source": "https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use/",
-    "comments": "GPT-4o benchmarks: ~0.3–0.43 Wh/query. Claude Code sessions are heavier — estimated 3× multiplier → ~0.003 kWh/session. Heavy use estimated at 40 sessions/day × 20 workdays × 0.003 kWh ≈ 2.4 kWh/month. At ~300 gCO₂/kWh ≈ 200g CO₂/month."
+    "co2_per_month_g": 1364,
+    "kwh_per_month": 4,
+    "source": "https://github.com/Magnus-Gille/claude-code-energy-monitor",
+    "comments": "Based on my own Claude Code logs for daily AI-assisted work (real request and token counts), converted to energy with TokenAtlas estimates drawn from published research.",
+    "calculation_notes": [
+      "Energy per request: 5 Wh, measured on the capveggie-mijote-platform project over 28 working days (6 weeks ending 2026-10-20): 11,112 requests, 2.58 billion tokens (98.5% cache reads), 55.9 kWh.",
+      "Excluded days: 2026-10-08 (multi-session security review) and 2026-10-19 (production setup with continuous log reading).",
+      "Tokens read from local Claude Code transcripts (~/.claude/projects/*.jsonl), deduplicated by message id and request id.",
+      "Energy per million tokens (TokenAtlas mid estimates, GPU compute only): 390 Wh input, 1,400 Wh output, 490 Wh cache write, 15 Wh cache read.",
+      "Model mix: 70% Opus, 30% Sonnet, Sonnet weighted at 0.6x Opus (TokenAtlas tiers), so a 0.88 factor.",
+      "Simon Couch's constants (1,950 Wh output, 39 Wh cache read) give about twice as much; Zeke Hausfather measured about 3 kWh per active day for similar volumes.",
+      "Datacenter overhead (cooling, network, CPU) is not included; TokenAtlas suggests 1.5x to 3x.",
+      "Grid: 341 gCO2e/kWh, US average (eGRID 2024), as used by Zeke Hausfather. Anthropic does not publish where requests are served.",
+      "Agentic requests carry long contexts, so the 5 Wh figure is likely an upper bound for lighter use. Older usage (before 2026) had context windows about 4x smaller.",
+      "Monthly rates cover 20 working days; co2.ts prorates them over the report's duration_days (working days).",
+      "Heavy use: ~40 requests per working day x 20 days x 5 Wh = 4 kWh/month; x 341 g = 1,364 g CO2/month."
+    ]
   },
   {
     "id": "gmail",
@@ -47,6 +84,36 @@
     "co2_per_month_g": 12,
     "kwh_per_month": 0.04,
     "source": "https://sustainability.google/reports/",
-    "comments": "Counted actual sent mail: ~40 emails over 20 workdays (~2/day). 40 emails/month × 0.3g CO₂/email = 12g CO₂/month. kWh estimated at ~0.001 kWh/email → 0.04 kWh/month. Google Workspace runs on carbon-neutral infrastructure."
+    "comments": "Counted from my sent mail as a yearly average, with a per-email carbon estimate.",
+    "calculation_notes": [
+      "~40 sent emails per 20 working days (~2 per day), yearly average of the actual sent mail count.",
+      "40 emails x 0.3 g CO2/email = 12 g CO2/month. The 0.3 g factor is a commonly cited figure; its origin is not documented here.",
+      "Energy: ~0.001 kWh/email, so 0.04 kWh/month.",
+      "Google no longer claims operational carbon neutrality since 2023 (2024 environmental report).",
+      "Monthly rates cover 20 working days; co2.ts prorates them over the report's duration_days (working days)."
+    ]
+  },
+  {
+    "id": "claude-code-agentic",
+    "name": "Claude Code (agentic)",
+    "icon": "lucide:bot",
+    "description": "Continuous agentic AI use throughout the project, with Claude Code acting directly on the codebase.",
+    "co2_per_month_g": 13640,
+    "kwh_per_month": 40,
+    "source": "https://github.com/Magnus-Gille/claude-code-energy-monitor",
+    "comments": "Based on my own Claude Code logs for continuous agentic work (real request and token counts), converted to energy with TokenAtlas estimates drawn from published research.",
+    "calculation_notes": [
+      "Energy per request: 5 Wh, measured on the capveggie-mijote-platform project over 28 working days (6 weeks ending 2026-10-20): 11,112 requests, 2.58 billion tokens (98.5% cache reads), 55.9 kWh.",
+      "Excluded days: 2026-10-08 (multi-session security review) and 2026-10-19 (production setup with continuous log reading).",
+      "Tokens read from local Claude Code transcripts (~/.claude/projects/*.jsonl), deduplicated by message id and request id.",
+      "Energy per million tokens (TokenAtlas mid estimates, GPU compute only): 390 Wh input, 1,400 Wh output, 490 Wh cache write, 15 Wh cache read.",
+      "Model mix: 70% Opus, 30% Sonnet, Sonnet weighted at 0.6x Opus (TokenAtlas tiers), so a 0.88 factor.",
+      "Simon Couch's constants (1,950 Wh output, 39 Wh cache read) give about twice as much; Zeke Hausfather measured about 3 kWh per active day for similar volumes.",
+      "Datacenter overhead (cooling, network, CPU) is not included; TokenAtlas suggests 1.5x to 3x.",
+      "Grid: 341 gCO2e/kWh, US average (eGRID 2024), as used by Zeke Hausfather. Anthropic does not publish where requests are served.",
+      "Agentic requests carry long contexts, so the 5 Wh figure is likely an upper bound for lighter use. Older usage (before 2026) had context windows about 4x smaller.",
+      "Monthly rates cover 20 working days; co2.ts prorates them over the report's duration_days (working days).",
+      "Agentic use: ~400 requests per working day x 20 days x 5 Wh = 40 kWh/month; x 341 g = 13.6 kg CO2/month."
+    ]
   }
 ]

@@ -46,7 +46,9 @@ const hardware = defineCollection({
         water_per_day_l: z.number().optional(),
         source: z.string().optional(),
         comments: z.string().optional(),
-        methodology: z.string().optional()
+        methodology: z.string().optional(),
+        // Internal: how the figures were calculated. Not rendered.
+        calculation_notes: z.array(z.string()).optional()
       })
 });
 
@@ -60,7 +62,9 @@ const services = defineCollection({
         co2_per_month_g: z.number(),
         kwh_per_month: z.number().optional(),
         source: z.string().optional(),
-        comments: z.string().optional()
+        comments: z.string().optional(),
+        // Internal: how the figures were calculated. Not rendered.
+        calculation_notes: z.array(z.string()).optional()
       })
 });
 
@@ -78,6 +82,16 @@ const reports = defineCollection({
         duration_days: z.number(),
         hardware_used: z.array(z.string()),
         services_used: z.array(z.string()).default([]),
+        // Other people on the project. share = their daily footprint as a fraction of mine
+        // (1 = same setup and usage), applied to the days they worked.
+        team: z.array(z.object({
+          role: z.string(),
+          share: z.number(),
+          days: z.number(),
+          comment: z.string().optional(),
+          // Portfolio of the freelancer or agency.
+          url: z.string().optional(),
+        })).default([]),
         use_metrics: z.object({
           page_weight_kb: z.number().optional(),
           co2_per_view_g: z.number().optional(),

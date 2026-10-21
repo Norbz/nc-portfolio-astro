@@ -13,25 +13,36 @@ const icon = "lucide:copy";
     data-umami-event="contact"
 >
     <div class="action">
-        <span>hello@nicolaschesne.fr</span>
+        {/*
+            Cloudflare Email Obfuscation rewrites plain addresses to
+            "[email protected]" and decodes them only on a full page load.
+            Pages fetched by the ClientRouter stay encoded, so this address
+            is excluded from obfuscation.
+        */}
+        <!--email_off--><span>hello@nicolaschesne.fr</span><!--/email_off-->
         <Icon name={icon} size="24" />
     </div>
-    <span class="result" client.visible>copied in clipboard !</span>
+    <span class="result" client.visible>Copied to clipboard!</span>
 </button>
 
 <script>
-    const buttons = document.querySelectorAll(".email-button");
-    buttons.forEach((button) => {
-        const btn = button as HTMLElement;
-        btn.addEventListener("click", () => {
-            const email = `${btn.dataset.email}@${btn.dataset.domain}`;
-            navigator.clipboard.writeText(email).then(() => {
-                btn?.classList.add("copied");
-                setTimeout(() => {
-                    btn?.classList.remove("copied");
-                }, 2000);
+    // The ClientRouter swaps the body on navigation, so listeners are bound
+    // again on each page load. data-bound skips buttons already bound.
+    document.addEventListener("astro:page-load", () => {
+        document
+            .querySelectorAll<HTMLElement>(".email-button:not([data-bound])")
+            .forEach((btn) => {
+                btn.dataset.bound = "";
+                btn.addEventListener("click", () => {
+                    const email = `${btn.dataset.email}@${btn.dataset.domain}`;
+                    navigator.clipboard.writeText(email).then(() => {
+                        btn.classList.add("copied");
+                        setTimeout(() => {
+                            btn.classList.remove("copied");
+                        }, 2000);
+                    });
+                });
             });
-        });
     });
 </script>
 

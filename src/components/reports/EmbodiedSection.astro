@@ -9,58 +9,74 @@ import {
     round,
 } from "../../utils/co2";
 
+interface TeamMember {
+    role: string;
+    share: number;
+    days: number;
+    comment?: string;
+    url?: string;
+}
+
 interface Props {
     hardwareItems: any[];
     servicesItems: any[];
     durationDays: number;
     referenceDate: Date;
+    team?: TeamMember[];
 }
-const { hardwareItems, servicesItems, durationDays, referenceDate } =
-    Astro.props;
+const {
+    hardwareItems,
+    servicesItems,
+    durationDays,
+    referenceDate,
+    team = [],
+} = Astro.props;
 
-const totalHardwareCO2 = round(
-    hardwareItems.reduce(
-        (sum, h) =>
-            sum +
-            computeHardwareCO2ForProject(h.data, durationDays, referenceDate),
-        0,
-    ),
-    3,
+const hardwareKg = hardwareItems.reduce(
+    (sum, h) =>
+        sum + computeHardwareCO2ForProject(h.data, durationDays, referenceDate),
+    0,
 );
-const totalServicesCO2g = round(
+const servicesKg =
     servicesItems.reduce(
         (sum, s) => sum + computeServiceCO2ForProject(s.data, durationDays),
         0,
-    ),
-    1,
-);
-const totalServicesKwh = round(
-    servicesItems.reduce(
-        (sum, s) => sum + computeServiceEnergyForProject(s.data, durationDays),
-        0,
-    ),
-    2,
-);
+    ) / 1000;
+
+// Team members are estimated from my own footprint per working day,
+// scaled by their share and the days they worked.
+const myDailyKg = (hardwareKg + servicesKg) / durationDays;
+const teamItems = team.map((member) => ({
+    ...member,
+    kg: myDailyKg * member.share * member.days,
+}));
+const teamKg = teamItems.reduce((sum, m) => sum + m.kg, 0);
+
+const totalKg = round(hardwareKg + servicesKg + teamKg, 3);
+
+// Breakdown values under 1 kg are shown in grams, so small totals do not round to 0.
+const formatKg = (kg: number) =>
+    kg >= 1 ? `${round(kg, 1)} kg` : `${Math.round(kg * 1000)} g`;
 ---
 
 <TwoColumnsSection titleLevel={2}>
-    <span slot="title">Manufacturing<br />footprint</span>
+    <span slot="title">Build<br />footprint</span>
 
     <div class="embodied-content">
         <p class="section-intro">
-            CO₂ embodied in hardware manufacturing, amortised over the actual
-            duration of this project. Keeping devices longer reduces this
-            figure.
+            The build footprint, called embodied CO₂, covers a prorated share
+            of the lifecycle emissions (manufacturing, and use during
+            development) of the hardware and services that went into building
+            this project. Keeping hardware longer reduces it.
         </p>
 
         <p class="methodology-note">
-            Each device's lifecycle CO₂ is sourced from manufacturer
-            environmental reports, adjusted where needed. The figure is spread
-            over an estimated professional lifespan (200 working days/year). If
-            a device outlives that estimate, its daily cost decreases, rewarding
-            longer retention. Use phase percentages and wattage are manufacturer
-            estimates or measured proxies, exact values will vary with real
-            usage patterns.
+            Each device's lifecycle CO₂ comes from its manufacturer's
+            environmental report, adjusted where needed, and is spread over an
+            estimated professional lifespan (200 working days per year). Once a
+            device outlives that estimate, the calculation uses its actual age,
+            and its daily cost keeps decreasing. The use phase is recalculated
+            from each device's power draw at the French grid mix (ADEME).
         </p>
 
         <div class="hardware-list">
@@ -127,17 +143,56 @@ const totalServicesKwh = round(
             )
         }
 
+        {
+            teamItems.length > 0 && (
+                <div class="services-block">
+                    <h3>Team</h3>
+                    <p class="team-note">Team members' footprints are estimated.</p>
+                    <ul class="services-list">
+                        {teamItems.map((member) => (
+                            <li class="service-item">
+                                <Icon name="lucide:user" size="20" />
+                                <div class="service-info">
+                                    {member.url ? (
+                                        <a
+                                            href={member.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="service-name team-link"
+                                        >
+                                            {member.role}{" "}
+                                            <Icon name="lucide:external-link" size="12" />
+                                        </a>
+                                    ) : (
+                                        <span class="service-name">
+                                            {member.role}
+                                        </span>
+                                    )}
+                                    {member.comment && (
+                                        <span class="service-methodology">
+                                            {member.comment}
+                                        </span>
+                                    )}
+                                </div>
+                                <div class="service-metrics">
+                                    <span class="service-co2">
+                                        {formatKg(member.kg)} CO₂
+                                    </span>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )
+        }
+
         <div class="total-bar">
             <span class="total-label">Total embodied</span>
-            <span class="total-value">{totalHardwareCO2} kg CO₂</span>
-            {
-                servicesItems.length > 0 && (
-                    <span class="total-services">
-                        + {totalServicesCO2g} g services · {totalServicesKwh}{" "}
-                        kWh
-                    </span>
-                )
-            }
+            <span class="total-value">{totalKg} kg CO₂</span>
+            <span class="total-services">
+                Hardware {formatKg(hardwareKg)} · services {formatKg(servicesKg)}
+                {teamItems.length > 0 && ` · team ${formatKg(teamKg)}`}
+            </span>
         </div>
     </div>
 </TwoColumnsSection>
@@ -172,6 +227,21 @@ const totalServicesKwh = round(
         h3 {
             font-size: 1.2rem;
             margin-bottom: 1rem;
+        }
+
+        .team-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--textColor);
+            width: fit-content;
+        }
+
+        .team-note {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            font-style: italic;
+            margin: -0.5rem 0 1rem;
         }
     }
 
