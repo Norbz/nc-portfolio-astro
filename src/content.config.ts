@@ -82,6 +82,16 @@ const reports = defineCollection({
         duration_days: z.number(),
         hardware_used: z.array(z.string()),
         services_used: z.array(z.string()).default([]),
+        // Other people on the project. share = their daily footprint as a fraction of mine
+        // (1 = same setup and usage), applied to the days they worked.
+        team: z.array(z.object({
+          role: z.string(),
+          share: z.number(),
+          days: z.number(),
+          comment: z.string().optional(),
+          // Portfolio of the freelancer or agency.
+          url: z.string().optional(),
+        })).default([]),
         use_metrics: z.object({
           page_weight_kb: z.number().optional(),
           co2_per_view_g: z.number().optional(),
