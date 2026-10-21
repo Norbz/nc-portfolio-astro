@@ -46,7 +46,9 @@ const hardware = defineCollection({
         water_per_day_l: z.number().optional(),
         source: z.string().optional(),
         comments: z.string().optional(),
-        methodology: z.string().optional()
+        methodology: z.string().optional(),
+        // Internal: how the figures were calculated. Not rendered.
+        calculation_notes: z.array(z.string()).optional()
       })
 });
 

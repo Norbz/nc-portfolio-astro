@@ -5,6 +5,8 @@ import {
     computeHardwareCO2ForProject,
     computeDeviceEnergyForProject,
     computeEffectiveLifespanDays,
+    computeEmbodiedCO2,
+    computeUseCO2PerDay,
     isUsingActualLifespan,
     round,
 } from "../../../utils/co2";
@@ -18,14 +20,10 @@ const lifespanLabel = isUsingActualLifespan(hardware, ref)
     ? "Effective lifespan"
     : "Estimated lifespan";
 
-const embodiedCO2 = hardware.lifecycle_co2 * (1 - hardware.use_phase_percent);
-const useCO2PerDayMfr =
-    (hardware.lifecycle_co2 * hardware.use_phase_percent) /
-    hardware.manufacturer_lifespan_days;
-const actualLifecycleCO2 = round(
-    embodiedCO2 + useCO2PerDayMfr * effectiveDays,
-    1,
-);
+const embodiedCO2 = computeEmbodiedCO2(hardware);
+const useCO2 = computeUseCO2PerDay(hardware) * effectiveDays;
+const actualLifecycleCO2 = round(embodiedCO2 + useCO2, 1);
+const useShare = Math.round((useCO2 / (embodiedCO2 + useCO2)) * 100);
 const projectCO2 = durationDays
     ? round(computeHardwareCO2ForProject(hardware, durationDays, ref), 3)
     : null;
@@ -80,13 +78,11 @@ const projectKwh =
                             )
                         }
                         <li
-                            data-tooltip="Share of lifecycle CO₂ due to electricity during use. The rest covers manufacturing, transport and end of life."
+                            data-tooltip="Share of the adjusted lifecycle CO₂ due to electricity during use, at the French grid mix. The rest covers manufacturing, transport and end of life."
                         >
                             <span class="label">CO₂ from use</span>
                             <span class="value"
-                                >{
-                                    Math.round(hardware.use_phase_percent * 100)
-                                }%</span
+                                >{useShare}%</span
                             >
                         </li>
                         <li
@@ -99,7 +95,7 @@ const projectKwh =
                             >
                         </li>
                         <li
-                            data-tooltip="Lifecycle CO₂ recalculated over this device's lifespan. It exceeds the manufacturer figure when the device lasts longer, because electricity use keeps adding up."
+                            data-tooltip="Lifecycle CO₂ recalculated over this device's lifespan, with the use phase at the French grid mix instead of the manufacturer's assumption."
                         >
                             <span class="label">Adjusted lifecycle CO₂</span>
                             <span class="value">{actualLifecycleCO2} kg</span>

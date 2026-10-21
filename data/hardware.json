@@ -13,7 +13,18 @@
     "estimated_lifespan_days": 1000,
     "water_per_day_l": 0.4992,
     "source": "https://www.apple.com/environment/pdf/products/notebooks/14-inch_MacBook_Pro_PER_Jan2023.pdf",
-    "comments": "Apple uses a 4-year lifespan for its life cycle analysis, adjusted to 5 years for my usage."
+    "comments": "Apple uses a 4-year lifespan for its life cycle analysis, adjusted to 5 years for my usage.",
+    "calculation_notes": [
+      "Apple Product Environmental Report, 14-inch MacBook Pro (January 2023): 312 kg CO2e, use phase 20%, over Apple's 4-year assumption (800 working days).",
+      "Estimated lifespan raised to 5 years (1,000 working days) for my usage.",
+      "The in-box power adapter is likely included in Apple's figure (production covers all parts and packaging); not confirmed explicitly.",
+      "Power: 20 W x 8 h per working day.",
+      "water_per_day_l: origin not documented.",
+      "Daily CO2 = lifecycle_co2 x (1 - use_phase_percent) / effective lifespan + wattage x daily_hours x 0.0461 kg/kWh (co2.ts).",
+      "The manufacturer's use phase is removed and replaced with real consumption at the French grid mix: 46.1 gCO2e/kWh, ADEME Base Empreinte 'Electricite 2025 - mix moyen - consommation', smoothed over 2022-2025. All work happens in France.",
+      "Effective lifespan = max(estimated_lifespan_days, working days owned at the project date), with working days = calendar days x 5/7 (200 days/year).",
+      "manufacturer_lifespan_days is kept for reference; the calculation no longer uses it."
+    ]
   },
   {
     "id": "samsung-s9",
@@ -30,7 +41,17 @@
     "estimated_lifespan_days": 1200,
     "water_per_day_l": 0.06307,
     "source": "https://www.samsung.com/global/sustainability/media/pdf/Galaxy_S23_Plus_Environmental_Report_EN_230201.pdf",
-    "comments": "Based on S23 data, increased by 25% (arbitrary). Samsung's data assumes a 3-year lifespan."
+    "comments": "Based on S23 data, increased by 25% (arbitrary). Samsung's data assumes a 3-year lifespan.",
+    "calculation_notes": [
+      "No report for the S9: based on the Galaxy S23+ environmental report, increased by 25% (arbitrary) to 73.5 kg CO2e; use phase 9.9%.",
+      "Samsung assumes 3 years (600 working days); estimated lifespan 1,200 working days.",
+      "Usage ratio 0.2: share of the workday spent on professional use. Power: 4.5 W x 3 h.",
+      "water_per_day_l: origin not documented.",
+      "Daily CO2 = lifecycle_co2 x (1 - use_phase_percent) / effective lifespan + wattage x daily_hours x 0.0461 kg/kWh (co2.ts).",
+      "The manufacturer's use phase is removed and replaced with real consumption at the French grid mix: 46.1 gCO2e/kWh, ADEME Base Empreinte 'Electricite 2025 - mix moyen - consommation', smoothed over 2022-2025. All work happens in France.",
+      "Effective lifespan = max(estimated_lifespan_days, working days owned at the project date), with working days = calendar days x 5/7 (200 days/year).",
+      "manufacturer_lifespan_days is kept for reference; the calculation no longer uses it."
+    ]
   },
   {
     "id": "ipad",
@@ -47,7 +68,16 @@
     "estimated_lifespan_days": 1200,
     "water_per_day_l": 0.10535,
     "source": "https://www.apple.com/environment/pdf/products/ipad/iPad_PER_sept2019.pdf",
-    "comments": "Apple uses a 3-year lifespan."
+    "comments": "Apple uses a 3-year lifespan.",
+    "calculation_notes": [
+      "Apple Product Environmental Report, iPad 7th generation (September 2019): 87 kg CO2e, use phase 14%, over Apple's 3-year assumption (600 working days).",
+      "Estimated lifespan 1,200 working days. Usage ratio 0.1 (testing only). Power: 7 W x 2 h.",
+      "water_per_day_l: origin not documented.",
+      "Daily CO2 = lifecycle_co2 x (1 - use_phase_percent) / effective lifespan + wattage x daily_hours x 0.0461 kg/kWh (co2.ts).",
+      "The manufacturer's use phase is removed and replaced with real consumption at the French grid mix: 46.1 gCO2e/kWh, ADEME Base Empreinte 'Electricite 2025 - mix moyen - consommation', smoothed over 2022-2025. All work happens in France.",
+      "Effective lifespan = max(estimated_lifespan_days, working days owned at the project date), with working days = calendar days x 5/7 (200 days/year).",
+      "manufacturer_lifespan_days is kept for reference; the calculation no longer uses it."
+    ]
   },
   {
     "id": "screen34",
@@ -55,28 +85,54 @@
     "description": "My main external display.",
     "icon": "lucide:monitor",
     "purchaseDate": "2022-01-01",
-    "wattage": 40,
+    "wattage": 39,
     "daily_hours": 8,
-    "lifecycle_co2": 300,
-    "manufacturer_lifespan_days": 2000,
-    "use_phase_percent": 0.4,
+    "lifecycle_co2": 821,
+    "manufacturer_lifespan_days": 1200,
+    "use_phase_percent": 0.437,
     "estimated_lifespan_days": 2000,
     "water_per_day_l": 0.18,
-    "source": "https://impactco2.fr/outils/numerique/television",
-    "comments": "Weighted estimate between TV and computer monitor, over 10 years."
+    "source": "https://www.delltechnologies.com/assetlink/doc/en-us/dell-s3422dw-monitor-pcf-datasheet-en-dl1llxh-original.pdf",
+    "comments": "No environmental report for this model. Based on an equivalent 34\" curved monitor.",
+    "calculation_notes": [
+      "Device: Huawei MateView GT 34 (not named publicly). Huawei publishes no carbon footprint for it.",
+      "Proxy: Dell S3422DW PCF (34-inch curved, 3440x1440, PAIA model v1.3.2, September 2022): mean 821 kg CO2e +/- 263 (5th-95th percentile 331-1,804), use phase 43.7% at the EU grid, 6 years (1,200 working days), 122 kWh/year.",
+      "Dell's use phase implies ~490 g/kWh (359 kg for 732 kWh); it is replaced by the French grid mix in co2.ts.",
+      "Cross-check: ADEME/impactco2 24-inch monitor (92.6 kg over 6 years) scaled by panel area (x1.67) gives ~155 kg; average TV (370 kg over 8 years) scaled (x0.48) gives ~176 kg. Dell's manufacturing share alone is ~460 kg (incl. 71 kg transport).",
+      "Power: 39 W from the EU energy label (39 kWh per 1,000 h), x 8 h per working day.",
+      "Estimated lifespan: 10 years (2,000 working days). Purchased January 2022.",
+      "water_per_day_l: origin not documented.",
+      "Daily CO2 = lifecycle_co2 x (1 - use_phase_percent) / effective lifespan + wattage x daily_hours x 0.0461 kg/kWh (co2.ts).",
+      "The manufacturer's use phase is removed and replaced with real consumption at the French grid mix: 46.1 gCO2e/kWh, ADEME Base Empreinte 'Electricite 2025 - mix moyen - consommation', smoothed over 2022-2025. All work happens in France.",
+      "Effective lifespan = max(estimated_lifespan_days, working days owned at the project date), with working days = calendar days x 5/7 (200 days/year).",
+      "manufacturer_lifespan_days is kept for reference; the calculation no longer uses it."
+    ]
   },
   {
     "id": "accessories",
     "name": "Accessories",
     "description": "Chargers, ISP box and other peripherals.",
     "icon": "lucide:cable",
-    "purchaseDate": "2020-01-01",
+    "purchaseDate": "2016-10-01",
     "wattage": 10,
     "daily_hours": 8,
-    "lifecycle_co2": 45,
-    "manufacturer_lifespan_days": 1600,
-    "use_phase_percent": 0.4,
+    "lifecycle_co2": 92,
+    "manufacturer_lifespan_days": 1000,
+    "use_phase_percent": 0.21,
     "estimated_lifespan_days": 1600,
-    "comments": "Includes MacBook charger (~4 kg), ISP internet box (~40 kg), cables (~1 kg)... Use phase at 0.4 reflects the always-on internet box. Daily hours scoped to work use only."
+    "comments": "Includes MacBook charger, ISP internet box and cables. Daily hours scoped to work use only.",
+    "source": "https://impactco2.fr/outils/numerique/box",
+    "calculation_notes": [
+      "Internet box: ADEME/Arcep 2025 via impactco2.fr, 81.2 kg CO2e over 5 years, use 18.2 kg (22%). About 88% of the total.",
+      "Wired headset: Logitech G335 wired PCF (ISO 14067, DEKRA review), 7.14 kg CO2e over 2 years, use 20%. Used occasionally for calls, so likely overestimated.",
+      "Second MacBook charger (for client meetings): ~4 kg CO2e, estimate. The first charger is likely counted in Apple's MacBook report.",
+      "Total 92.3 kg, rounded to 92; weighted use phase 21%; manufacturer lifespan set to the box's 5 years (1,000 working days).",
+      "Purchase date 2016-10-01: average age of about 10 years (box ~12, charger ~11, headset ~9).",
+      "Power: 10 W x 8 h per working day, within the 3.6-25 W range Arcep measured for internet boxes. Daily hours scoped to work use only.",
+      "Daily CO2 = lifecycle_co2 x (1 - use_phase_percent) / effective lifespan + wattage x daily_hours x 0.0461 kg/kWh (co2.ts).",
+      "The manufacturer's use phase is removed and replaced with real consumption at the French grid mix: 46.1 gCO2e/kWh, ADEME Base Empreinte 'Electricite 2025 - mix moyen - consommation', smoothed over 2022-2025. All work happens in France.",
+      "Effective lifespan = max(estimated_lifespan_days, working days owned at the project date), with working days = calendar days x 5/7 (200 days/year).",
+      "manufacturer_lifespan_days is kept for reference; the calculation no longer uses it."
+    ]
   }
 ]
