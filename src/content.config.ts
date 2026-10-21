@@ -62,7 +62,9 @@ const services = defineCollection({
         co2_per_month_g: z.number(),
         kwh_per_month: z.number().optional(),
         source: z.string().optional(),
-        comments: z.string().optional()
+        comments: z.string().optional(),
+        // Internal: how the figures were calculated. Not rendered.
+        calculation_notes: z.array(z.string()).optional()
       })
 });
 
