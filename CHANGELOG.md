@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.8.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.7.0...nc-portfolio-astro-v1.8.0) (2026-10-21)
+
+
+### 🚀 New Features
+
+* **reports:** add team members to the build footprint ([0b8b809](https://github.com/Norbz/nc-portfolio-astro/commit/0b8b809cfe19fbb616e04216dc99faf0f61e78cf))
+* **reports:** base Claude Code footprint on measured token usage ([0b8b809](https://github.com/Norbz/nc-portfolio-astro/commit/0b8b809cfe19fbb616e04216dc99faf0f61e78cf))
+* **reports:** use the French grid mix for device use phases ([0b8b809](https://github.com/Norbz/nc-portfolio-astro/commit/0b8b809cfe19fbb616e04216dc99faf0f61e78cf))
+
+
+### 🔥 Bug Fixes
+
+* keep the email button working after client-side navigation ([0b8b809](https://github.com/Norbz/nc-portfolio-astro/commit/0b8b809cfe19fbb616e04216dc99faf0f61e78cf))
+* **reports:** correct the LOTR services list and the Branche Architecture page weight ([0b8b809](https://github.com/Norbz/nc-portfolio-astro/commit/0b8b809cfe19fbb616e04216dc99faf0f61e78cf))
+* **reports:** prorate monthly service rates over working days ([0b8b809](https://github.com/Norbz/nc-portfolio-astro/commit/0b8b809cfe19fbb616e04216dc99faf0f61e78cf))
+
+
+### 📝 Content
+
+* **reports:** rewrite the eco report copy and labels ([#14](https://github.com/Norbz/nc-portfolio-astro/issues/14)) ([0b8b809](https://github.com/Norbz/nc-portfolio-astro/commit/0b8b809cfe19fbb616e04216dc99faf0f61e78cf))
+
 ## [1.7.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.6.0...nc-portfolio-astro-v1.7.0) (2026-09-25)
 
 
