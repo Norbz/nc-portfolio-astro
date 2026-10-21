@@ -73,15 +73,18 @@ export function computeHardwareCO2ForProject(
   return computeDailyCO2(device, referenceDate) * duration_days * (device.ratio ?? 1);
 }
 
+/** Working days in one month of service usage (200 days/year model). */
+const WORKING_DAYS_PER_MONTH = 20;
+
 /**
  * Total CO2 (g) attributed to a project for one service.
- * Uses a simple monthly rate prorated by project duration.
+ * Monthly rates cover 20 working days, the unit of duration_days.
  */
 export function computeServiceCO2ForProject(
   service: ServiceData,
   duration_days: number
 ): number {
-  return (service.co2_per_month_g / 30) * duration_days;
+  return (service.co2_per_month_g / WORKING_DAYS_PER_MONTH) * duration_days;
 }
 
 /**
@@ -104,7 +107,7 @@ export function computeServiceEnergyForProject(
   duration_days: number
 ): number {
   if (!service.kwh_per_month) return 0;
-  return (service.kwh_per_month / 30) * duration_days;
+  return (service.kwh_per_month / WORKING_DAYS_PER_MONTH) * duration_days;
 }
 
 /** Round to N decimal places */
