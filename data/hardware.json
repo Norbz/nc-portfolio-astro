@@ -54,6 +54,35 @@
     ]
   },
   {
+    "id": "pixel-11-pro",
+    "name": "Pixel 11 Pro",
+    "description": "My daily phone, used for communication and testing.",
+    "icon": "lucide:smartphone",
+    "purchaseDate": "2026-10-27",
+    "ratio": 0.3,
+    "wattage": 6.4,
+    "daily_hours": 3,
+    "lifecycle_co2": 80,
+    "manufacturer_lifespan_days": 600,
+    "use_phase_percent": 0.11,
+    "estimated_lifespan_days": 1400,
+    "source": "https://sustainability.google/files/cf01dc40cf5efd79aead4474f2453a45f159340c/google-pixel-11-pro-product-environmental-report.pdf",
+    "comments": "Google's life cycle assessment assumes 3 years of use.",
+    "calculation_notes": [
+      "Google Product Environmental Report, Pixel 11 Pro (Model G7SWN, August 2026): 80 kg CO2e over Google's 3-year assumption; production 85%, transport 3%, customer use 11%, end-of-life 1%. ISO 14040/14044.",
+      "The 80 kg figure is for the 256 GB configuration (endnote 11). Google publishes no figure for the 512 GB model I own; 80 kg is used as is, with no storage uplift.",
+      "manufacturer_lifespan_days 600 = Google's 3-year assumption (200 working days/year).",
+      "Estimated lifespan 1,400 working days (7 years): matches Google's 7 years of OS and security updates and my habit of keeping phones well beyond the vendor assumption (the S9 it replaces is about 8 years old).",
+      "Usage ratio 0.3: professional share of daily phone use (communication, occasional mobile testing, Claude Remote Control). About 3 h of use per day, roughly 1 h of it professional; the rest is personal, and much testing goes through simulators.",
+      "Power: 6.4 W x 3 h per working day (about 19 Wh/day), derived from Google's 7 kWh/year annual energy estimate (230 V).",
+      "No water figure published by Google; water_per_day_l omitted.",
+      "Daily CO2 = lifecycle_co2 x (1 - use_phase_percent) / effective lifespan + wattage x daily_hours x 0.0461 kg/kWh (co2.ts).",
+      "The manufacturer's use phase is removed and replaced with real consumption at the French grid mix: 46.1 gCO2e/kWh, ADEME Base Empreinte 'Electricite 2025 - mix moyen - consommation', smoothed over 2022-2025. All work happens in France.",
+      "Effective lifespan = max(estimated_lifespan_days, working days owned at the project date), with working days = calendar days x 5/7 (200 days/year).",
+      "manufacturer_lifespan_days is kept for reference; the calculation no longer uses it."
+    ]
+  },
+  {
     "id": "ipad",
     "name": "iPad 7th Gen",
     "description": "An older iPad, used only for testing.",
