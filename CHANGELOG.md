@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.8.0...nc-portfolio-astro-v1.8.1) (2026-10-26)
+
+
+### 📝 Content
+
+* **hardware:** add Pixel 11 Pro work phone ([#16](https://github.com/Norbz/nc-portfolio-astro/issues/16)) ([23317b9](https://github.com/Norbz/nc-portfolio-astro/commit/23317b97b885ebdb4131cc7f0adf8f61c92d6ef2))
+
 ## [1.8.0](https://github.com/Norbz/nc-portfolio-astro/compare/nc-portfolio-astro-v1.7.0...nc-portfolio-astro-v1.8.0) (2026-10-21)
 
 
